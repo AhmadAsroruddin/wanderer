@@ -6,7 +6,6 @@ import 'package:wanderer/data/datasource/auth_datasource.dart';
 import 'package:wanderer/data/service/auth_repos_impl.dart';
 import 'package:wanderer/domain/usecase/firstTimeDone.dart';
 import 'package:wanderer/domain/usecase/isFirstTime.dart';
-import 'package:wanderer/presentations/bloc/image_bloc.dart';
 import 'package:wanderer/presentations/bloc/location_data_cubit.dart';
 import 'package:wanderer/presentations/bloc/markers_bloc.dart';
 import 'package:wanderer/presentations/bloc/toggle_boolean_bloc.dart';
@@ -68,7 +67,6 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (_) => BooleanCubit()),
         BlocProvider(create: (_) => di.locator<LocationDataCubit>()),
         BlocProvider(create: (_) => di.locator<MarkersCubit>()),
-        BlocProvider(create: (_) => di.locator<ImageCubit>()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

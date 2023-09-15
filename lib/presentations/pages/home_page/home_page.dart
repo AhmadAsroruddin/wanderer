@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wanderer/presentations/bloc/toggle_boolean_bloc.dart';
+import 'package:wanderer/presentations/bloc/markers_bloc.dart';
 import 'package:wanderer/presentations/pages/home_page/search_bar.dart';
 import 'package:wanderer/presentations/pages/add_marker/marker_category.dart';
 import 'package:wanderer/presentations/shared/map.dart';
@@ -21,11 +21,21 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
+  bool toggle = false;
+
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<BooleanCubit, bool>(
-      listener: (context, state) {},
+    return BlocConsumer<MarkersCubit, MarkersState>(
+      listener: (context, state) {
+        if (state is MarkersSuccess) {
+          setState(() {
+            toggle = !toggle;
+          });
+        }
+      },
       builder: (context, state) {
+        print(toggle);
+        print(state);
         return Scaffold(
           body: SafeArea(
             child: Center(
@@ -66,7 +76,7 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                   ),
-                  if (state == true) const PopUpSelectedMarker()
+                  if (toggle == true) const PopUpSelectedMarker()
                 ],
               ),
             ),

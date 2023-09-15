@@ -21,8 +21,19 @@ class MarkersFailed extends MarkersState {
 
 class MarkersSuccess extends MarkersState {
   final String message;
-  const MarkersSuccess({required this.message});
+  final bool isClicked;
+
+  MarkersSuccess({required this.message, required this.isClicked});
 
   @override
-  List<Object> get props => [message];
+  List<Object> get props => [message, isClicked];
+}
+
+class GetAllMarkersDone extends MarkersState {
+  final List<Markers> data;
+
+  const GetAllMarkersDone({required this.data});
+
+  @override
+  List<Object> get props => [data];
 }

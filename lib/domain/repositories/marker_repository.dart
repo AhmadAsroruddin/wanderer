@@ -5,4 +5,5 @@ import '../entities/marker.dart';
 
 abstract class MarkerRepos {
   Future<Either<String, String>> addMarker(Markers markers, List<XFile> images);
+  Future<List<Markers>> getAllMarkers();
 }

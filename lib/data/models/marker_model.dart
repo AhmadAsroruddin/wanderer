@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:wanderer/domain/entities/marker.dart';
 
 class MarkerModel extends Equatable {
@@ -19,7 +21,7 @@ class MarkerModel extends Equatable {
   final double latitude;
   final double longitude;
   final String description;
-  final List<String> image;
+  final List<dynamic> image;
   final String socialMedia;
   final String contact;
 
@@ -37,6 +39,22 @@ class MarkerModel extends Equatable {
     };
   }
 
+  factory MarkerModel.fromDocumentSnapshot(DocumentSnapshot documentSnapshot) {
+    Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
+
+    return MarkerModel(
+      name: data['name'],
+      description: data['description'],
+      image: data['image'],
+      jenis: data['jenis'],
+      userId: data['userId'],
+      latitude: data['latitude'],
+      longitude: data['longitude'],
+      contact: data['contact'],
+      socialMedia: data['socialMedia'],
+    );
+  }
+
   static Markers fromMap(Map<String, dynamic> data) {
     return Markers(
         name: data['name'],
@@ -48,6 +66,20 @@ class MarkerModel extends Equatable {
         userId: data['userId'],
         socialMedia: data['socialMedia'],
         contact: data['contacs']);
+  }
+
+  Markers toEntity() {
+    return Markers(
+      name: name,
+      description: description,
+      image: image,
+      jenis: jenis,
+      latitude: latitude,
+      longitude: longitude,
+      userId: userId,
+      socialMedia: socialMedia,
+      contact: contact,
+    );
   }
 
   @override

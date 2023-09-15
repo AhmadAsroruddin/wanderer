@@ -1,11 +1,14 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geocoding/geocoding.dart' as geo;
 import 'package:location/location.dart';
-import 'package:wanderer/presentations/bloc/toggle_boolean_bloc.dart';
+import 'package:wanderer/presentations/bloc/markers_bloc.dart';
+
+import '../../domain/entities/marker.dart';
 
 class GMaps extends StatefulWidget {
   const GMaps({
@@ -28,7 +31,8 @@ class _GMapsState extends State<GMaps> {
 
   @override
   void initState() {
-    onMyLocationButtonPress();
+    onMyLocation();
+
     super.initState();
   }
 
@@ -42,25 +46,31 @@ class _GMapsState extends State<GMaps> {
       mapType: MapType.normal,
       markers: markers,
       scrollGesturesEnabled: true,
-      onTap: (LatLng latLng) {
-        onLongPress(latLng);
-      },
       initialCameraPosition: CameraPosition(
         target: deviceLocation,
-        zoom: 18,
+        zoom: 14,
       ),
       onMapCreated: (GoogleMapController controller) async {
+        print("fijr");
         _controller.complete(controller);
         await _controller.future.then(
           (value) async {
             mapController = await _controller.future;
           },
         );
+        final List<Markers> data =
+            await context.read<MarkersCubit>().getAllMarkers();
+
+        for (var datas in data) {
+          defineMarker(LatLng(datas.latitude, datas.longitude), "street",
+              "address", datas.latitude.toString());
+        }
+        print(markers.length);
       },
     );
   }
 
-  void onMyLocationButtonPress() async {
+  void onMyLocation() async {
     final Location location = Location();
     late bool serviceEnabled;
     late PermissionStatus permissionGranted;
@@ -91,50 +101,33 @@ class _GMapsState extends State<GMaps> {
         await geo.placemarkFromCoordinates(latLng.latitude, latLng.longitude);
 
     final place = info[0];
-    final street = place.street;
-    final address = '${place.subLocality}, ${place.locality}, ${place.country}';
 
     setState(() {
       placemark = place;
     });
 
-    defineMarker(latLng, street!, address);
-    print(latLng);
     mapController.animateCamera(
       CameraUpdate.newLatLng(latLng),
     );
   }
 
-  void defineMarker(LatLng latLng, String street, String address) {
+  void defineMarker(LatLng latLng, String street, String address, String id) {
     final marker = Marker(
-      markerId: const MarkerId("source"),
+      markerId: MarkerId(id),
       position: latLng,
       infoWindow: InfoWindow(title: street, snippet: address),
-      onTap: () {
-        context.read<BooleanCubit>().toggleValue();
+      onTap: () async {
+        setState(() {
+          isMarkerClicked = !isMarkerClicked;
+        });
+        context.read<MarkersCubit>().toggleValue(isMarkerClicked);
       },
     );
 
     setState(() {
-      markers.clear();
       markers.add(marker);
     });
   }
 
-  void onLongPress(LatLng latLng) async {
-    final info =
-        await geo.placemarkFromCoordinates(latLng.latitude, latLng.longitude);
-
-    final place = info[0];
-    final street = place.street;
-    final address = '${place.subLocality}, ${place.locality}, ${place.country}';
-
-    setState(() {
-      placemark = place;
-    });
-
-    defineMarker(latLng, street!, address);
-
-    mapController.animateCamera(CameraUpdate.newLatLng(latLng));
-  }
+  void getAllMarker() {}
 }

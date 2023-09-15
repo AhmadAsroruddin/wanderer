@@ -45,7 +45,7 @@ class _MapFullPageState extends State<MapFullPage> {
               zoomControlsEnabled: true,
               initialCameraPosition: CameraPosition(
                 target: deviceLocation,
-                zoom: 18,
+                zoom: 14,
               ),
               scrollGesturesEnabled: true,
               markers: markers,

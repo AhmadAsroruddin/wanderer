@@ -20,7 +20,7 @@ class Markers extends Equatable {
   final String description;
   final String contact;
   final String socialMedia;
-  final List<String> image;
+  final List<dynamic> image;
 
   @override
   List<Object> get props => [
