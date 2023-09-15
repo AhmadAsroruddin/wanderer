@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "828327365003",
+    "project_id": "wanderer-d5d66",
+    "storage_bucket": "wanderer-d5d66.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:828327365003:android:396c84dbfb0699fe97878e",
+        "android_client_info": {
+          "package_name": "com.example.test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "828327365003-fp3gtqpcnqr9uvhaqkhmvnjicma8p6kr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIsO_ekrliuWB5L9mUOfjh8xnPt9seJQE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "828327365003-8mtrr3ijsbp16rsp7iqiua8m43rrug01.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "828327365003-m2a4ipk6u048emea20h8aq8u20c0sf18.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.coba"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
