@@ -10,9 +10,11 @@ import 'package:wanderer/presentations/pages/getStarted/first_page.dart';
 import 'package:wanderer/presentations/pages/getStarted/third_page.dart';
 import 'package:wanderer/presentations/pages/add_marker/maps_page.dart';
 import 'package:wanderer/presentations/pages/add_marker/marker_category.dart';
+import 'package:wanderer/presentations/pages/marker_paget.dart';
 import 'package:wanderer/presentations/pages/splashScreen.dart';
 import 'package:wanderer/presentations/pages/tab_screen.dart';
 import 'package:wanderer/presentations/pages/add_marker/tambah_marker.dart';
+import '../../domain/entities/marker.dart';
 import '../pages/getStarted/second_page.dart';
 
 class MyRouterDelegate extends RouterDelegate
@@ -25,6 +27,16 @@ class MyRouterDelegate extends RouterDelegate
   bool third = false;
 
   String categoryName = "";
+  Markers marker = const Markers(
+      name: "name",
+      description: "description",
+      image: [],
+      jenis: "jenis",
+      latitude: 0,
+      longitude: 0,
+      userId: "userId",
+      contact: "contact",
+      socialMedia: "socialMedia");
 
   final RouterCubit routerCubit;
 
@@ -102,7 +114,13 @@ class MyRouterDelegate extends RouterDelegate
         }
         if (settings.name == MapFullPage.routeName) {
           return MaterialPageRoute(
-            builder: (context) => MapFullPage(),
+            builder: (context) => const MapFullPage(),
+            settings: settings,
+          );
+        }
+        if (settings.name == MarkerPage.routeName) {
+          return MaterialPageRoute(
+            builder: (context) => MarkerPage(),
             settings: settings,
           );
         }

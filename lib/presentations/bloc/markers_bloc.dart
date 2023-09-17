@@ -31,8 +31,8 @@ class MarkersCubit extends Cubit<MarkersState> {
     return result;
   }
 
-  void toggleValue(bool isClicked) {
-    emit(MarkersSuccess(
-        message: "Asdasd", isClicked: isClicked)); // Toggle nilai boolean
+  void getMarker(bool isClicked, Markers marker) {
+    emit(GetOneMarker(
+        marker: marker, isClicked: isClicked)); // Toggle nilai boolean
   }
 }

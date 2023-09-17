@@ -37,3 +37,13 @@ class GetAllMarkersDone extends MarkersState {
   @override
   List<Object> get props => [data];
 }
+
+class GetOneMarker extends MarkersState {
+  final Markers marker;
+  final bool isClicked;
+
+  GetOneMarker({required this.marker, required this.isClicked});
+
+  @override
+  List<Object> get props => [marker, isClicked];
+}

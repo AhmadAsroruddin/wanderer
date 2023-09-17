@@ -27,15 +27,13 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return BlocConsumer<MarkersCubit, MarkersState>(
       listener: (context, state) {
-        if (state is MarkersSuccess) {
+        if (state is GetOneMarker) {
           setState(() {
-            toggle = !toggle;
+            toggle = state.isClicked;
           });
         }
       },
       builder: (context, state) {
-        print(toggle);
-        print(state);
         return Scaffold(
           body: SafeArea(
             child: Center(
@@ -76,7 +74,10 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                   ),
-                  if (toggle == true) const PopUpSelectedMarker()
+                  if (toggle == true && state is GetOneMarker)
+                    PopUpSelectedMarker(
+                      marker: state.marker,
+                    )
                 ],
               ),
             ),

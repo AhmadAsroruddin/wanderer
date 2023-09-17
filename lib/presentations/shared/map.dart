@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -63,7 +62,7 @@ class _GMapsState extends State<GMaps> {
 
         for (var datas in data) {
           defineMarker(LatLng(datas.latitude, datas.longitude), "street",
-              "address", datas.latitude.toString());
+              "address", datas.latitude.toString(), datas);
         }
         print(markers.length);
       },
@@ -111,7 +110,8 @@ class _GMapsState extends State<GMaps> {
     );
   }
 
-  void defineMarker(LatLng latLng, String street, String address, String id) {
+  void defineMarker(LatLng latLng, String street, String address, String id,
+      Markers markerData) {
     final marker = Marker(
       markerId: MarkerId(id),
       position: latLng,
@@ -120,7 +120,7 @@ class _GMapsState extends State<GMaps> {
         setState(() {
           isMarkerClicked = !isMarkerClicked;
         });
-        context.read<MarkersCubit>().toggleValue(isMarkerClicked);
+        context.read<MarkersCubit>().getMarker(isMarkerClicked, markerData);
       },
     );
 
