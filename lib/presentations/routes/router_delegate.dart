@@ -10,7 +10,7 @@ import 'package:wanderer/presentations/pages/getStarted/first_page.dart';
 import 'package:wanderer/presentations/pages/getStarted/third_page.dart';
 import 'package:wanderer/presentations/pages/add_marker/maps_page.dart';
 import 'package:wanderer/presentations/pages/add_marker/marker_category.dart';
-import 'package:wanderer/presentations/pages/marker_paget.dart';
+import 'package:wanderer/presentations/pages/marker_page/marker_paget.dart';
 import 'package:wanderer/presentations/pages/splashScreen.dart';
 import 'package:wanderer/presentations/pages/tab_screen.dart';
 import 'package:wanderer/presentations/pages/add_marker/tambah_marker.dart';

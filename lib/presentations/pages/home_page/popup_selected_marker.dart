@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:wanderer/domain/entities/marker.dart';
-import 'package:wanderer/presentations/pages/marker_paget.dart';
+import 'package:wanderer/presentations/pages/marker_page/marker_paget.dart';
 
 import '../../shared/theme.dart';
 
