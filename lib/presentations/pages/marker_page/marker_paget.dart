@@ -114,7 +114,9 @@ class _MarkerPageState extends State<MarkerPage>
                         ],
                       ),
                     ),
-                    MarkerTab()
+                    MarkerTab(
+                      markers: state.marker,
+                    )
                   ],
                 ),
               ),

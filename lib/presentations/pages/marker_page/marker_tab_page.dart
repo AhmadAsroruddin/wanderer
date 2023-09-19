@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:wanderer/domain/entities/marker.dart';
 
 import '../../shared/theme.dart';
+import 'marker_detail_page.dart';
 
 class MarkerTab extends StatefulWidget {
-  const MarkerTab({super.key});
+  const MarkerTab({required this.markers, super.key});
+
+  final Markers markers;
 
   @override
   State<MarkerTab> createState() => _MarkerTabState();
@@ -49,36 +53,13 @@ class _MarkerTabState extends State<MarkerTab>
         ),
         Container(
           width: deviceWidth,
-          height: deviceHeight,
+          height: deviceHeight * 0.5,
           child: TabBarView(
             controller: _tabController,
             children: [
               // Isi tab 1
-              SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      margin: const EdgeInsets.only(top: 5),
-                      padding: EdgeInsets.symmetric(
-                        vertical: deviceHeight * 0.02,
-                        horizontal: 5,
-                      ),
-                      width: deviceWidth,
-                      decoration: const BoxDecoration(
-                        border: Border.symmetric(
-                          horizontal: BorderSide(width: 1),
-                        ),
-                      ),
-                      child: const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Perkemahan"),
-                          Text("123 km"),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
+              DetailsPage(
+                markers: widget.markers,
               ),
               // Isi tab 2
               Container(

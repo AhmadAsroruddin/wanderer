@@ -48,7 +48,8 @@ class MarkersDatasourceImpl implements MarkersDataSource {
             longitude: markers.longitude,
             userId: markers.userId,
             contact: markers.contact,
-            socialMedia: markers.socialMedia)
+            socialMedia: markers.socialMedia,
+            address: markers.address)
         .toMap());
 
     final newMarkerID = newMarker.id;

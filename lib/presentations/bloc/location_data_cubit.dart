@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:wanderer/domain/entities/location_data.dart';
 import 'package:wanderer/domain/repositories/location_data_repository.dart';
+import 'package:geolocator/geolocator.dart';
 
 class LocationDataCubit extends Cubit<LocationDataa> {
   final LocationDataRepos repository;
@@ -18,5 +19,12 @@ class LocationDataCubit extends Cubit<LocationDataa> {
 
   void loadLocationData() {
     emit(repository.getLocationData());
+  }
+
+  Future<double> getDistances(LatLng currLocation, LatLng destinastion) async {
+    final double distance = Geolocator.distanceBetween(currLocation.latitude,
+        currLocation.longitude, destinastion.latitude, destinastion.longitude);
+
+    return distance;
   }
 }

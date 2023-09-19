@@ -149,7 +149,8 @@ class _MapFullPageState extends State<MapFullPage> {
 
     final place = info[0];
     final street = place.street;
-    final address = '${place.subLocality}, ${place.locality}, ${place.country}';
+    final address =
+        '${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
 
     setState(() {
       placemark = place;
@@ -183,11 +184,12 @@ class _MapFullPageState extends State<MapFullPage> {
 
     final place = info[0];
     final street = place.street;
-    final address = '${place.subLocality}, ${place.locality}, ${place.country}';
+    final address =
+        '${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
 
     setState(() {
       placemark = place;
-      alamat = street!;
+      alamat = address;
       selectedLatLng = latLng;
     });
 

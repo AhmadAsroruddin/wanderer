@@ -36,7 +36,8 @@ class MyRouterDelegate extends RouterDelegate
       longitude: 0,
       userId: "userId",
       contact: "contact",
-      socialMedia: "socialMedia");
+      socialMedia: "socialMedia",
+      address: "");
 
   final RouterCubit routerCubit;
 
