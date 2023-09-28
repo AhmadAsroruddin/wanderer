@@ -17,7 +17,6 @@ class DetailsPage extends StatefulWidget {
   });
 
   final Markers markers;
-
   @override
   State<DetailsPage> createState() => _DetailsPageState();
 }
@@ -33,6 +32,13 @@ class _DetailsPageState extends State<DetailsPage> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    jarak = 0;
+    // TODO: implement dispose
+    super.dispose();
+  }
+
   void _getJarak(LatLng dest) async {
     final Location location = Location();
     LocationData locationData;
@@ -44,6 +50,7 @@ class _DetailsPageState extends State<DetailsPage> {
 
     final distance =
         await context.read<LocationDataCubit>().getDistances(curr, dest);
+
     setState(() {
       jarak = distance / 1000;
     });

@@ -230,16 +230,17 @@ class _AddMarkerPageState extends State<AddMarkerPage> {
                         func: () {
                           context.read<MarkersCubit>().addMarkers(
                                 Markers(
-                                    name: name.text,
-                                    description: description.text,
-                                    image: imageLinks,
-                                    jenis: widget.category,
-                                    latitude: latLngMarker.latitude,
-                                    longitude: latLngMarker.longitude,
-                                    userId: "",
-                                    contact: contact.text,
-                                    socialMedia: contact.text,
-                                    address: address.text),
+                                  name: name.text,
+                                  description: description.text,
+                                  image: imageLinks,
+                                  jenis: widget.category,
+                                  latitude: latLngMarker.latitude,
+                                  longitude: latLngMarker.longitude,
+                                  userId: "",
+                                  contact: contact.text,
+                                  socialMedia: contact.text,
+                                  address: address.text,
+                                ),
                                 images!,
                               );
                         },

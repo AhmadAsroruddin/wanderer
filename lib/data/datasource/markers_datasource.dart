@@ -49,11 +49,12 @@ class MarkersDatasourceImpl implements MarkersDataSource {
             userId: markers.userId,
             contact: markers.contact,
             socialMedia: markers.socialMedia,
-            address: markers.address)
+            address: markers.address,
+            id: "")
         .toMap());
 
     final newMarkerID = newMarker.id;
-
+    await newMarker.update({'id': newMarkerID});
     await _firestore.collection('users').doc(currentUser).update(
       {
         'markers': FieldValue.arrayUnion([newMarkerID])

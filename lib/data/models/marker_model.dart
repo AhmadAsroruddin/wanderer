@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:wanderer/domain/entities/marker.dart';
 
 class MarkerModel extends Equatable {
-  const MarkerModel(
+  MarkerModel(
       {required this.name,
       required this.description,
       required this.image,
@@ -13,7 +13,8 @@ class MarkerModel extends Equatable {
       required this.longitude,
       required this.contact,
       required this.socialMedia,
-      required this.address});
+      required this.address,
+      this.id = "id"});
 
   final String userId;
   final String jenis;
@@ -25,6 +26,7 @@ class MarkerModel extends Equatable {
   final String socialMedia;
   final String contact;
   final String address;
+  final String id;
 
   Map<String, dynamic> toMap() {
     return {
@@ -37,7 +39,8 @@ class MarkerModel extends Equatable {
       'image': image,
       'socialMedia': socialMedia,
       'contact': contact,
-      'address': address
+      'address': address,
+      'id': id
     };
   }
 
@@ -54,7 +57,8 @@ class MarkerModel extends Equatable {
         longitude: data['longitude'],
         contact: data['contact'],
         socialMedia: data['socialMedia'],
-        address: data['address']);
+        address: data['address'],
+        id: data['id']);
   }
 
   static Markers fromMap(Map<String, dynamic> data) {
@@ -68,7 +72,8 @@ class MarkerModel extends Equatable {
         userId: data['userId'],
         socialMedia: data['socialMedia'],
         contact: data['contacs'],
-        address: data['address']);
+        address: data['address'],
+        id: data['id']);
   }
 
   Markers toEntity() {
@@ -82,7 +87,8 @@ class MarkerModel extends Equatable {
         userId: userId,
         socialMedia: socialMedia,
         contact: contact,
-        address: address);
+        address: address,
+        id: id);
   }
 
   @override
@@ -96,6 +102,7 @@ class MarkerModel extends Equatable {
         image,
         contact,
         socialMedia,
-        address
+        address,
+        id
       ];
 }
