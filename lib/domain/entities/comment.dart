@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
 class Comments extends Equatable {
@@ -5,7 +6,7 @@ class Comments extends Equatable {
 
   final String writer;
   final String comment;
-  final DateTime time;
+  final Timestamp time;
 
   @override
   List<Object> get props => [writer, comment, time];

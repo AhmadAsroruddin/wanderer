@@ -3,4 +3,5 @@ import 'package:wanderer/domain/entities/comment.dart';
 
 abstract class CommentRepos {
   Future<Either<String, String>> pushComment(Comments comment, String markerId);
+  Future<Either<String, List<Comments>>> getComments(String markerId);
 }

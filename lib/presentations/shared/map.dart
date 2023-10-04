@@ -45,6 +45,7 @@ class _GMapsState extends State<GMaps> {
       mapType: MapType.normal,
       markers: markers,
       scrollGesturesEnabled: true,
+      onTap: (argument) {},
       initialCameraPosition: CameraPosition(
         target: deviceLocation,
         zoom: 14,

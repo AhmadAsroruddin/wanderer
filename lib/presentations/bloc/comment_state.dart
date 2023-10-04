@@ -26,3 +26,12 @@ class CommentSuccess extends CommentState {
   @override
   List<Object> get props => [success];
 }
+
+class AllCommentReceived extends CommentState {
+  final List<Comments> comments;
+
+  const AllCommentReceived({required this.comments});
+
+  @override
+  List<Object> get props => [comments];
+}

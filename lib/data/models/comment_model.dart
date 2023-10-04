@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../domain/entities/comment.dart';
@@ -8,7 +9,7 @@ class CommentModel extends Equatable {
 
   final String writer;
   final String comment;
-  final DateTime time;
+  final Timestamp time;
 
   Map<String, dynamic> toMap() {
     return {
@@ -23,6 +24,20 @@ class CommentModel extends Equatable {
       comment: data['comment'],
       time: data['time'],
       writer: data['writer'],
+    );
+  }
+
+  Comments toEntity() {
+    return Comments(comment: comment, writer: writer, time: time);
+  }
+
+  factory CommentModel.fromDocumentSnapshot(DocumentSnapshot documentSnapshot) {
+    Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
+
+    return CommentModel(
+      comment: data['comment'],
+      writer: data['writer'],
+      time: data['time'],
     );
   }
 

@@ -26,19 +26,6 @@ class _DetailsPageState extends State<DetailsPage> {
   LatLng destination = LatLng(1, 1);
   double jarak = 0;
 
-  @override
-  void initState() {
-    _getJarak(LatLng(widget.markers.latitude, widget.markers.longitude));
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    jarak = 0;
-    // TODO: implement dispose
-    super.dispose();
-  }
-
   void _getJarak(LatLng dest) async {
     final Location location = Location();
     LocationData locationData;
@@ -48,16 +35,19 @@ class _DetailsPageState extends State<DetailsPage> {
 
     curr = LatLng(locationData.latitude!, locationData.longitude!);
 
-    final distance =
-        await context.read<LocationDataCubit>().getDistances(curr, dest);
+    if (mounted) {
+      final distance =
+          await context.read<LocationDataCubit>().getDistances(curr, dest);
 
-    setState(() {
-      jarak = distance / 1000;
-    });
+      setState(() {
+        jarak = distance / 1000;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    _getJarak(LatLng(widget.markers.latitude, widget.markers.longitude));
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[

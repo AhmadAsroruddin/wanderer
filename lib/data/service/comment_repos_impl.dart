@@ -12,12 +12,22 @@ class CommentsReposImpl implements CommentRepos {
   Future<Either<String, String>> pushComment(
       Comments comment, String markerId) async {
     try {
-      await commentDataSource.pushComment(comment, markerId);
+      await commentDataSource.pushComments(comment, markerId);
 
       return const Right("Comment berhasil ditambahkan");
     } catch (e) {
       print(e);
       return Left("Error : $e");
+    }
+  }
+
+  @override
+  Future<Either<String, List<Comments>>> getComments(String markerId) async {
+    try {
+      final data = await commentDataSource.getComments(markerId);
+      return Right(data);
+    } catch (e) {
+      return Left(e.toString());
     }
   }
 }

@@ -4,12 +4,13 @@ import 'package:wanderer/domain/entities/comment.dart';
 import '../models/comment_model.dart';
 
 abstract class CommentDataSource {
-  Future<void> pushComment(Comments comments, String markerId);
+  Future<void> pushComments(Comments comments, String markerId);
+  Future<List<Comments>> getComments(String markerId);
 }
 
 class CommentDataSourceImpl implements CommentDataSource {
   @override
-  Future<void> pushComment(Comments comments, String markerId) async {
+  Future<void> pushComments(Comments comments, String markerId) async {
     final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
     final markerCollection =
@@ -20,5 +21,23 @@ class CommentDataSourceImpl implements CommentDataSource {
             writer: comments.writer,
             time: comments.time)
         .toMap());
+  }
+
+  @override
+  Future<List<Comments>> getComments(String markerId) async {
+    final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+
+    final dataQuery = await firebaseFirestore
+        .collection('markers')
+        .doc(markerId)
+        .collection('comments')
+        .get();
+
+    final List<Comments> comments = dataQuery.docs
+        .map<Comments>(
+            (doc) => CommentModel.fromDocumentSnapshot(doc).toEntity())
+        .toList();
+    print("fired");
+    return comments;
   }
 }

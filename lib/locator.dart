@@ -15,6 +15,7 @@ import 'package:wanderer/domain/repositories/location_data_repository.dart';
 import 'package:wanderer/domain/repositories/marker_repository.dart';
 import 'package:wanderer/domain/usecase/addMarker.dart';
 import 'package:wanderer/domain/usecase/createAccount.dart';
+import 'package:wanderer/domain/usecase/getAllComments.dart';
 import 'package:wanderer/domain/usecase/getAllMarkers.dart';
 import 'package:wanderer/domain/usecase/isFirstTime.dart';
 import 'package:wanderer/domain/usecase/login.dart';
@@ -43,6 +44,7 @@ void init() {
   locator.registerLazySingleton(() => UploadImages(imageRepos: locator()));
   locator.registerLazySingleton(() => GetAllMarkers(markerRepos: locator()));
   locator.registerLazySingleton(() => PushComment(commentRepos: locator()));
+  locator.registerLazySingleton(() => GetAllComments(commentRepos: locator()));
 
   //REPOSITORY
   locator.registerLazySingleton<AuthRepos>(() => AuthReposImpl(
@@ -65,7 +67,7 @@ void init() {
       ));
   locator.registerFactory(() => LocationDataCubit(locator()));
   locator.registerFactory(() => MarkersCubit(locator(), locator()));
-  locator.registerFactory(() => CommentCubit(locator()));
+  locator.registerFactory(() => CommentCubit(locator(), locator()));
 
   //DATA
 
