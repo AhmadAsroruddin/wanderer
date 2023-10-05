@@ -108,9 +108,12 @@ flutter:
     - assets/img/marker.png
     - assets/img/dropDown.png
     - assets/img/star.png
+    - assets/img/gunung.png
     - assets/img/category/
     - assets/img/
     - assets/gif/
+    - assets/markers/
+   
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

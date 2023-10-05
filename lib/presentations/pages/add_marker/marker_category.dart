@@ -9,11 +9,12 @@ class MarkerCategoryPage extends StatelessWidget {
   static const routeName = '/markerCategoryPage';
 
   final List<Map<String, String>> data = [
-    {'image': 'rumah_makan', 'name': 'Tempat Makan'},
+    {'image': 'rumah_makan', 'name': 'Restaurant'},
     {'image': 'spbu', 'name': 'SPBU'},
-    {'image': 'campervan', 'name': 'Persewaan Campervan'},
-    {'image': 'campsite', 'name': 'Perkemahan'},
-    {'image': 'gunung', 'name': 'Pegunungan'},
+    {'image': 'campervan', 'name': 'Campervan'},
+    {'image': 'campsite', 'name': 'Paid_Campsite'},
+    {'image': 'campsite', 'name': 'Free_Campsite'},
+    {'image': 'gunung', 'name': 'Gunung'},
     {'image': 'pantai', 'name': 'Pantai'},
     {'image': 'danau', 'name': 'Danau'},
   ];

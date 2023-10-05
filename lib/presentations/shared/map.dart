@@ -31,7 +31,8 @@ class _GMapsState extends State<GMaps> {
   @override
   void initState() {
     onMyLocation();
-
+    // addCustom();
+    getAllMarkers();
     super.initState();
   }
 
@@ -45,27 +46,17 @@ class _GMapsState extends State<GMaps> {
       mapType: MapType.normal,
       markers: markers,
       scrollGesturesEnabled: true,
-      onTap: (argument) {},
       initialCameraPosition: CameraPosition(
         target: deviceLocation,
-        zoom: 14,
+        zoom: 10,
       ),
       onMapCreated: (GoogleMapController controller) async {
-        print("fijr");
         _controller.complete(controller);
         await _controller.future.then(
           (value) async {
             mapController = await _controller.future;
           },
         );
-        final List<Markers> data =
-            await context.read<MarkersCubit>().getAllMarkers();
-
-        for (var datas in data) {
-          defineMarker(LatLng(datas.latitude, datas.longitude), "street",
-              "address", datas.latitude.toString(), datas);
-        }
-        print(markers.length);
       },
     );
   }
@@ -111,12 +102,38 @@ class _GMapsState extends State<GMaps> {
     );
   }
 
+  void getAllMarkers() async {
+    final List<Markers> data =
+        await context.read<MarkersCubit>().getAllMarkers();
+
+    for (var datas in data) {
+      defineMarker(LatLng(datas.latitude, datas.longitude), "street", "address",
+          datas.latitude.toString(), datas);
+    }
+  }
+
+  // void addCustom() {
+  //   BitmapDescriptor.fromAssetImage(
+  //           const ImageConfiguration(), 'assets/img/pantai.png')
+  //       .then(
+  //     (icon) {
+  //       setState(() {
+  //         customIcon = icon;
+  //       });
+  //     },
+  //   );
+  // }
+
   void defineMarker(LatLng latLng, String street, String address, String id,
-      Markers markerData) {
+      Markers markerData) async {
+    BitmapDescriptor markerIcon;
+    markerIcon = await BitmapDescriptor.fromAssetImage(
+        const ImageConfiguration(),
+        'assets/markers/${markerData.jenis.toLowerCase()}.png');
     final marker = Marker(
       markerId: MarkerId(id),
       position: latLng,
-      infoWindow: InfoWindow(title: street, snippet: address),
+      icon: markerIcon,
       onTap: () async {
         setState(() {
           isMarkerClicked = !isMarkerClicked;
@@ -129,6 +146,4 @@ class _GMapsState extends State<GMaps> {
       markers.add(marker);
     });
   }
-
-  void getAllMarker() {}
 }

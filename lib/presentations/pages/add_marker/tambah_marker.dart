@@ -40,6 +40,8 @@ class _AddMarkerPageState extends State<AddMarkerPage> {
 
   final TextEditingController categoryController = TextEditingController();
 
+  final TextEditingController harga = TextEditingController();
+
   LatLng latLngMarker = LatLng(0, 0);
   List<XFile>? images;
   List<String> imageLinks = [];
@@ -139,6 +141,10 @@ class _AddMarkerPageState extends State<AddMarkerPage> {
               CustomTextFormFieldAddMarker(
                 hintText: "Kontak",
                 controller: contact,
+              ),
+              CustomTextFormFieldAddMarker(
+                hintText: "Harga",
+                controller: harga,
               ),
               SizedBox(
                 height: deviceHeight * 0.02,

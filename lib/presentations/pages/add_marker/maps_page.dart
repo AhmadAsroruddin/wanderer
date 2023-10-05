@@ -162,7 +162,7 @@ class _MapFullPageState extends State<MapFullPage> {
     );
   }
 
-  void defineMarker(LatLng latLng, String street, String address) {
+  void defineMarker(LatLng latLng, String street, String address) async {
     final marker = Marker(
       markerId: const MarkerId("source"),
       position: latLng,
