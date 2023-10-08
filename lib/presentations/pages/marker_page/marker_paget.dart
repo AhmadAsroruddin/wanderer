@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:wanderer/presentations/bloc/favorite_bloc.dart';
 import 'package:wanderer/presentations/bloc/markers_bloc.dart';
 import 'package:wanderer/presentations/pages/marker_page/marker_tab_page.dart';
 import 'package:wanderer/presentations/shared/theme.dart';
@@ -16,23 +18,57 @@ class MarkerPage extends StatefulWidget {
 
 class _MarkerPageState extends State<MarkerPage>
     with SingleTickerProviderStateMixin {
+  bool isFavorite = false;
+  String markerId = "";
+  String previousMarkerId = "";
+
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<MarkersCubit, MarkersState>(
-      listener: (context, state) {},
+    return BlocBuilder<MarkersCubit, MarkersState>(
       builder: (context, state) {
         if (state is GetOneMarker) {
+          FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+          previousMarkerId = state.marker.id;
+          String userId = firebaseAuth.currentUser!.uid.toString();
+          context
+              .read<FavoriteCubit>()
+              .favoriteCheck(state.marker.id, userId)
+              .then((value) {
+            setState(() {
+              isFavorite = value;
+            });
+          });
+
           return Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
               title: const Text("kembali"),
               actions: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+                    String userId = firebaseAuth.currentUser!.uid.toString();
+
+                    if (isFavorite == false) {
+                      print("qwe");
+                      await context.read<FavoriteCubit>().addMarkerToFavorite(
+                          state.marker, userId, state.marker.id);
+                    } else {
+                      print("asd");
+                      await context
+                          .read<FavoriteCubit>()
+                          .remove(state.marker.id, userId);
+                    }
+
+                    setState(() {
+                      isFavorite = !isFavorite;
+                    });
+                  },
                   icon: const Icon(
                     Icons.favorite,
                   ),
                   iconSize: 40,
+                  color: isFavorite == true ? Colors.red : Colors.black,
                 ),
               ],
             ),
@@ -75,7 +111,7 @@ class _MarkerPageState extends State<MarkerPage>
                                   left: 0,
                                   bottom: 0,
                                   child: Text(
-                                    "Tebing Watu Mabur",
+                                    state.marker.name,
                                     style: GoogleFonts.imprima().copyWith(
                                       fontSize: 30,
                                       color: whiteColor,

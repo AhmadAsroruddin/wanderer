@@ -14,6 +14,7 @@ class MarkerModel extends Equatable {
       required this.contact,
       required this.socialMedia,
       required this.address,
+      required this.harga,
       this.id = "id"});
 
   final String userId;
@@ -27,6 +28,7 @@ class MarkerModel extends Equatable {
   final String contact;
   final String address;
   final String id;
+  final String harga;
 
   Map<String, dynamic> toMap() {
     return {
@@ -40,7 +42,8 @@ class MarkerModel extends Equatable {
       'socialMedia': socialMedia,
       'contact': contact,
       'address': address,
-      'id': id
+      'id': id,
+      'harga': harga
     };
   }
 
@@ -58,7 +61,8 @@ class MarkerModel extends Equatable {
         contact: data['contact'],
         socialMedia: data['socialMedia'],
         address: data['address'],
-        id: data['id']);
+        id: data['id'],
+        harga: data['harga']);
   }
 
   static Markers fromMap(Map<String, dynamic> data) {
@@ -73,7 +77,8 @@ class MarkerModel extends Equatable {
         socialMedia: data['socialMedia'],
         contact: data['contacs'],
         address: data['address'],
-        id: data['id']);
+        id: data['id'],
+        harga: data['harga']);
   }
 
   Markers toEntity() {
@@ -88,7 +93,8 @@ class MarkerModel extends Equatable {
         socialMedia: socialMedia,
         contact: contact,
         address: address,
-        id: id);
+        id: id,
+        harga: harga);
   }
 
   @override
@@ -103,6 +109,7 @@ class MarkerModel extends Equatable {
         contact,
         socialMedia,
         address,
-        id
+        id,
+        harga
       ];
 }

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
@@ -10,6 +11,8 @@ import '../../domain/entities/marker.dart';
 
 abstract class MarkersDataSource {
   Future<void> addMarker(Markers markers, List<XFile> images);
+  Future<Either<String, String>> addAdmin(
+      String name, double price, String address);
 }
 
 class MarkersDatasourceImpl implements MarkersDataSource {
@@ -50,7 +53,8 @@ class MarkersDatasourceImpl implements MarkersDataSource {
             contact: markers.contact,
             socialMedia: markers.socialMedia,
             address: markers.address,
-            id: "")
+            id: "",
+            harga: markers.harga)
         .toMap());
 
     final newMarkerID = newMarker.id;
@@ -60,5 +64,12 @@ class MarkersDatasourceImpl implements MarkersDataSource {
         'markers': FieldValue.arrayUnion([newMarkerID])
       },
     );
+  }
+
+  @override
+  Future<Either<String, String>> addAdmin(
+      String name, double price, String address) {
+    // TODO: implement addAdmin
+    throw UnimplementedError();
   }
 }

@@ -6,11 +6,13 @@ import 'package:wanderer/presentations/pages/auth/login_page.dart';
 import 'package:wanderer/presentations/pages/auth/register_page.dart';
 import 'package:wanderer/presentations/pages/auth/resetConfirmation.dart';
 import 'package:wanderer/presentations/pages/auth/reset_page.dart';
+import 'package:wanderer/presentations/pages/favorite_page.dart';
 import 'package:wanderer/presentations/pages/getStarted/first_page.dart';
 import 'package:wanderer/presentations/pages/getStarted/third_page.dart';
 import 'package:wanderer/presentations/pages/add_marker/maps_page.dart';
 import 'package:wanderer/presentations/pages/add_marker/marker_category.dart';
 import 'package:wanderer/presentations/pages/marker_page/marker_paget.dart';
+import 'package:wanderer/presentations/pages/pengelola_page/name_form_page.dart';
 import 'package:wanderer/presentations/pages/splashScreen.dart';
 import 'package:wanderer/presentations/pages/tab_screen.dart';
 import 'package:wanderer/presentations/pages/add_marker/tambah_marker.dart';
@@ -37,7 +39,8 @@ class MyRouterDelegate extends RouterDelegate
       userId: "userId",
       contact: "contact",
       socialMedia: "socialMedia",
-      address: "");
+      address: "",
+      harga: "");
 
   final RouterCubit routerCubit;
 
@@ -122,6 +125,18 @@ class MyRouterDelegate extends RouterDelegate
         if (settings.name == MarkerPage.routeName) {
           return MaterialPageRoute(
             builder: (context) => MarkerPage(),
+            settings: settings,
+          );
+        }
+        if (settings.name == FavoritePage.routeName) {
+          return MaterialPageRoute(
+            builder: (context) => const FavoritePage(),
+            settings: settings,
+          );
+        }
+        if (settings.name == NameFormPage.routeName) {
+          return MaterialPageRoute(
+            builder: (context) => const NameFormPage(),
             settings: settings,
           );
         }

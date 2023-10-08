@@ -36,4 +36,11 @@ class MarkersReposImpl implements MarkerRepos {
 
     return markers;
   }
+
+  @override
+  Future<Either<String, String>> addAdmin(
+      String name, double price, String address) {
+    // TODO: implement addAdmin
+    throw UnimplementedError();
+  }
 }

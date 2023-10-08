@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
@@ -60,7 +59,13 @@ class _DetailsPageState extends State<DetailsPage> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Icon(FontAwesomeIcons.tent),
+                    SizedBox(
+                      height: deviceHeight * 0.05,
+                      width: deviceWidth * 0.1,
+                      child: Image.asset(
+                        "assets/img/category/${widget.markers.jenis.toLowerCase()}.png",
+                      ),
+                    ),
                     SizedBox(
                       width: deviceWidth * 0.02,
                     ),
@@ -137,6 +142,36 @@ class _DetailsPageState extends State<DetailsPage> {
                     ),
                   ),
                 )
+              ],
+            ),
+          ),
+          DetailContainer(
+            widget: widget,
+            widgetChild: Column(
+              children: <Widget>[
+                ListTile(
+                  leading: Image.asset(
+                    'assets/img/jam.png',
+                    scale: 1.3,
+                  ),
+                  title: const Text("24 Jam"),
+                ),
+                if (widget.markers.harga != "")
+                  ListTile(
+                    leading: Image.asset(
+                      'assets/img/harga.png',
+                      scale: 1.3,
+                    ),
+                    title: Text("Rp.24.000/orang"),
+                  ),
+                if (widget.markers.socialMedia != "")
+                  ListTile(
+                    leading: Image.asset(
+                      "assets/img/instagram.png",
+                      scale: 7,
+                    ),
+                    title: Text("watu.kodok"),
+                  )
               ],
             ),
           )

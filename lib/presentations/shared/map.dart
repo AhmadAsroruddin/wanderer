@@ -48,7 +48,7 @@ class _GMapsState extends State<GMaps> {
       scrollGesturesEnabled: true,
       initialCameraPosition: CameraPosition(
         target: deviceLocation,
-        zoom: 10,
+        zoom: 15,
       ),
       onMapCreated: (GoogleMapController controller) async {
         _controller.complete(controller);

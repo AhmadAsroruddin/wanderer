@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:wanderer/presentations/bloc/favorite_bloc.dart';
+import 'package:wanderer/presentations/pages/favorite_page.dart';
 
 import '../bloc/auth_bloc.dart';
 import '../shared/theme.dart';
@@ -59,11 +62,20 @@ class AccountPage extends StatelessWidget {
                       const Divider(
                         thickness: 2,
                       ),
-                      AccountItem(
-                        deviceWidth: deviceWidth,
-                        deviceHeight: deviceHeight,
-                        name: "Favorite Saya",
-                        image: "love",
+                      GestureDetector(
+                        onTap: () async {
+                          FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+                          String userId = firebaseAuth.currentUser!.uid;
+                          context.read<FavoriteCubit>().getAllFav(userId);
+                          Navigator.of(context)
+                              .pushNamed(FavoritePage.routeName);
+                        },
+                        child: AccountItem(
+                          deviceWidth: deviceWidth,
+                          deviceHeight: deviceHeight,
+                          name: "Favorite Saya",
+                          image: "love",
+                        ),
                       )
                     ],
                   ),

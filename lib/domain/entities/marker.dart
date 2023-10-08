@@ -12,6 +12,7 @@ class Markers extends Equatable {
       required this.contact,
       required this.socialMedia,
       required this.address,
+      required this.harga,
       this.id = "id"});
 
   final String userId;
@@ -25,6 +26,7 @@ class Markers extends Equatable {
   final List<dynamic> image;
   final String address;
   final String id;
+  final String harga;
 
   @override
   List<Object> get props => [
@@ -38,6 +40,7 @@ class Markers extends Equatable {
         socialMedia,
         contact,
         address,
+        harga,
         id
       ];
 }
