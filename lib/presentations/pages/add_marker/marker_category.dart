@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:wanderer/presentations/pages/add_marker/tambah_marker.dart';
-import 'package:wanderer/presentations/pages/pengelola_page/name_form_page.dart';
+import 'package:wanderer/presentations/pages/admin_page/getStarted_page.dart';
 import 'package:wanderer/presentations/routes/router_delegate.dart';
 import 'package:wanderer/presentations/shared/theme.dart';
 
@@ -38,7 +38,8 @@ class MarkerCategoryPage extends StatelessWidget {
                   .addCategory(data[index]['name']!);
               if (data[index]['name'] == "Campervan" ||
                   data[index]['name'] == "Paid_Campsite") {
-                Navigator.of(context).pushNamed(NameFormPage.routeName);
+                Navigator.of(context)
+                    .pushNamed(GetStartedWandererPage.routeName);
               } else {
                 Navigator.of(context).pushNamed(AddMarkerPage.routeName,
                     arguments: data[index]['name']!);

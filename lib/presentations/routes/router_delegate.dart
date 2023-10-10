@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:wanderer/presentations/bloc/router_bloc.dart';
+import 'package:wanderer/presentations/pages/admin_page/addLocation.dart';
+import 'package:wanderer/presentations/pages/admin_page/getStarted_page.dart';
+import 'package:wanderer/presentations/pages/admin_page/step1_page.dart';
 
 import 'package:wanderer/presentations/pages/auth/login_page.dart';
 import 'package:wanderer/presentations/pages/auth/register_page.dart';
@@ -12,7 +15,6 @@ import 'package:wanderer/presentations/pages/getStarted/third_page.dart';
 import 'package:wanderer/presentations/pages/add_marker/maps_page.dart';
 import 'package:wanderer/presentations/pages/add_marker/marker_category.dart';
 import 'package:wanderer/presentations/pages/marker_page/marker_paget.dart';
-import 'package:wanderer/presentations/pages/pengelola_page/name_form_page.dart';
 import 'package:wanderer/presentations/pages/splashScreen.dart';
 import 'package:wanderer/presentations/pages/tab_screen.dart';
 import 'package:wanderer/presentations/pages/add_marker/tambah_marker.dart';
@@ -134,9 +136,21 @@ class MyRouterDelegate extends RouterDelegate
             settings: settings,
           );
         }
-        if (settings.name == NameFormPage.routeName) {
+        if (settings.name == GetStartedWandererPage.routeName) {
           return MaterialPageRoute(
-            builder: (context) => const NameFormPage(),
+            builder: (context) => const GetStartedWandererPage(),
+            settings: settings,
+          );
+        }
+        if (settings.name == Step1Page.routeName) {
+          return MaterialPageRoute(
+            builder: (context) => const Step1Page(),
+            settings: settings,
+          );
+        }
+        if (settings.name == AddLocation.routeName) {
+          return MaterialPageRoute(
+            builder: (context) => const AddLocation(),
             settings: settings,
           );
         }

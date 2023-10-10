@@ -1,15 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get_it/get_it.dart';
+import 'package:wanderer/data/datasource/admin_datasource.dart';
 import 'package:wanderer/data/datasource/auth_datasource.dart';
 import 'package:wanderer/data/datasource/comment_datasource.dart';
 import 'package:wanderer/data/datasource/favorite_datasource.dart';
 import 'package:wanderer/data/datasource/markers_datasource.dart';
+import 'package:wanderer/data/service/admin_repos_impl.dart';
 import 'package:wanderer/data/service/auth_repos_impl.dart';
 import 'package:wanderer/data/service/comment_repos_impl.dart';
 import 'package:wanderer/data/service/favorite_repos_impl.dart';
 import 'package:wanderer/data/service/image_repos_implementation.dart';
 import 'package:wanderer/data/service/location_data_repos_implementation.dart';
 import 'package:wanderer/data/service/markers_repos_implementation.dart';
+import 'package:wanderer/domain/repositories/admin_repository.dart';
 import 'package:wanderer/domain/repositories/auth_repository.dart';
 import 'package:wanderer/domain/repositories/comment_repository.dart';
 import 'package:wanderer/domain/repositories/favorite_repository.dart';
@@ -17,7 +20,9 @@ import 'package:wanderer/domain/repositories/image_repository.dart';
 import 'package:wanderer/domain/repositories/location_data_repository.dart';
 import 'package:wanderer/domain/repositories/marker_repository.dart';
 import 'package:wanderer/domain/usecase/addMarker.dart';
+import 'package:wanderer/domain/usecase/addToAdmin.dart';
 import 'package:wanderer/domain/usecase/addToFavorite.dart';
+import 'package:wanderer/domain/usecase/addTypeToAdmin.dart';
 import 'package:wanderer/domain/usecase/createAccount.dart';
 import 'package:wanderer/domain/usecase/getAllComments.dart';
 import 'package:wanderer/domain/usecase/getAllFavorites.dart';
@@ -59,6 +64,8 @@ void init() {
       .registerLazySingleton(() => GetAllFavorites(favoriteRepos: locator()));
   locator.registerLazySingleton(
       () => RemoveFromFavorite(favoriteRepos: locator()));
+  locator.registerLazySingleton(() => AddToAdmin(adminRepos: locator()));
+  locator.registerLazySingleton(() => AddTypeToAdmin(adminRepos: locator()));
 
   //REPOSITORY
   locator.registerLazySingleton<AuthRepos>(() => AuthReposImpl(
@@ -73,6 +80,8 @@ void init() {
       () => CommentsReposImpl(commentDataSource: locator()));
   locator.registerLazySingleton<FavoriteRepos>(
       () => FavoriteReposImpl(favoriteDataSource: locator()));
+  locator.registerLazySingleton<AdminRepos>(
+      () => AdminReposImpl(adminDataSource: locator()));
 
   //BLOC
   locator.registerFactory(
@@ -96,6 +105,7 @@ void init() {
       .registerLazySingleton<CommentDataSource>(() => CommentDataSourceImpl());
   locator.registerLazySingleton<FavoriteDataSource>(
       () => FavoriteDataSourceImpl());
+  locator.registerLazySingleton<AdminDataSource>(() => AdminDataSourceImpl());
 
   //ROUTER
 

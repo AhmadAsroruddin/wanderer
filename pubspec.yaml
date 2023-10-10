@@ -112,6 +112,7 @@ flutter:
     - assets/img/category/
     - assets/img/
     - assets/gif/
+    - assets/admin/
     - assets/markers/
    
   # An image asset can refer to one or more resolution-specific "variants", see
