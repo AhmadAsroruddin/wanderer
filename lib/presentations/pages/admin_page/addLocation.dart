@@ -7,6 +7,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:geocoding/geocoding.dart' as geo;
 import 'package:wanderer/presentations/bloc/admin_bloc.dart';
+import 'package:wanderer/presentations/pages/admin_page/location_details_page.dart';
 import 'package:wanderer/presentations/shared/customButton.dart';
 
 import '../../bloc/toggle_boolean_bloc.dart';
@@ -133,6 +134,7 @@ class _AddLocationState extends State<AddLocation> {
             GestureDetector(
               onTap: () {
                 context.read<AdminCubit>().setAddress(alamat);
+                Navigator.of(context).pushNamed(LocationDetailsPage.routeName);
               },
               child: SizedBox(
                 width: deviceWidth * 0.8,

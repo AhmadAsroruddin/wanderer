@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:wanderer/presentations/bloc/admin_bloc.dart';
 import 'package:wanderer/presentations/pages/add_marker/tambah_marker.dart';
 import 'package:wanderer/presentations/pages/admin_page/getStarted_page.dart';
 import 'package:wanderer/presentations/routes/router_delegate.dart';
@@ -40,6 +42,7 @@ class MarkerCategoryPage extends StatelessWidget {
                   data[index]['name'] == "Paid_Campsite") {
                 Navigator.of(context)
                     .pushNamed(GetStartedWandererPage.routeName);
+                context.read<AdminCubit>().setCategory(data[index]['name']!);
               } else {
                 Navigator.of(context).pushNamed(AddMarkerPage.routeName,
                     arguments: data[index]['name']!);

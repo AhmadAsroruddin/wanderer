@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:wanderer/presentations/pages/admin_page/addLocation.dart';
+
+import 'package:wanderer/presentations/pages/admin_page/facilities_page.dart';
 import 'package:wanderer/presentations/shared/customButton.dart';
 import 'package:wanderer/presentations/shared/theme.dart';
 
-class Step1Page extends StatelessWidget {
-  const Step1Page({super.key});
-  static const routeName = '/step1Page';
+class Step2Page extends StatelessWidget {
+  const Step2Page({super.key});
+  static const routeName = '/step2Page';
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,7 @@ class Step1Page extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     image: const DecorationImage(
-                      image: AssetImage("assets/admin/step1.png"),
+                      image: AssetImage("assets/admin/step2.png"),
                       fit: BoxFit.contain,
                     ),
                   ),
@@ -40,12 +41,12 @@ class Step1Page extends StatelessWidget {
               SizedBox(
                 height: deviceHeight * 0.05,
               ),
-              const Text("Step 1"),
+              const Text("Step 2"),
               SizedBox(
                 height: deviceHeight * 0.03,
               ),
               Text(
-                "Tell us about your place",
+                "Make your place stand out",
                 style: blackTextStyle.copyWith(
                   fontSize: deviceWidth * 0.05,
                   fontWeight: FontWeight.w200,
@@ -55,12 +56,12 @@ class Step1Page extends StatelessWidget {
                 height: deviceHeight * 0.03,
               ),
               const Text(
-                "In this step, we\"ll ask you which type of property you have. Then let us know the location and how many guests can stay.",
+                "In this step, you will add some of the amenities your place offers, plus 3 or more photos. ",
               ),
               const Expanded(child: SizedBox()),
               GestureDetector(
                 onTap: () {
-                  Navigator.of(context).pushNamed(AddLocation.routeName);
+                  Navigator.of(context).pushNamed(FacilitiesPage.routeName);
                 },
                 child: const CustomButton(name: "Next"),
               ),

@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'package:wanderer/presentations/bloc/router_bloc.dart';
 import 'package:wanderer/presentations/pages/admin_page/addLocation.dart';
+import 'package:wanderer/presentations/pages/admin_page/addType_page.dart';
+import 'package:wanderer/presentations/pages/admin_page/chooseType_page.dart';
+import 'package:wanderer/presentations/pages/admin_page/facilities_page.dart';
 import 'package:wanderer/presentations/pages/admin_page/getStarted_page.dart';
+import 'package:wanderer/presentations/pages/admin_page/location_details_page.dart';
 import 'package:wanderer/presentations/pages/admin_page/step1_page.dart';
+import 'package:wanderer/presentations/pages/admin_page/step2_page.dart';
 
 import 'package:wanderer/presentations/pages/auth/login_page.dart';
 import 'package:wanderer/presentations/pages/auth/register_page.dart';
@@ -153,6 +158,28 @@ class MyRouterDelegate extends RouterDelegate
             builder: (context) => const AddLocation(),
             settings: settings,
           );
+        }
+
+        if (settings.name == LocationDetailsPage.routeName) {
+          return MaterialPageRoute(
+              builder: (context) => const LocationDetailsPage(),
+              settings: settings);
+        }
+        if (settings.name == AddTypePage.routeName) {
+          return MaterialPageRoute(
+              builder: (context) => const AddTypePage(), settings: settings);
+        }
+        if (settings.name == ChooseTypePage.routeName) {
+          return MaterialPageRoute(
+              builder: (context) => const ChooseTypePage(), settings: settings);
+        }
+        if (settings.name == Step2Page.routeName) {
+          return MaterialPageRoute(
+              builder: (context) => const Step2Page(), settings: settings);
+        }
+        if (settings.name == FacilitiesPage.routeName) {
+          return MaterialPageRoute(
+              builder: (context) => FacilitiesPage(), settings: settings);
         }
 
         return null;

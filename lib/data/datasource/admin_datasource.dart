@@ -25,6 +25,9 @@ class AdminDataSourceImpl implements AdminDataSource {
           tiktok: admin.tiktok,
           instagram: admin.instagram,
           facilities: admin.facilities,
+          time: admin.time,
+          description: admin.description,
+          category: admin.category,
           markerId: admin.markerId,
         ).toMap());
   }

@@ -13,6 +13,9 @@ class AdminModel extends Equatable {
       required this.tiktok,
       required this.website,
       required this.facilities,
+      required this.time,
+      required this.description,
+      required this.category,
       required this.markerId});
 
   final String name;
@@ -26,6 +29,9 @@ class AdminModel extends Equatable {
   final String tiktok;
   final List<String> facilities;
   final String markerId;
+  final String time;
+  final String description;
+  final String category;
 
   Map<String, dynamic> toMap() {
     return {
@@ -39,6 +45,8 @@ class AdminModel extends Equatable {
       'website': website,
       'tiktok': tiktok,
       'facilities': facilities,
+      'time': time,
+      'category': category,
       'markerId': markerId
     };
   }
@@ -55,6 +63,9 @@ class AdminModel extends Equatable {
         website: data['website'],
         instagram: data['instagram'],
         facilities: data['facilities'],
+        time: data['time'],
+        description: data['description'],
+        category: data['category'],
         markerId: data['markerId']);
   }
 
@@ -70,6 +81,9 @@ class AdminModel extends Equatable {
         tiktok: tiktok,
         instagram: instagram,
         facilities: facilities,
+        time: time,
+        description: description,
+        category: category,
         markerId: markerId);
   }
 
@@ -85,6 +99,9 @@ class AdminModel extends Equatable {
         instagram,
         tiktok,
         facilities,
+        time,
+        description,
+        category,
         markerId
       ];
 }

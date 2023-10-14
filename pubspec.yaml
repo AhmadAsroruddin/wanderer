@@ -113,6 +113,8 @@ flutter:
     - assets/img/
     - assets/gif/
     - assets/admin/
+    - assets/admin/campsite/
+    - assets/admin/campervan/
     - assets/markers/
    
   # An image asset can refer to one or more resolution-specific "variants", see

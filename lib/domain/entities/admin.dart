@@ -12,7 +12,10 @@ class Admin extends Equatable {
       required this.tiktok,
       required this.website,
       required this.facilities,
-      required this.markerId});
+      required this.time,
+      required this.markerId,
+      required this.description,
+      required this.category});
 
   final String name;
   final String noRek;
@@ -25,6 +28,9 @@ class Admin extends Equatable {
   final String tiktok;
   final List<String> facilities;
   final String markerId;
+  final String time;
+  final String description;
+  final String category;
 
   @override
   List<Object> get props => [
@@ -38,6 +44,9 @@ class Admin extends Equatable {
         instagram,
         tiktok,
         facilities,
-        markerId
+        time,
+        description,
+        markerId,
+        category
       ];
 }

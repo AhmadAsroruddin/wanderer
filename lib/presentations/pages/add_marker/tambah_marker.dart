@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -233,6 +234,10 @@ class _AddMarkerPageState extends State<AddMarkerPage> {
                         green: 248,
                         blue: 248,
                         func: () {
+                          final FirebaseAuth firebaseAuth =
+                              FirebaseAuth.instance;
+                          final String userId = firebaseAuth.currentUser!.uid;
+
                           context.read<MarkersCubit>().addMarkers(
                                 Markers(
                                     name: name.text,
@@ -241,7 +246,7 @@ class _AddMarkerPageState extends State<AddMarkerPage> {
                                     jenis: widget.category,
                                     latitude: latLngMarker.latitude,
                                     longitude: latLngMarker.longitude,
-                                    userId: "",
+                                    userId: userId,
                                     contact: contact.text,
                                     socialMedia: contact.text,
                                     address: address.text,
