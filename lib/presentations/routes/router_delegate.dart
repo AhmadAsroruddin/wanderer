@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:wanderer/presentations/bloc/router_bloc.dart';
 import 'package:wanderer/presentations/pages/admin_page/addLocation.dart';
+import 'package:wanderer/presentations/pages/admin_page/addPhoto_page.dart';
 import 'package:wanderer/presentations/pages/admin_page/addType_page.dart';
 import 'package:wanderer/presentations/pages/admin_page/chooseType_page.dart';
 import 'package:wanderer/presentations/pages/admin_page/facilities_page.dart';
@@ -179,7 +180,11 @@ class MyRouterDelegate extends RouterDelegate
         }
         if (settings.name == FacilitiesPage.routeName) {
           return MaterialPageRoute(
-              builder: (context) => FacilitiesPage(), settings: settings);
+              builder: (context) => const FacilitiesPage(), settings: settings);
+        }
+        if (settings.name == AddPhotoPage.routeName) {
+          return MaterialPageRoute(
+              builder: (context) => const AddPhotoPage(), settings: settings);
         }
 
         return null;

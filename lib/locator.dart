@@ -36,9 +36,11 @@ import 'package:wanderer/domain/usecase/removedFromFavorite.dart';
 import 'package:wanderer/domain/usecase/resetPassword.dart';
 import 'package:wanderer/domain/usecase/signInWithGoogle.dart';
 import 'package:wanderer/domain/usecase/uploadImages.dart';
+import 'package:wanderer/presentations/bloc/admin_bloc.dart';
 import 'package:wanderer/presentations/bloc/auth_bloc.dart';
 import 'package:wanderer/presentations/bloc/comment_bloc.dart';
 import 'package:wanderer/presentations/bloc/favorite_bloc.dart';
+import 'package:wanderer/presentations/bloc/image_bloc.dart';
 import 'package:wanderer/presentations/bloc/location_data_cubit.dart';
 import 'package:wanderer/presentations/bloc/markers_bloc.dart';
 import 'package:wanderer/presentations/bloc/router_bloc.dart';
@@ -95,6 +97,8 @@ void init() {
   locator.registerFactory(() => CommentCubit(locator(), locator()));
   locator.registerFactory(
       () => FavoriteCubit(locator(), locator(), locator(), locator()));
+  locator.registerFactory(() => ImageCubit(locator()));
+  locator.registerFactory(() => AdminCubit());
 
   //DATA
 

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:wanderer/presentations/bloc/admin_bloc.dart';
+import 'package:wanderer/presentations/pages/admin_page/addPhoto_page.dart';
 import 'package:wanderer/presentations/shared/customButton.dart';
 
-import '../../../data/models/admin_model.dart';
 import '../../shared/theme.dart';
 
 class FacilitiesPage extends StatefulWidget {
@@ -141,12 +141,11 @@ class _FacilitiesPageState extends State<FacilitiesPage> {
               SizedBox(
                 height: deviceHeight * 0.02,
               ),
-              const CustomButton(name: "Next"),
-              BlocConsumer<AdminCubit, AdminModel>(builder: (context, state) {
-                return Container();
-              }, listener: (context, state) {
-                print(state);
-              }),
+              GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushNamed(AddPhotoPage.routeName);
+                  },
+                  child: const CustomButton(name: "Next")),
             ],
           ),
         ),
