@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:wanderer/data/models/admin_model.dart';
 import 'package:wanderer/presentations/bloc/admin_bloc.dart';
 
 import 'package:wanderer/presentations/pages/admin_page/step2_page.dart';
@@ -136,11 +135,6 @@ class LocationDetailsPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                BlocConsumer<AdminCubit, AdminModel>(builder: (context, state) {
-                  return Container();
-                }, listener: (context, state) {
-                  print(state);
-                }),
                 GestureDetector(
                   onTap: () {
                     Navigator.of(context).pushNamed(Step2Page.routeName);

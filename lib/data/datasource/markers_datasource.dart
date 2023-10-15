@@ -10,7 +10,7 @@ import 'package:wanderer/data/models/marker_model.dart';
 import '../../domain/entities/marker.dart';
 
 abstract class MarkersDataSource {
-  Future<void> addMarker(Markers markers, List<XFile> images);
+  Future<void> addMarker(Markers markers, List<XFile> images, bool AdminCheck);
   Future<Either<String, String>> addAdmin(
       String name, double price, String address);
 }
@@ -20,26 +20,30 @@ class MarkersDatasourceImpl implements MarkersDataSource {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   @override
-  Future<void> addMarker(Markers markers, List<XFile> images) async {
+  Future<void> addMarker(
+      Markers markers, List<XFile> images, bool adminCheck) async {
     final currentUser = _firebaseAuth.currentUser!.uid;
     List<String> links = [];
-    for (var image in images) {
-      final ext = image.path.split('.').last.toLowerCase();
 
-      if (ext != 'jpg' && ext != 'png') {
-        throw (Exception("File harus berjenis png atau jpg"));
+    if (adminCheck == false) {
+      for (var image in images) {
+        final ext = image.path.split('.').last.toLowerCase();
+
+        if (ext != 'jpg' && ext != 'png') {
+          throw (Exception("File harus berjenis png atau jpg"));
+        }
+
+        final Reference storageReference = FirebaseStorage.instance
+            .ref()
+            .child('markers')
+            .child('${DateTime.now().millisecondsSinceEpoch}.$ext');
+        final File imageFile = File(image.path);
+        final UploadTask uploadTask = storageReference.putFile(imageFile);
+        final TaskSnapshot taskSnapshot =
+            await uploadTask.whenComplete(() => null);
+        final imageURL = await taskSnapshot.ref.getDownloadURL();
+        links.add(imageURL);
       }
-
-      final Reference storageReference = FirebaseStorage.instance
-          .ref()
-          .child('markers')
-          .child('${DateTime.now().millisecondsSinceEpoch}.$ext');
-      final File imageFile = File(image.path);
-      final UploadTask uploadTask = storageReference.putFile(imageFile);
-      final TaskSnapshot taskSnapshot =
-          await uploadTask.whenComplete(() => null);
-      final imageURL = await taskSnapshot.ref.getDownloadURL();
-      links.add(imageURL);
     }
 
     final newMarker = await _firestore.collection('markers').add(MarkerModel(

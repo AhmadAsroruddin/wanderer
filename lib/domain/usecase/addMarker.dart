@@ -9,7 +9,8 @@ class AddMarkers {
 
   AddMarkers({required this.markerRepos});
 
-  Future<Either<String, String>> execute(Markers markers, List<XFile> images) {
-    return markerRepos.addMarker(markers, images);
+  Future<Either<String, String>> execute(
+      Markers markers, List<XFile> images, bool adminCheck) {
+    return markerRepos.addMarker(markers, images, adminCheck);
   }
 }

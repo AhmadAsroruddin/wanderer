@@ -1,8 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wanderer/data/models/admin_model.dart';
+import 'package:wanderer/domain/usecase/addToAdmin.dart';
+
+import '../../domain/entities/admin.dart';
 
 class AdminCubit extends Cubit<AdminModel> {
-  AdminCubit()
+  final AddToAdmin addToAdminUseCase;
+  AdminCubit(this.addToAdminUseCase)
       : super(
           const AdminModel(
               name: '',
@@ -18,8 +22,16 @@ class AdminCubit extends Cubit<AdminModel> {
               time: '',
               description: '',
               category: '',
+              latitude: 0,
+              longitude: 0,
               markerId: ''),
         );
+
+  Future<String> addToAdmin(Admin admin) async {
+    final result = await addToAdminUseCase.execute(admin);
+
+    return result;
+  }
 
   void setName(String name) {
     final currState = state;
@@ -39,6 +51,8 @@ class AdminCubit extends Cubit<AdminModel> {
           facilities: currState.facilities,
           time: currState.time,
           category: currState.category,
+          latitude: currState.latitude,
+          longitude: currState.longitude,
           markerId: currState.markerId),
     );
   }
@@ -61,6 +75,8 @@ class AdminCubit extends Cubit<AdminModel> {
           facilities: currState.facilities,
           time: currState.time,
           category: currState.category,
+          latitude: currState.latitude,
+          longitude: currState.longitude,
           markerId: currState.markerId),
     );
   }
@@ -83,6 +99,8 @@ class AdminCubit extends Cubit<AdminModel> {
           facilities: currState.facilities,
           time: currState.time,
           category: currState.category,
+          latitude: currState.latitude,
+          longitude: currState.longitude,
           markerId: currState.markerId),
     );
   }
@@ -105,6 +123,8 @@ class AdminCubit extends Cubit<AdminModel> {
           facilities: currState.facilities,
           time: currState.time,
           category: currState.category,
+          latitude: currState.latitude,
+          longitude: currState.longitude,
           markerId: currState.markerId),
     );
   }
@@ -127,6 +147,8 @@ class AdminCubit extends Cubit<AdminModel> {
           facilities: currState.facilities,
           time: currState.time,
           category: currState.category,
+          latitude: currState.latitude,
+          longitude: currState.longitude,
           markerId: currState.markerId),
     );
   }
@@ -149,6 +171,8 @@ class AdminCubit extends Cubit<AdminModel> {
           facilities: currState.facilities,
           time: currState.time,
           category: currState.category,
+          latitude: currState.latitude,
+          longitude: currState.longitude,
           markerId: currState.markerId),
     );
   }
@@ -171,6 +195,8 @@ class AdminCubit extends Cubit<AdminModel> {
           facilities: currState.facilities,
           time: currState.time,
           category: currState.category,
+          latitude: currState.latitude,
+          longitude: currState.longitude,
           markerId: markerId),
     );
   }
@@ -193,6 +219,8 @@ class AdminCubit extends Cubit<AdminModel> {
           facilities: currState.facilities,
           time: currState.time,
           category: currState.category,
+          latitude: currState.latitude,
+          longitude: currState.longitude,
           markerId: currState.markerId),
     );
   }
@@ -215,6 +243,8 @@ class AdminCubit extends Cubit<AdminModel> {
           facilities: currState.facilities,
           time: currState.time,
           category: currState.category,
+          latitude: currState.latitude,
+          longitude: currState.longitude,
           markerId: currState.markerId),
     );
   }
@@ -237,6 +267,8 @@ class AdminCubit extends Cubit<AdminModel> {
           facilities: currState.facilities,
           time: currState.time,
           category: currState.category,
+          latitude: currState.latitude,
+          longitude: currState.longitude,
           markerId: currState.markerId),
     );
   }
@@ -267,6 +299,8 @@ class AdminCubit extends Cubit<AdminModel> {
           facilities: newList,
           time: currState.time,
           category: currState.category,
+          latitude: currState.latitude,
+          longitude: currState.longitude,
           markerId: currState.markerId),
     );
   }
@@ -289,6 +323,8 @@ class AdminCubit extends Cubit<AdminModel> {
           facilities: currState.facilities,
           time: time,
           category: currState.category,
+          latitude: currState.latitude,
+          longitude: currState.longitude,
           markerId: currState.markerId),
     );
   }
@@ -310,6 +346,8 @@ class AdminCubit extends Cubit<AdminModel> {
           facilities: currState.facilities,
           time: currState.time,
           category: currState.category,
+          latitude: currState.latitude,
+          longitude: currState.longitude,
           markerId: currState.markerId),
     );
   }
@@ -331,11 +369,57 @@ class AdminCubit extends Cubit<AdminModel> {
           facilities: currState.facilities,
           time: currState.time,
           category: category,
+          latitude: currState.latitude,
+          longitude: currState.longitude,
+          markerId: currState.markerId),
+    );
+  }
+
+  void setLatLng(double lat, double lon) {
+    final currState = state;
+    emit(
+      AdminModel(
+          name: currState.name,
+          noRek: currState.noRek,
+          address: currState.address,
+          email: currState.email,
+          description: currState.description,
+          image: currState.image,
+          noTelp: currState.noTelp,
+          instagram: currState.instagram,
+          website: currState.website,
+          tiktok: currState.tiktok,
+          facilities: currState.facilities,
+          time: currState.time,
+          category: currState.category,
+          latitude: lat,
+          longitude: lon,
           markerId: currState.markerId),
     );
   }
 
   String getCategory() {
     return state.category;
+  }
+
+  AdminModel getAllAdmin() {
+    final currState = state;
+    return AdminModel(
+        name: currState.name,
+        noRek: currState.noRek,
+        address: currState.address,
+        email: currState.email,
+        description: currState.description,
+        image: currState.image,
+        noTelp: currState.noTelp,
+        instagram: currState.instagram,
+        website: currState.website,
+        tiktok: currState.tiktok,
+        facilities: currState.facilities,
+        time: currState.time,
+        category: currState.category,
+        latitude: currState.latitude,
+        longitude: currState.longitude,
+        markerId: currState.markerId);
   }
 }

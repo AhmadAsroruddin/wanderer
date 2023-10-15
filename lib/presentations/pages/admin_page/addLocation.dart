@@ -124,6 +124,12 @@ class _AddLocationState extends State<AddLocation> {
                           border: InputBorder.none, // Menghilangkan garis bawah
                           hintText: 'Masukkan teks di sini', // Contoh hint text
                         ),
+                        onChanged: (value) {
+                          setState(() {
+                            alamat = value;
+                            print(alamat);
+                          });
+                        },
                       ),
                     ),
                   )
@@ -132,8 +138,10 @@ class _AddLocationState extends State<AddLocation> {
             ),
             const Expanded(child: SizedBox()),
             GestureDetector(
-              onTap: () {
+              onTap: () async {
                 context.read<AdminCubit>().setAddress(alamat);
+                context.read<AdminCubit>().setLatLng(
+                    selectedLatLng.latitude, selectedLatLng.longitude);
                 Navigator.of(context).pushNamed(LocationDetailsPage.routeName);
               },
               child: SizedBox(

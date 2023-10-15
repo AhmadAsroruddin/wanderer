@@ -14,10 +14,11 @@ class MarkersCubit extends Cubit<MarkersState> {
 
   MarkersCubit(this._addMarkers, this._getAllMarkers) : super(MarkersInitial());
 
-  Future<void> addMarkers(Markers markers, List<XFile> images) async {
+  Future<void> addMarkers(
+      Markers markers, List<XFile> images, bool adminCheck) async {
     emit(MarkersLoading());
 
-    final result = await _addMarkers.execute(markers, images);
+    final result = await _addMarkers.execute(markers, images, adminCheck);
 
     result.fold(
       (l) => emit(MarkersFailed(error: l)),

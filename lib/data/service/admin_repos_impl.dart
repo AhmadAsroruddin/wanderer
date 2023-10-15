@@ -10,13 +10,9 @@ class AdminReposImpl implements AdminRepos {
   AdminReposImpl({required this.adminDataSource});
 
   @override
-  Future<Either<String, String>> addToAdmin(Admin admin) async {
-    try {
-      await adminDataSource.addToAdmin(admin);
-      return const Right("You're now an Admin");
-    } catch (e) {
-      return Left(e.toString());
-    }
+  Future<String> addToAdmin(Admin admin) async {
+    String id = await adminDataSource.addToAdmin(admin);
+    return id;
   }
 
   @override

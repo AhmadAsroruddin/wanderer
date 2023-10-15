@@ -16,6 +16,8 @@ class AdminModel extends Equatable {
       required this.time,
       required this.description,
       required this.category,
+      required this.latitude,
+      required this.longitude,
       required this.markerId});
 
   final String name;
@@ -32,6 +34,8 @@ class AdminModel extends Equatable {
   final String time;
   final String description;
   final String category;
+  final double latitude;
+  final double longitude;
 
   Map<String, dynamic> toMap() {
     return {
@@ -47,6 +51,8 @@ class AdminModel extends Equatable {
       'facilities': facilities,
       'time': time,
       'category': category,
+      'latitude': latitude,
+      'longitude': longitude,
       'markerId': markerId
     };
   }
@@ -66,6 +72,8 @@ class AdminModel extends Equatable {
         time: data['time'],
         description: data['description'],
         category: data['category'],
+        latitude: data['latitude'],
+        longitude: data['longitude'],
         markerId: data['markerId']);
   }
 
@@ -84,6 +92,8 @@ class AdminModel extends Equatable {
         time: time,
         description: description,
         category: category,
+        latitude: latitude,
+        longitude: longitude,
         markerId: markerId);
   }
 
@@ -102,6 +112,8 @@ class AdminModel extends Equatable {
         time,
         description,
         category,
+        latitude,
+        longitude,
         markerId
       ];
 }

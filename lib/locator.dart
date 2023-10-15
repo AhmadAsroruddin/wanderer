@@ -45,6 +45,8 @@ import 'package:wanderer/presentations/bloc/location_data_cubit.dart';
 import 'package:wanderer/presentations/bloc/markers_bloc.dart';
 import 'package:wanderer/presentations/bloc/router_bloc.dart';
 
+import 'presentations/bloc/type_bloc.dart';
+
 final locator = GetIt.instance;
 
 void init() {
@@ -98,7 +100,8 @@ void init() {
   locator.registerFactory(
       () => FavoriteCubit(locator(), locator(), locator(), locator()));
   locator.registerFactory(() => ImageCubit(locator()));
-  locator.registerFactory(() => AdminCubit());
+  locator.registerFactory(() => AdminCubit(locator()));
+  locator.registerFactory(() => TypeCubit(locator()));
 
   //DATA
 

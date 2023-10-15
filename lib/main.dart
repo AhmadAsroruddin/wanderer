@@ -13,6 +13,7 @@ import 'package:wanderer/presentations/bloc/image_bloc.dart';
 import 'package:wanderer/presentations/bloc/location_data_cubit.dart';
 import 'package:wanderer/presentations/bloc/markers_bloc.dart';
 import 'package:wanderer/presentations/bloc/toggle_boolean_bloc.dart';
+import 'package:wanderer/presentations/bloc/type_bloc.dart';
 import 'package:wanderer/presentations/shared/theme.dart';
 
 import './locator.dart' as di;
@@ -75,6 +76,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (_) => di.locator<FavoriteCubit>()),
         BlocProvider(create: (_) => di.locator<AdminCubit>()),
         BlocProvider(create: (_) => di.locator<ImageCubit>()),
+        BlocProvider(create: (_) => di.locator<TypeCubit>()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

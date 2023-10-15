@@ -25,6 +25,7 @@ import 'package:wanderer/presentations/pages/splashScreen.dart';
 import 'package:wanderer/presentations/pages/tab_screen.dart';
 import 'package:wanderer/presentations/pages/add_marker/tambah_marker.dart';
 import '../../domain/entities/marker.dart';
+import '../pages/admin_page/step3_page.dart';
 import '../pages/getStarted/second_page.dart';
 
 class MyRouterDelegate extends RouterDelegate
@@ -177,6 +178,10 @@ class MyRouterDelegate extends RouterDelegate
         if (settings.name == Step2Page.routeName) {
           return MaterialPageRoute(
               builder: (context) => const Step2Page(), settings: settings);
+        }
+        if (settings.name == Step3Page.routeName) {
+          return MaterialPageRoute(
+              builder: (context) => const Step3Page(), settings: settings);
         }
         if (settings.name == FacilitiesPage.routeName) {
           return MaterialPageRoute(

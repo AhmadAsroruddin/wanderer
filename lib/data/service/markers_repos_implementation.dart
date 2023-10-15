@@ -15,9 +15,9 @@ class MarkersReposImpl implements MarkerRepos {
 
   @override
   Future<Either<String, String>> addMarker(
-      Markers markers, List<XFile> images) async {
+      Markers markers, List<XFile> images, bool adminCheck) async {
     try {
-      await markersDataSource.addMarker(markers, images);
+      await markersDataSource.addMarker(markers, images, adminCheck);
 
       return const Right("Marker berhasil ditambahkan");
     } catch (e) {

@@ -15,6 +15,8 @@ class Admin extends Equatable {
       required this.time,
       required this.markerId,
       required this.description,
+      required this.latitude,
+      required this.longitude,
       required this.category});
 
   final String name;
@@ -31,6 +33,8 @@ class Admin extends Equatable {
   final String time;
   final String description;
   final String category;
+  final double latitude;
+  final double longitude;
 
   @override
   List<Object> get props => [
@@ -47,6 +51,8 @@ class Admin extends Equatable {
         time,
         description,
         markerId,
+        latitude,
+        longitude,
         category
       ];
 }

@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:wanderer/presentations/bloc/admin_bloc.dart';
 import 'package:wanderer/presentations/bloc/image_bloc.dart';
+import 'package:wanderer/presentations/pages/admin_page/step3_page.dart';
 
 import '../../shared/theme.dart';
 import '../../shared/utils.dart';
@@ -135,6 +136,8 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
                       if (state is ImageSuccess) {
                         imageLinks = state.links;
                         context.read<AdminCubit>().setImage(imageLinks);
+
+                        Navigator.of(context).pushNamed(Step3Page.routeName);
                       }
                     },
                     child: Container(

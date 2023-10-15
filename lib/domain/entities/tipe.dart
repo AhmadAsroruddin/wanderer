@@ -1,14 +1,14 @@
 import 'package:equatable/equatable.dart';
 
 class Tipe extends Equatable {
-  const Tipe({
-    required this.name,
-    required this.price,
-    required this.facility,
-    required this.images,
-    required this.capacity,
-    required this.description,
-  });
+  const Tipe(
+      {required this.name,
+      required this.price,
+      required this.facility,
+      required this.images,
+      required this.capacity,
+      required this.description,
+      required this.adminId});
 
   final String name;
   final double price;
@@ -16,8 +16,9 @@ class Tipe extends Equatable {
   final List<dynamic> images;
   final int capacity;
   final String description;
+  final String adminId;
 
   @override
   List<Object> get props =>
-      [name, price, facility, images, capacity, description];
+      [name, price, facility, images, capacity, description, adminId];
 }

@@ -239,20 +239,20 @@ class _AddMarkerPageState extends State<AddMarkerPage> {
                           final String userId = firebaseAuth.currentUser!.uid;
 
                           context.read<MarkersCubit>().addMarkers(
-                                Markers(
-                                    name: name.text,
-                                    description: description.text,
-                                    image: imageLinks,
-                                    jenis: widget.category,
-                                    latitude: latLngMarker.latitude,
-                                    longitude: latLngMarker.longitude,
-                                    userId: userId,
-                                    contact: contact.text,
-                                    socialMedia: contact.text,
-                                    address: address.text,
-                                    harga: harga.text),
-                                images!,
-                              );
+                              Markers(
+                                  name: name.text,
+                                  description: description.text,
+                                  image: imageLinks,
+                                  jenis: widget.category,
+                                  latitude: latLngMarker.latitude,
+                                  longitude: latLngMarker.longitude,
+                                  userId: userId,
+                                  contact: contact.text,
+                                  socialMedia: contact.text,
+                                  address: address.text,
+                                  harga: harga.text),
+                              images!,
+                              false);
                         },
                       ),
                       ButtonAddWidget(
