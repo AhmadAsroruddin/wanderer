@@ -14,10 +14,10 @@ class MarkersReposImpl implements MarkerRepos {
       {required this.markersDataSource, required this.firebaseFirestore});
 
   @override
-  Future<Either<String, String>> addMarker(
-      Markers markers, List<XFile> images, bool adminCheck) async {
+  Future<Either<String, String>> addMarker(Markers markers, List<XFile> images,
+      bool adminCheck, List<dynamic> link) async {
     try {
-      await markersDataSource.addMarker(markers, images, adminCheck);
+      await markersDataSource.addMarker(markers, images);
 
       return const Right("Marker berhasil ditambahkan");
     } catch (e) {
@@ -42,5 +42,15 @@ class MarkersReposImpl implements MarkerRepos {
       String name, double price, String address) {
     // TODO: implement addAdmin
     throw UnimplementedError();
+  }
+
+  @override
+  Future<String> addMarkerAdmin(Markers markers, link) async {
+    try {
+      String markerId = await markersDataSource.addMarkerAdmin(markers, link);
+      return markerId;
+    } catch (e) {
+      return e.toString();
+    }
   }
 }

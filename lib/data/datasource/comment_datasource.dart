@@ -37,7 +37,6 @@ class CommentDataSourceImpl implements CommentDataSource {
         .map<Comments>(
             (doc) => CommentModel.fromDocumentSnapshot(doc).toEntity())
         .toList();
-    print("fired");
     return comments;
   }
 }

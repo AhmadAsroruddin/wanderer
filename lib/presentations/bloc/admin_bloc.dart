@@ -1,14 +1,15 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wanderer/data/models/admin_model.dart';
 import 'package:wanderer/domain/usecase/addToAdmin.dart';
+import 'package:wanderer/domain/usecase/getAdmin.dart';
 
 import '../../domain/entities/admin.dart';
 
-class AdminCubit extends Cubit<AdminModel> {
+class AdminCubit extends Cubit<Admin> {
   final AddToAdmin addToAdminUseCase;
-  AdminCubit(this.addToAdminUseCase)
+  final GetAdmin getAdmin;
+  AdminCubit(this.addToAdminUseCase, this.getAdmin)
       : super(
-          const AdminModel(
+          const Admin(
               name: '',
               noRek: '',
               address: '',
@@ -27,17 +28,22 @@ class AdminCubit extends Cubit<AdminModel> {
               markerId: ''),
         );
 
-  Future<String> addToAdmin(Admin admin) async {
-    final result = await addToAdminUseCase.execute(admin);
+  Future<String> addToAdmin(Admin admin, String markerId) async {
+    final result = await addToAdminUseCase.execute(admin, markerId);
 
     return result;
+  }
+
+  Future<void> getAdminData(String markerId) async {
+    final result = await getAdmin.execute(markerId);
+    emit(result);
   }
 
   void setName(String name) {
     final currState = state;
 
     emit(
-      AdminModel(
+      Admin(
           name: name,
           noRek: currState.noRek,
           address: currState.address,
@@ -61,7 +67,7 @@ class AdminCubit extends Cubit<AdminModel> {
     final currState = state;
 
     emit(
-      AdminModel(
+      Admin(
           name: currState.name,
           noRek: noRek,
           address: currState.address,
@@ -85,7 +91,7 @@ class AdminCubit extends Cubit<AdminModel> {
     final currState = state;
 
     emit(
-      AdminModel(
+      Admin(
           name: currState.name,
           noRek: currState.noRek,
           address: address,
@@ -109,7 +115,7 @@ class AdminCubit extends Cubit<AdminModel> {
     final currState = state;
 
     emit(
-      AdminModel(
+      Admin(
           name: currState.name,
           noRek: currState.noRek,
           address: currState.address,
@@ -133,7 +139,7 @@ class AdminCubit extends Cubit<AdminModel> {
     final currState = state;
 
     emit(
-      AdminModel(
+      Admin(
           name: currState.name,
           noRek: currState.noRek,
           address: currState.address,
@@ -157,7 +163,7 @@ class AdminCubit extends Cubit<AdminModel> {
     final currState = state;
 
     emit(
-      AdminModel(
+      Admin(
           name: currState.name,
           noRek: currState.noRek,
           address: currState.address,
@@ -177,11 +183,11 @@ class AdminCubit extends Cubit<AdminModel> {
     );
   }
 
-  void setMarkerId(String markerId) {
+  Future<void> setMarkerId(String markerId) async {
     final currState = state;
 
     emit(
-      AdminModel(
+      Admin(
           name: currState.name,
           noRek: currState.noRek,
           address: currState.address,
@@ -205,7 +211,7 @@ class AdminCubit extends Cubit<AdminModel> {
     final currState = state;
 
     emit(
-      AdminModel(
+      Admin(
           name: currState.name,
           noRek: currState.noRek,
           address: currState.address,
@@ -229,7 +235,7 @@ class AdminCubit extends Cubit<AdminModel> {
     final currState = state;
 
     emit(
-      AdminModel(
+      Admin(
           name: currState.name,
           noRek: currState.noRek,
           address: currState.address,
@@ -253,7 +259,7 @@ class AdminCubit extends Cubit<AdminModel> {
     final currState = state;
 
     emit(
-      AdminModel(
+      Admin(
           name: currState.name,
           noRek: currState.noRek,
           address: currState.address,
@@ -285,7 +291,7 @@ class AdminCubit extends Cubit<AdminModel> {
     }
 
     emit(
-      AdminModel(
+      Admin(
           name: currState.name,
           noRek: currState.noRek,
           address: currState.address,
@@ -309,7 +315,7 @@ class AdminCubit extends Cubit<AdminModel> {
     final currState = state;
 
     emit(
-      AdminModel(
+      Admin(
           name: currState.name,
           noRek: currState.noRek,
           address: currState.address,
@@ -332,7 +338,7 @@ class AdminCubit extends Cubit<AdminModel> {
   void setDescription(String description) {
     final currState = state;
     emit(
-      AdminModel(
+      Admin(
           name: currState.name,
           noRek: currState.noRek,
           address: currState.address,
@@ -355,7 +361,7 @@ class AdminCubit extends Cubit<AdminModel> {
   void setCategory(String category) {
     final currState = state;
     emit(
-      AdminModel(
+      Admin(
           name: currState.name,
           noRek: currState.noRek,
           address: currState.address,
@@ -378,7 +384,7 @@ class AdminCubit extends Cubit<AdminModel> {
   void setLatLng(double lat, double lon) {
     final currState = state;
     emit(
-      AdminModel(
+      Admin(
           name: currState.name,
           noRek: currState.noRek,
           address: currState.address,
@@ -402,9 +408,9 @@ class AdminCubit extends Cubit<AdminModel> {
     return state.category;
   }
 
-  AdminModel getAllAdmin() {
+  Admin getAllAdmin() {
     final currState = state;
-    return AdminModel(
+    return Admin(
         name: currState.name,
         noRek: currState.noRek,
         address: currState.address,

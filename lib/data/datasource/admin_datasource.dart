@@ -5,13 +5,14 @@ import 'package:wanderer/domain/entities/admin.dart';
 import 'package:wanderer/domain/entities/tipe.dart';
 
 abstract class AdminDataSource {
-  Future<String> addToAdmin(Admin admin);
+  Future<String> addToAdmin(Admin admin, String adminId);
   Future<void> addTypeToAdmin(Tipe tipe, String adminId);
+  Future<List<Admin>> getAdmin(String markerId);
 }
 
 class AdminDataSourceImpl implements AdminDataSource {
   @override
-  Future<String> addToAdmin(Admin admin) async {
+  Future<String> addToAdmin(Admin admin, String markerId) async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     DocumentReference doc =
         await firebaseFirestore.collection('admin').add(AdminModel(
@@ -30,7 +31,7 @@ class AdminDataSourceImpl implements AdminDataSource {
               category: admin.category,
               latitude: admin.latitude,
               longitude: admin.longitude,
-              markerId: admin.markerId,
+              markerId: markerId,
             ).toMap());
     String adminId = doc.id;
     return adminId;
@@ -52,5 +53,20 @@ class AdminDataSourceImpl implements AdminDataSource {
                 description: tipe.description,
                 adminId: tipe.adminId)
             .toMap());
+  }
+
+  @override
+  Future<List<Admin>> getAdmin(String markerId) async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    final adminQuery = await firebaseFirestore
+        .collection('admin')
+        .where('markerId', isEqualTo: markerId)
+        .get();
+
+    final List<Admin> admin = adminQuery.docs
+        .map<Admin>((doc) => AdminModel.fromDocumentSnapshot(doc).toEntity())
+        .toList();
+
+    return admin;
   }
 }

@@ -5,7 +5,7 @@ class AddToAdmin {
   final AdminRepos adminRepos;
   AddToAdmin({required this.adminRepos});
 
-  Future<String> execute(Admin admin) async {
-    return adminRepos.addToAdmin(admin);
+  Future<String> execute(Admin admin, String markerId) async {
+    return adminRepos.addToAdmin(admin, markerId);
   }
 }

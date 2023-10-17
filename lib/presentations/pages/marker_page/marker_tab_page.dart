@@ -37,7 +37,7 @@ class _MarkerTabState extends State<MarkerTab>
         Align(
           alignment: Alignment.topLeft,
           child: Container(
-            width: deviceWidth * 0.5,
+            width: deviceWidth * 0.6,
             color: Colors.white,
             child: TabBar(
               controller: _tabController,
@@ -63,7 +63,7 @@ class _MarkerTabState extends State<MarkerTab>
               DetailsPage(
                 markers: widget.markers,
               ),
-              CommentTabPage(widget: widget),
+              CommentTabPage(widget: widget.markers),
             ],
           ),
         ),

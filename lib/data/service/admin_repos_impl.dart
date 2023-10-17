@@ -10,8 +10,8 @@ class AdminReposImpl implements AdminRepos {
   AdminReposImpl({required this.adminDataSource});
 
   @override
-  Future<String> addToAdmin(Admin admin) async {
-    String id = await adminDataSource.addToAdmin(admin);
+  Future<String> addToAdmin(Admin admin, String markerId) async {
+    String id = await adminDataSource.addToAdmin(admin, markerId);
     return id;
   }
 
@@ -24,5 +24,11 @@ class AdminReposImpl implements AdminRepos {
     } catch (e) {
       return Left(e.toString());
     }
+  }
+
+  @override
+  Future<Admin> getAdmin(String markerId) async {
+    final result = await adminDataSource.getAdmin(markerId);
+    return result.first;
   }
 }

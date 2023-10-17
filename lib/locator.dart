@@ -20,10 +20,12 @@ import 'package:wanderer/domain/repositories/image_repository.dart';
 import 'package:wanderer/domain/repositories/location_data_repository.dart';
 import 'package:wanderer/domain/repositories/marker_repository.dart';
 import 'package:wanderer/domain/usecase/addMarker.dart';
+import 'package:wanderer/domain/usecase/addMarkerAdmin.dart';
 import 'package:wanderer/domain/usecase/addToAdmin.dart';
 import 'package:wanderer/domain/usecase/addToFavorite.dart';
 import 'package:wanderer/domain/usecase/addTypeToAdmin.dart';
 import 'package:wanderer/domain/usecase/createAccount.dart';
+import 'package:wanderer/domain/usecase/getAdmin.dart';
 import 'package:wanderer/domain/usecase/getAllComments.dart';
 import 'package:wanderer/domain/usecase/getAllFavorites.dart';
 import 'package:wanderer/domain/usecase/getAllMarkers.dart';
@@ -37,6 +39,7 @@ import 'package:wanderer/domain/usecase/resetPassword.dart';
 import 'package:wanderer/domain/usecase/signInWithGoogle.dart';
 import 'package:wanderer/domain/usecase/uploadImages.dart';
 import 'package:wanderer/presentations/bloc/admin_bloc.dart';
+import 'package:wanderer/presentations/bloc/admin_data_bloc.dart';
 import 'package:wanderer/presentations/bloc/auth_bloc.dart';
 import 'package:wanderer/presentations/bloc/comment_bloc.dart';
 import 'package:wanderer/presentations/bloc/favorite_bloc.dart';
@@ -70,6 +73,8 @@ void init() {
       () => RemoveFromFavorite(favoriteRepos: locator()));
   locator.registerLazySingleton(() => AddToAdmin(adminRepos: locator()));
   locator.registerLazySingleton(() => AddTypeToAdmin(adminRepos: locator()));
+  locator.registerLazySingleton(() => AddMarkerAdmin(markerRepos: locator()));
+  locator.registerLazySingleton(() => GetAdmin(adminRepos: locator()));
 
   //REPOSITORY
   locator.registerLazySingleton<AuthRepos>(() => AuthReposImpl(
@@ -95,13 +100,14 @@ void init() {
         firstTimeDone: locator(),
       ));
   locator.registerFactory(() => LocationDataCubit(locator()));
-  locator.registerFactory(() => MarkersCubit(locator(), locator()));
+  locator.registerFactory(() => MarkersCubit(locator(), locator(), locator()));
   locator.registerFactory(() => CommentCubit(locator(), locator()));
   locator.registerFactory(
       () => FavoriteCubit(locator(), locator(), locator(), locator()));
   locator.registerFactory(() => ImageCubit(locator()));
-  locator.registerFactory(() => AdminCubit(locator()));
+  locator.registerFactory(() => AdminCubit(locator(), locator()));
   locator.registerFactory(() => TypeCubit(locator()));
+  locator.registerFactory(() => AdminDataCubit(locator()));
 
   //DATA
 

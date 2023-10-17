@@ -26,8 +26,9 @@ class CommentCubit extends Cubit<CommentState> {
   }
 
   Future<void> getAllComment(String markerId) async {
+    emit(CommentLoading());
     final result = await getAllComments.execute(markerId);
-
+    print("bloc");
     result.fold(
       (l) => emit(CommentFailed(error: l)),
       (r) => emit(AllCommentReceived(comments: r)),

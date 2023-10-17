@@ -252,7 +252,8 @@ class _AddMarkerPageState extends State<AddMarkerPage> {
                                   address: address.text,
                                   harga: harga.text),
                               images!,
-                              false);
+                              false,
+                              []);
                         },
                       ),
                       ButtonAddWidget(

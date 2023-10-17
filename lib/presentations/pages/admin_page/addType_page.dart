@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:wanderer/domain/entities/admin.dart';
 import 'package:wanderer/domain/entities/tipe.dart';
 import 'package:wanderer/presentations/bloc/image_bloc.dart';
 import 'package:wanderer/presentations/bloc/type_bloc.dart';
 import 'package:wanderer/presentations/pages/tab_screen.dart';
 import 'package:wanderer/presentations/shared/customButton.dart';
 
-import '../../../data/models/admin_model.dart';
 import '../../../domain/entities/marker.dart';
 import '../../bloc/admin_bloc.dart';
 import '../../bloc/markers_bloc.dart';
@@ -225,8 +225,7 @@ class _AddTypePageState extends State<AddTypePage> {
               ),
               GestureDetector(
                   onTap: () async {
-                    print("fired");
-
+                    addToFirestore();
                     Navigator.of(context).pushNamed(TabScreen.routeName);
                   },
                   child: const CustomButton(name: "Next"))
@@ -238,7 +237,7 @@ class _AddTypePageState extends State<AddTypePage> {
   }
 
   void addToFirestore() async {
-    AdminModel admin = context.read<AdminCubit>().getAllAdmin();
+    Admin admin = context.read<AdminCubit>().getAllAdmin();
     Markers marker = Markers(
         name: admin.name,
         description: admin.description,
@@ -251,9 +250,13 @@ class _AddTypePageState extends State<AddTypePage> {
         socialMedia: admin.instagram,
         address: admin.address,
         harga: "");
-    context.read<MarkersCubit>().addMarkers(marker, images!, true);
+    final String markerid =
+        await context.read<MarkersCubit>().addMarkerAdmin(marker, admin.image);
+
+    await context.read<AdminCubit>().setMarkerId(markerid);
+
     String adminId =
-        await context.read<AdminCubit>().addToAdmin(admin.toEntity());
+        await context.read<AdminCubit>().addToAdmin(admin, markerid);
 
     List<Tipe> types = context.read<TypeCubit>().getTipe();
     context.read<TypeCubit>().addType(types, adminId);

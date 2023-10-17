@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:wanderer/domain/entities/admin.dart';
 
@@ -29,7 +30,7 @@ class AdminModel extends Equatable {
   final String website;
   final String instagram;
   final String tiktok;
-  final List<String> facilities;
+  final List<dynamic> facilities;
   final String markerId;
   final String time;
   final String description;
@@ -53,7 +54,8 @@ class AdminModel extends Equatable {
       'category': category,
       'latitude': latitude,
       'longitude': longitude,
-      'markerId': markerId
+      'markerId': markerId,
+      'description': description
     };
   }
 
@@ -77,6 +79,27 @@ class AdminModel extends Equatable {
         markerId: data['markerId']);
   }
 
+  factory AdminModel.fromDocumentSnapshot(DocumentSnapshot documentSnapshot) {
+    Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
+
+    return AdminModel(
+        name: data['name'],
+        noRek: data['noRek'],
+        address: data['address'],
+        email: data['email'],
+        image: data['image'],
+        noTelp: data['noTelp'],
+        tiktok: data['tiktok'],
+        website: data['website'],
+        instagram: data['instagram'],
+        facilities: data['facilities'],
+        time: data['time'],
+        description: data['description'],
+        category: data['category'],
+        latitude: data['latitude'],
+        longitude: data['longitude'],
+        markerId: data['markerId']);
+  }
   Admin toEntity() {
     return Admin(
         name: name,

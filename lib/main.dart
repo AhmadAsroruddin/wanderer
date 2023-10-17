@@ -7,6 +7,7 @@ import 'package:wanderer/data/service/auth_repos_impl.dart';
 import 'package:wanderer/domain/usecase/firstTimeDone.dart';
 import 'package:wanderer/domain/usecase/isFirstTime.dart';
 import 'package:wanderer/presentations/bloc/admin_bloc.dart';
+import 'package:wanderer/presentations/bloc/admin_data_bloc.dart';
 import 'package:wanderer/presentations/bloc/comment_bloc.dart';
 import 'package:wanderer/presentations/bloc/favorite_bloc.dart';
 import 'package:wanderer/presentations/bloc/image_bloc.dart';
@@ -77,6 +78,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (_) => di.locator<AdminCubit>()),
         BlocProvider(create: (_) => di.locator<ImageCubit>()),
         BlocProvider(create: (_) => di.locator<TypeCubit>()),
+        BlocProvider(create: (_) => di.locator<AdminDataCubit>()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

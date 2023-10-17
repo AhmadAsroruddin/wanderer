@@ -4,33 +4,45 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:wanderer/domain/entities/marker.dart';
 
 import '../../../domain/entities/comment.dart';
 import '../../bloc/comment_bloc.dart';
 import '../../shared/theme.dart';
-import 'marker_tab_page.dart';
 
-class CommentTabPage extends StatelessWidget {
-  CommentTabPage({
+class CommentTabPage extends StatefulWidget {
+  const CommentTabPage({
     super.key,
     required this.widget,
   });
 
-  final MarkerTab widget;
+  final Markers widget;
+
+  @override
+  State<CommentTabPage> createState() => _CommentTabPageState();
+}
+
+class _CommentTabPageState extends State<CommentTabPage> {
   final TextEditingController _commentController = TextEditingController();
+  @override
+  void initState() {
+    context.read<CommentCubit>().getAllComment(widget.widget.id);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    context.read<CommentCubit>().getAllComment(widget.markers.id);
     return Column(
       children: <Widget>[
-        BlocConsumer<CommentCubit, CommentState>(
-          listener: (context, state) {},
+        BlocBuilder<CommentCubit, CommentState>(
           builder: (context, state) {
             List<Comments> comments = [];
 
             if (state is AllCommentReceived) {
-              comments = state.comments;
+              if (comments != state.comments) {
+                // Periksa apakah komentar telah berubah
+                comments = state.comments;
+              }
             }
 
             return SizedBox(
@@ -124,8 +136,8 @@ class CommentTabPage extends StatelessWidget {
                           DateTime.now(),
                         ),
                       ),
-                      widget.markers.id);
-                  context.read<CommentCubit>().getAllComment(widget.markers.id);
+                      widget.widget.id);
+                  context.read<CommentCubit>().getAllComment(widget.widget.id);
                 },
                 child: const Icon(
                   FontAwesomeIcons.paperPlane,

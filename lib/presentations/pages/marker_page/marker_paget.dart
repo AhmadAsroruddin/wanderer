@@ -50,11 +50,9 @@ class _MarkerPageState extends State<MarkerPage>
                     String userId = firebaseAuth.currentUser!.uid.toString();
 
                     if (isFavorite == false) {
-                      print("qwe");
                       await context.read<FavoriteCubit>().addMarkerToFavorite(
                           state.marker, userId, state.marker.id);
                     } else {
-                      print("asd");
                       await context
                           .read<FavoriteCubit>()
                           .remove(state.marker.id, userId);

@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:wanderer/domain/usecase/addMarker.dart';
+import 'package:wanderer/domain/usecase/addMarkerAdmin.dart';
 import 'package:wanderer/domain/usecase/getAllMarkers.dart';
 
 import '../../domain/entities/marker.dart';
@@ -11,19 +12,33 @@ part 'markers_state.dart';
 class MarkersCubit extends Cubit<MarkersState> {
   final AddMarkers _addMarkers;
   final GetAllMarkers _getAllMarkers;
+  final AddMarkerAdmin _addMarkerAdmin;
 
-  MarkersCubit(this._addMarkers, this._getAllMarkers) : super(MarkersInitial());
+  MarkersCubit(this._addMarkers, this._getAllMarkers, this._addMarkerAdmin)
+      : super(MarkersInitial());
 
-  Future<void> addMarkers(
-      Markers markers, List<XFile> images, bool adminCheck) async {
+  Future<void> addMarkers(Markers markers, List<XFile> images, bool adminCheck,
+      List<dynamic> link) async {
     emit(MarkersLoading());
 
-    final result = await _addMarkers.execute(markers, images, adminCheck);
+    final result = await _addMarkers.execute(markers, images, adminCheck, link);
 
-    result.fold(
-      (l) => emit(MarkersFailed(error: l)),
-      (r) => emit(MarkersSuccess(message: r, isClicked: false)),
-    );
+    if (adminCheck == true) {
+      result.fold(
+        (l) => emit(MarkersFailed(error: l)),
+        (r) => emit(MarkersSuccess(message: r, isClicked: false)),
+      );
+    } else {
+      result.fold(
+        (l) => emit(const MarkersFailed(error: "Marker berhasil ditambahkan")),
+        (r) => emit(MarkersSuccess(message: r, isClicked: false)),
+      );
+    }
+  }
+
+  Future<String> addMarkerAdmin(Markers markers, List<dynamic> links) async {
+    final result = await _addMarkerAdmin.execute(markers, links);
+    return result;
   }
 
   Future<List<Markers>> getAllMarkers() async {

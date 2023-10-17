@@ -8,6 +8,7 @@ import 'package:wanderer/presentations/bloc/location_data_cubit.dart';
 
 import '../../../domain/entities/marker.dart';
 import '../../shared/theme.dart';
+import 'marker_paid.dart';
 
 class DetailsPage extends StatefulWidget {
   const DetailsPage({
@@ -21,14 +22,14 @@ class DetailsPage extends StatefulWidget {
 }
 
 class _DetailsPageState extends State<DetailsPage> {
-  LatLng currLocation = LatLng(0, 0);
-  LatLng destination = LatLng(1, 1);
+  LatLng currLocation = const LatLng(0, 0);
+  LatLng destination = const LatLng(1, 1);
   double jarak = 0;
 
   void _getJarak(LatLng dest) async {
     final Location location = Location();
     LocationData locationData;
-    final curr;
+    final LatLng curr;
 
     locationData = await location.getLocation();
 
@@ -47,6 +48,7 @@ class _DetailsPageState extends State<DetailsPage> {
   @override
   Widget build(BuildContext context) {
     _getJarak(LatLng(widget.markers.latitude, widget.markers.longitude));
+
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
@@ -79,21 +81,19 @@ class _DetailsPageState extends State<DetailsPage> {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: DetailContainer(
-              widget: widget,
-              widgetChild: Text(
-                widget.markers.description,
-                style: GoogleFonts.inter().copyWith(
-                  fontSize: 13,
-                  fontWeight: light,
-                  letterSpacing: 1,
-                ),
-                textAlign: TextAlign.justify,
+          DetailContainer(
+            widget: widget,
+            widgetChild: Text(
+              widget.markers.description,
+              style: GoogleFonts.inter().copyWith(
+                fontSize: 13,
+                fontWeight: light,
+                letterSpacing: 1,
               ),
+              textAlign: TextAlign.justify,
             ),
           ),
+          PaidMarkerPage(widget: widget),
           DetailContainer(
             widget: widget,
             widgetChild: Column(
@@ -113,8 +113,8 @@ class _DetailsPageState extends State<DetailsPage> {
                 Align(
                   alignment: Alignment.centerRight,
                   child: Container(
-                    padding: const EdgeInsets.all(5),
-                    width: deviceWidth * 0.3,
+                    padding: const EdgeInsets.all(10),
+                    width: deviceWidth * 0.35,
                     height: deviceHeight * 0.05,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
@@ -134,6 +134,7 @@ class _DetailsPageState extends State<DetailsPage> {
                         }
                       },
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Image.asset("assets/img/direction.png"),
                           const Text("DIRECTIONS"),
@@ -162,7 +163,7 @@ class _DetailsPageState extends State<DetailsPage> {
                       'assets/img/harga.png',
                       scale: 1.3,
                     ),
-                    title: Text("Rp.24.000/orang"),
+                    title: Text(widget.markers.harga),
                   ),
                 if (widget.markers.socialMedia != "")
                   ListTile(
@@ -170,7 +171,7 @@ class _DetailsPageState extends State<DetailsPage> {
                       "assets/img/instagram.png",
                       scale: 7,
                     ),
-                    title: Text("watu.kodok"),
+                    title: Text(widget.markers.socialMedia),
                   )
               ],
             ),

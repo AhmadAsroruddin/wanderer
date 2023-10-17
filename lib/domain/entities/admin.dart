@@ -28,7 +28,7 @@ class Admin extends Equatable {
   final String website;
   final String instagram;
   final String tiktok;
-  final List<String> facilities;
+  final List<dynamic> facilities;
   final String markerId;
   final String time;
   final String description;
