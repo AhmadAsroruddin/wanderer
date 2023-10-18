@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:wanderer/domain/usecase/getCurrentUserId.dart';
 
 import 'package:wanderer/domain/usecase/login.dart';
 import 'package:wanderer/domain/usecase/logout.dart';
@@ -15,9 +16,10 @@ class AuthCubit extends Cubit<AuthState> {
   final Logout _logout;
   final SignInWithGoogle _signInWithGoogle;
   final ResetPassword _resetPassword;
+  final GetCurrentUserId _getCurrentUserId;
 
-  AuthCubit(this._createAccount, this._login, this._logout,
-      this._signInWithGoogle, this._resetPassword)
+  AuthCubit(this._getCurrentUserId, this._createAccount, this._login,
+      this._logout, this._signInWithGoogle, this._resetPassword)
       : super(AuthInitial());
 
   Future<void> createAccount(String username, String email, String password,
@@ -81,5 +83,10 @@ class AuthCubit extends Cubit<AuthState> {
         ResetSended(message: r),
       ),
     );
+  }
+
+  Future<String> getCurrentUser() async {
+    final id = await _getCurrentUserId.execute();
+    return id;
   }
 }

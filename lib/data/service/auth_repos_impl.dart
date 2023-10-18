@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:wanderer/data/datasource/auth_datasource.dart';
@@ -73,5 +74,12 @@ class AuthReposImpl implements AuthRepos {
   Future<void> gettingStartedDone() async {
     final pref = await SharedPreferences.getInstance();
     pref.setBool('firstTime', false);
+  }
+
+  @override
+  Future<String> getUserId() async {
+    FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+    final String userId = firebaseAuth.currentUser!.uid;
+    return userId;
   }
 }

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:wanderer/data/datasource/admin_datasource.dart';
 import 'package:wanderer/domain/entities/admin.dart';
@@ -30,5 +31,17 @@ class AdminReposImpl implements AdminRepos {
   Future<Admin> getAdmin(String markerId) async {
     final result = await adminDataSource.getAdmin(markerId);
     return result.first;
+  }
+
+  @override
+  Future<List<Tipe>> getTypes(String adminId) async {
+    final result = await adminDataSource.getTypes(adminId);
+    return result;
+  }
+
+  @override
+  Future<void> setUserRole(String userId) async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    await firebaseFirestore.collection('users').doc(userId).update({'role': 1});
   }
 }

@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:wanderer/domain/usecase/addMarker.dart';
 import 'package:wanderer/domain/usecase/addMarkerAdmin.dart';
 import 'package:wanderer/domain/usecase/getAllMarkers.dart';
+import 'package:wanderer/domain/usecase/updateUserIdMarker.dart';
 
 import '../../domain/entities/marker.dart';
 
@@ -13,8 +14,10 @@ class MarkersCubit extends Cubit<MarkersState> {
   final AddMarkers _addMarkers;
   final GetAllMarkers _getAllMarkers;
   final AddMarkerAdmin _addMarkerAdmin;
+  final UpdateUseridMarker _updateUseridMarker;
 
-  MarkersCubit(this._addMarkers, this._getAllMarkers, this._addMarkerAdmin)
+  MarkersCubit(this._addMarkers, this._getAllMarkers, this._addMarkerAdmin,
+      this._updateUseridMarker)
       : super(MarkersInitial());
 
   Future<void> addMarkers(Markers markers, List<XFile> images, bool adminCheck,
@@ -50,5 +53,9 @@ class MarkersCubit extends Cubit<MarkersState> {
   void getMarker(bool isClicked, Markers marker) {
     emit(GetOneMarker(
         marker: marker, isClicked: isClicked)); // Toggle nilai boolean
+  }
+
+  Future<void> update(String id, String markerId) async {
+    await _updateUseridMarker.execute(id, markerId);
   }
 }

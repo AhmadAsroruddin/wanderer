@@ -57,13 +57,17 @@ class PopUpSelectedMarker extends StatelessWidget {
                 scale: 3,
               ),
               SizedBox(
-                width: deviceWidth * 0.1,
+                width: deviceWidth * 0.07,
               ),
-              Text(
-                marker.name,
-                style: GoogleFonts.inter().copyWith(
-                  fontSize: 16,
-                  fontWeight: bold,
+              SizedBox(
+                width: deviceWidth * 0.37,
+                child: Text(
+                  marker.name,
+                  overflow: TextOverflow.fade,
+                  style: GoogleFonts.inter().copyWith(
+                    fontSize: 16,
+                    fontWeight: bold,
+                  ),
                 ),
               )
             ],

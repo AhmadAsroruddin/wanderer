@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:wanderer/presentations/bloc/admin_data_bloc.dart';
 import 'package:wanderer/presentations/bloc/location_data_cubit.dart';
 
 import '../../../domain/entities/marker.dart';
@@ -25,6 +26,14 @@ class _DetailsPageState extends State<DetailsPage> {
   LatLng currLocation = const LatLng(0, 0);
   LatLng destination = const LatLng(1, 1);
   double jarak = 0;
+  String adminId = "Asd";
+
+  @override
+  void initState() {
+    super.initState();
+    print(widget.markers.userId);
+    context.read<AdminDataCubit>().getAdminData(widget.markers.id);
+  }
 
   void _getJarak(LatLng dest) async {
     final Location location = Location();
@@ -93,7 +102,10 @@ class _DetailsPageState extends State<DetailsPage> {
               textAlign: TextAlign.justify,
             ),
           ),
-          PaidMarkerPage(widget: widget),
+          PaidMarkerPage(
+            widget: widget,
+            adminId: widget.markers.userId,
+          ),
           DetailContainer(
             widget: widget,
             widgetChild: Column(

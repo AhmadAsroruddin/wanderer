@@ -87,13 +87,18 @@ class _FacilitiesPageState extends State<FacilitiesPage> {
                         : campervan.length,
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2),
+                      crossAxisCount: 2,
+                    ),
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {
-                          context
-                              .read<AdminCubit>()
-                              .setFacilities(campsite[index]);
+                          category == "Paid_Campsite"
+                              ? context
+                                  .read<AdminCubit>()
+                                  .setFacilities(campsite[index])
+                              : context
+                                  .read<AdminCubit>()
+                                  .setFacilities(campervan[index]);
                           setState(() {
                             onClickList![index] = !onClickList![index];
                           });
@@ -142,10 +147,11 @@ class _FacilitiesPageState extends State<FacilitiesPage> {
                 height: deviceHeight * 0.02,
               ),
               GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pushNamed(AddPhotoPage.routeName);
-                  },
-                  child: const CustomButton(name: "Next")),
+                onTap: () {
+                  Navigator.of(context).pushNamed(AddPhotoPage.routeName);
+                },
+                child: const CustomButton(name: "Next"),
+              ),
             ],
           ),
         ),

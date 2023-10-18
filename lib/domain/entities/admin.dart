@@ -3,6 +3,8 @@ import 'package:equatable/equatable.dart';
 class Admin extends Equatable {
   const Admin(
       {required this.name,
+      required this.id,
+      required this.userId,
       required this.noRek,
       required this.address,
       required this.email,
@@ -20,6 +22,8 @@ class Admin extends Equatable {
       required this.category});
 
   final String name;
+  final String userId;
+  final String id;
   final String noRek;
   final String address;
   final String email;
@@ -39,6 +43,8 @@ class Admin extends Equatable {
   @override
   List<Object> get props => [
         name,
+        userId,
+        id,
         noRek,
         address,
         email,

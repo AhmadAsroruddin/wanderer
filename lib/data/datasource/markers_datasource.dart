@@ -14,6 +14,7 @@ abstract class MarkersDataSource {
   Future<Either<String, String>> addAdmin(
       String name, double price, String address);
   Future<String> addMarkerAdmin(Markers markers, List<dynamic> link);
+  Future<void> updateUserId(String id, String markerId);
 }
 
 class MarkersDatasourceImpl implements MarkersDataSource {
@@ -102,5 +103,11 @@ class MarkersDatasourceImpl implements MarkersDataSource {
       },
     );
     return newMarkerID;
+  }
+
+  @override
+  Future<void> updateUserId(String id, String markerId) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    firestore.collection('markers').doc(markerId).update({'userId': id});
   }
 }

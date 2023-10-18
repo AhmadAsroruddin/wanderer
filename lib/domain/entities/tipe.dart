@@ -12,7 +12,7 @@ class Tipe extends Equatable {
 
   final String name;
   final double price;
-  final List<String> facility;
+  final List<dynamic> facility;
   final List<dynamic> images;
   final int capacity;
   final String description;

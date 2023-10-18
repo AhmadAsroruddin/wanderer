@@ -13,6 +13,7 @@ Color greenColor = const Color(0xff22B07D);
 Color numberBackgroundColor = const Color(0xff1A1D2E);
 Color redColor = const Color(0xffFF2566);
 Color mainColor = const Color(0x00FFD700);
+Color baseColor = const Color.fromRGBO(255, 215, 0, 1);
 
 final double deviceWidth = MediaQueryData.fromView(
         WidgetsBinding.instance.platformDispatcher.views.single)

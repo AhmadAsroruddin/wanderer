@@ -53,4 +53,13 @@ class MarkersReposImpl implements MarkerRepos {
       return e.toString();
     }
   }
+
+  @override
+  Future<void> updateUserId(String id, String markerId) async {
+    try {
+      await markersDataSource.updateUserId(id, markerId);
+    } catch (e) {
+      print(e);
+    }
+  }
 }

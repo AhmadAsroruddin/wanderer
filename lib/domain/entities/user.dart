@@ -1,19 +1,22 @@
 import 'package:equatable/equatable.dart';
 
-class User extends Equatable {
-  const User(
+class Users extends Equatable {
+  const Users(
       {required this.username,
       required this.email,
       required this.imageUrl,
       required this.telponNumber,
-      required this.markers});
+      required this.markers,
+      required this.role});
 
   final String username;
   final String email;
   final String imageUrl;
   final String telponNumber;
-  final List<String> markers;
+  final List<dynamic> markers;
+  final int role;
 
   @override
-  List<Object> get props => [username, email, imageUrl, telponNumber, markers];
+  List<Object> get props =>
+      [username, email, imageUrl, telponNumber, role, markers];
 }

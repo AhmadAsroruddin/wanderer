@@ -1,15 +1,19 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wanderer/domain/usecase/addToAdmin.dart';
 import 'package:wanderer/domain/usecase/getAdmin.dart';
+import 'package:wanderer/domain/usecase/setUserRoleToAdmin.dart';
 
 import '../../domain/entities/admin.dart';
 
 class AdminCubit extends Cubit<Admin> {
   final AddToAdmin addToAdminUseCase;
   final GetAdmin getAdmin;
-  AdminCubit(this.addToAdminUseCase, this.getAdmin)
+  final SetUserRoleToAdmin setRole;
+  AdminCubit(this.addToAdminUseCase, this.getAdmin, this.setRole)
       : super(
           const Admin(
+              id: '',
+              userId: '',
               name: '',
               noRek: '',
               address: '',
@@ -34,6 +38,10 @@ class AdminCubit extends Cubit<Admin> {
     return result;
   }
 
+  Future<void> updateUserRole(String userId) async {
+    await setRole.execute(userId);
+  }
+
   Future<void> getAdminData(String markerId) async {
     final result = await getAdmin.execute(markerId);
     emit(result);
@@ -44,6 +52,8 @@ class AdminCubit extends Cubit<Admin> {
 
     emit(
       Admin(
+          id: currState.id,
+          userId: currState.userId,
           name: name,
           noRek: currState.noRek,
           address: currState.address,
@@ -68,6 +78,8 @@ class AdminCubit extends Cubit<Admin> {
 
     emit(
       Admin(
+          id: currState.id,
+          userId: currState.userId,
           name: currState.name,
           noRek: noRek,
           address: currState.address,
@@ -92,6 +104,8 @@ class AdminCubit extends Cubit<Admin> {
 
     emit(
       Admin(
+          id: currState.id,
+          userId: currState.userId,
           name: currState.name,
           noRek: currState.noRek,
           address: address,
@@ -116,6 +130,8 @@ class AdminCubit extends Cubit<Admin> {
 
     emit(
       Admin(
+          id: currState.id,
+          userId: currState.userId,
           name: currState.name,
           noRek: currState.noRek,
           address: currState.address,
@@ -140,6 +156,8 @@ class AdminCubit extends Cubit<Admin> {
 
     emit(
       Admin(
+          id: currState.id,
+          userId: currState.userId,
           name: currState.name,
           noRek: currState.noRek,
           address: currState.address,
@@ -164,6 +182,8 @@ class AdminCubit extends Cubit<Admin> {
 
     emit(
       Admin(
+          id: currState.id,
+          userId: currState.userId,
           name: currState.name,
           noRek: currState.noRek,
           address: currState.address,
@@ -188,6 +208,8 @@ class AdminCubit extends Cubit<Admin> {
 
     emit(
       Admin(
+          id: currState.id,
+          userId: currState.userId,
           name: currState.name,
           noRek: currState.noRek,
           address: currState.address,
@@ -212,6 +234,8 @@ class AdminCubit extends Cubit<Admin> {
 
     emit(
       Admin(
+          id: currState.id,
+          userId: currState.userId,
           name: currState.name,
           noRek: currState.noRek,
           address: currState.address,
@@ -236,6 +260,8 @@ class AdminCubit extends Cubit<Admin> {
 
     emit(
       Admin(
+          id: currState.id,
+          userId: currState.userId,
           name: currState.name,
           noRek: currState.noRek,
           address: currState.address,
@@ -260,6 +286,8 @@ class AdminCubit extends Cubit<Admin> {
 
     emit(
       Admin(
+          id: currState.id,
+          userId: currState.userId,
           name: currState.name,
           noRek: currState.noRek,
           address: currState.address,
@@ -292,6 +320,8 @@ class AdminCubit extends Cubit<Admin> {
 
     emit(
       Admin(
+          id: currState.id,
+          userId: currState.userId,
           name: currState.name,
           noRek: currState.noRek,
           address: currState.address,
@@ -316,6 +346,8 @@ class AdminCubit extends Cubit<Admin> {
 
     emit(
       Admin(
+          id: currState.id,
+          userId: currState.userId,
           name: currState.name,
           noRek: currState.noRek,
           address: currState.address,
@@ -339,6 +371,8 @@ class AdminCubit extends Cubit<Admin> {
     final currState = state;
     emit(
       Admin(
+          id: currState.id,
+          userId: currState.userId,
           name: currState.name,
           noRek: currState.noRek,
           address: currState.address,
@@ -362,6 +396,8 @@ class AdminCubit extends Cubit<Admin> {
     final currState = state;
     emit(
       Admin(
+          id: currState.id,
+          userId: currState.userId,
           name: currState.name,
           noRek: currState.noRek,
           address: currState.address,
@@ -385,6 +421,8 @@ class AdminCubit extends Cubit<Admin> {
     final currState = state;
     emit(
       Admin(
+          id: currState.id,
+          userId: currState.userId,
           name: currState.name,
           noRek: currState.noRek,
           address: currState.address,
@@ -404,6 +442,31 @@ class AdminCubit extends Cubit<Admin> {
     );
   }
 
+  void setUserId(String userId) {
+    final currState = state;
+    emit(
+      Admin(
+          id: currState.id,
+          userId: userId,
+          name: currState.name,
+          noRek: currState.noRek,
+          address: currState.address,
+          email: currState.email,
+          description: currState.description,
+          image: currState.image,
+          noTelp: currState.noTelp,
+          instagram: currState.instagram,
+          website: currState.website,
+          tiktok: currState.tiktok,
+          facilities: currState.facilities,
+          time: currState.time,
+          category: currState.category,
+          latitude: currState.latitude,
+          longitude: currState.longitude,
+          markerId: currState.markerId),
+    );
+  }
+
   String getCategory() {
     return state.category;
   }
@@ -411,6 +474,8 @@ class AdminCubit extends Cubit<Admin> {
   Admin getAllAdmin() {
     final currState = state;
     return Admin(
+        id: currState.id,
+        userId: currState.userId,
         name: currState.name,
         noRek: currState.noRek,
         address: currState.address,

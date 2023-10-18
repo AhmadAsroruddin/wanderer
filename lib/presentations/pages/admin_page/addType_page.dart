@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:wanderer/domain/entities/admin.dart';
 import 'package:wanderer/domain/entities/tipe.dart';
+import 'package:wanderer/presentations/bloc/auth_bloc.dart';
 import 'package:wanderer/presentations/bloc/image_bloc.dart';
 import 'package:wanderer/presentations/bloc/type_bloc.dart';
 import 'package:wanderer/presentations/pages/tab_screen.dart';
@@ -224,11 +225,12 @@ class _AddTypePageState extends State<AddTypePage> {
                 ),
               ),
               GestureDetector(
-                  onTap: () async {
-                    addToFirestore();
-                    Navigator.of(context).pushNamed(TabScreen.routeName);
-                  },
-                  child: const CustomButton(name: "Next"))
+                onTap: () async {
+                  addToFirestore();
+                  Navigator.of(context).pushNamed(TabScreen.routeName);
+                },
+                child: const CustomButton(name: "Next"),
+              )
             ],
           ),
         ),
@@ -238,6 +240,7 @@ class _AddTypePageState extends State<AddTypePage> {
 
   void addToFirestore() async {
     Admin admin = context.read<AdminCubit>().getAllAdmin();
+    String userId = await context.read<AuthCubit>().getCurrentUser();
     Markers marker = Markers(
         name: admin.name,
         description: admin.description,
@@ -257,8 +260,10 @@ class _AddTypePageState extends State<AddTypePage> {
 
     String adminId =
         await context.read<AdminCubit>().addToAdmin(admin, markerid);
+    await context.read<MarkersCubit>().update(adminId, markerid);
 
     List<Tipe> types = context.read<TypeCubit>().getTipe();
-    context.read<TypeCubit>().addType(types, adminId);
+    await context.read<TypeCubit>().addType(types, adminId);
+    context.read<AdminCubit>().updateUserRole(userId);
   }
 }

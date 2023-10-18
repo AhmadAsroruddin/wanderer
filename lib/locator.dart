@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:wanderer/data/datasource/admin_datasource.dart';
 import 'package:wanderer/data/datasource/auth_datasource.dart';
 import 'package:wanderer/data/datasource/comment_datasource.dart';
 import 'package:wanderer/data/datasource/favorite_datasource.dart';
 import 'package:wanderer/data/datasource/markers_datasource.dart';
+import 'package:wanderer/data/datasource/user_datasource.dart';
 import 'package:wanderer/data/service/admin_repos_impl.dart';
 import 'package:wanderer/data/service/auth_repos_impl.dart';
 import 'package:wanderer/data/service/comment_repos_impl.dart';
@@ -12,6 +14,7 @@ import 'package:wanderer/data/service/favorite_repos_impl.dart';
 import 'package:wanderer/data/service/image_repos_implementation.dart';
 import 'package:wanderer/data/service/location_data_repos_implementation.dart';
 import 'package:wanderer/data/service/markers_repos_implementation.dart';
+import 'package:wanderer/data/service/user_repos_impl.dart';
 import 'package:wanderer/domain/repositories/admin_repository.dart';
 import 'package:wanderer/domain/repositories/auth_repository.dart';
 import 'package:wanderer/domain/repositories/comment_repository.dart';
@@ -19,6 +22,7 @@ import 'package:wanderer/domain/repositories/favorite_repository.dart';
 import 'package:wanderer/domain/repositories/image_repository.dart';
 import 'package:wanderer/domain/repositories/location_data_repository.dart';
 import 'package:wanderer/domain/repositories/marker_repository.dart';
+import 'package:wanderer/domain/repositories/user_repository.dart';
 import 'package:wanderer/domain/usecase/addMarker.dart';
 import 'package:wanderer/domain/usecase/addMarkerAdmin.dart';
 import 'package:wanderer/domain/usecase/addToAdmin.dart';
@@ -29,6 +33,9 @@ import 'package:wanderer/domain/usecase/getAdmin.dart';
 import 'package:wanderer/domain/usecase/getAllComments.dart';
 import 'package:wanderer/domain/usecase/getAllFavorites.dart';
 import 'package:wanderer/domain/usecase/getAllMarkers.dart';
+import 'package:wanderer/domain/usecase/getAllTypes.dart';
+import 'package:wanderer/domain/usecase/getCurrentUserId.dart';
+import 'package:wanderer/domain/usecase/getUserData.dart';
 import 'package:wanderer/domain/usecase/isFavorite.dart';
 import 'package:wanderer/domain/usecase/isFirstTime.dart';
 import 'package:wanderer/domain/usecase/login.dart';
@@ -37,6 +44,7 @@ import 'package:wanderer/domain/usecase/pushComments.dart';
 import 'package:wanderer/domain/usecase/removedFromFavorite.dart';
 import 'package:wanderer/domain/usecase/resetPassword.dart';
 import 'package:wanderer/domain/usecase/signInWithGoogle.dart';
+import 'package:wanderer/domain/usecase/updateUserIdMarker.dart';
 import 'package:wanderer/domain/usecase/uploadImages.dart';
 import 'package:wanderer/presentations/bloc/admin_bloc.dart';
 import 'package:wanderer/presentations/bloc/admin_data_bloc.dart';
@@ -47,6 +55,7 @@ import 'package:wanderer/presentations/bloc/image_bloc.dart';
 import 'package:wanderer/presentations/bloc/location_data_cubit.dart';
 import 'package:wanderer/presentations/bloc/markers_bloc.dart';
 import 'package:wanderer/presentations/bloc/router_bloc.dart';
+import 'package:wanderer/presentations/bloc/user_bloc.dart';
 
 import 'presentations/bloc/type_bloc.dart';
 
@@ -75,6 +84,11 @@ void init() {
   locator.registerLazySingleton(() => AddTypeToAdmin(adminRepos: locator()));
   locator.registerLazySingleton(() => AddMarkerAdmin(markerRepos: locator()));
   locator.registerLazySingleton(() => GetAdmin(adminRepos: locator()));
+  locator.registerLazySingleton(() => GetAllTypes(adminRepos: locator()));
+  locator
+      .registerLazySingleton(() => UpdateUseridMarker(markerRepos: locator()));
+  locator.registerLazySingleton(() => GetCurrentUserId(authRepos: locator()));
+  locator.registerLazySingleton(() => GetUserData(userRepository: locator()));
 
   //REPOSITORY
   locator.registerLazySingleton<AuthRepos>(() => AuthReposImpl(
@@ -91,23 +105,28 @@ void init() {
       () => FavoriteReposImpl(favoriteDataSource: locator()));
   locator.registerLazySingleton<AdminRepos>(
       () => AdminReposImpl(adminDataSource: locator()));
+  locator.registerLazySingleton<UserRepository>(
+      () => UserReposImpl(userDataSource: locator()));
 
   //BLOC
-  locator.registerFactory(
-      () => AuthCubit(locator(), locator(), locator(), locator(), locator()));
+  locator.registerFactory(() => AuthCubit(
+      locator(), locator(), locator(), locator(), locator(), locator()));
   locator.registerFactory(() => RouterCubit(
         authUseCase: locator(),
         firstTimeDone: locator(),
       ));
   locator.registerFactory(() => LocationDataCubit(locator()));
-  locator.registerFactory(() => MarkersCubit(locator(), locator(), locator()));
+  locator.registerFactory(
+      () => MarkersCubit(locator(), locator(), locator(), locator()));
   locator.registerFactory(() => CommentCubit(locator(), locator()));
   locator.registerFactory(
       () => FavoriteCubit(locator(), locator(), locator(), locator()));
   locator.registerFactory(() => ImageCubit(locator()));
-  locator.registerFactory(() => AdminCubit(locator(), locator()));
+  locator.registerFactory(() => AdminCubit(locator(), locator(), locator()));
   locator.registerFactory(() => TypeCubit(locator()));
-  locator.registerFactory(() => AdminDataCubit(locator()));
+  locator.registerFactory(() => AdminDataCubit(locator(), locator()));
+  locator.registerFactory(() => TypeCubitData(locator()));
+  locator.registerFactory(() => UserCubit(locator()));
 
   //DATA
 
@@ -119,8 +138,10 @@ void init() {
   locator.registerLazySingleton<FavoriteDataSource>(
       () => FavoriteDataSourceImpl());
   locator.registerLazySingleton<AdminDataSource>(() => AdminDataSourceImpl());
+  locator.registerLazySingleton<UserDataSource>(() => UserDataSourceImpl());
 
   //ROUTER
 
   locator.registerLazySingleton(() => FirebaseFirestore.instance);
+  locator.registerLazySingleton(() => FirebaseAuth.instance);
 }

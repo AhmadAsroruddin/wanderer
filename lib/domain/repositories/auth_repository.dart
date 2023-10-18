@@ -9,4 +9,5 @@ abstract class AuthRepos {
   Future<Either<String, String>> resetPassword(String email);
   Future<bool> isFirstTime();
   Future<void> gettingStartedDone();
+  Future<String> getUserId();
 }

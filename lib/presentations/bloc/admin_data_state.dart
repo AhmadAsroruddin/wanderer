@@ -24,3 +24,11 @@ class AdminDataSuccess extends AdminDataState {
   @override
   List<Object> get props => [data];
 }
+
+class TypeDataSuccess extends AdminDataState {
+  final List<Tipe> tipe;
+  const TypeDataSuccess({required this.tipe});
+
+  @override
+  List<Object> get props => [tipe];
+}

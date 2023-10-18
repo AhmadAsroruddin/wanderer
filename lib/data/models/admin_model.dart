@@ -4,7 +4,9 @@ import 'package:wanderer/domain/entities/admin.dart';
 
 class AdminModel extends Equatable {
   const AdminModel(
-      {required this.name,
+      {required this.id,
+      required this.userId,
+      required this.name,
       required this.noRek,
       required this.address,
       required this.email,
@@ -21,6 +23,7 @@ class AdminModel extends Equatable {
       required this.longitude,
       required this.markerId});
 
+  final String id;
   final String name;
   final String noRek;
   final String address;
@@ -37,9 +40,12 @@ class AdminModel extends Equatable {
   final String category;
   final double latitude;
   final double longitude;
+  final String userId;
 
   Map<String, dynamic> toMap() {
     return {
+      'id': id,
+      'userId': userId,
       'name': name,
       'noRek': noRek,
       'address': address,
@@ -61,7 +67,9 @@ class AdminModel extends Equatable {
 
   static Admin fromMap(Map<String, dynamic> data) {
     return Admin(
+        id: data['id'],
         name: data['name'],
+        userId: data['userId'],
         noRek: data['noRek'],
         address: data['address'],
         email: data['email'],
@@ -83,6 +91,8 @@ class AdminModel extends Equatable {
     Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
 
     return AdminModel(
+        id: data['id'],
+        userId: data['userId'],
         name: data['name'],
         noRek: data['noRek'],
         address: data['address'],
@@ -102,6 +112,8 @@ class AdminModel extends Equatable {
   }
   Admin toEntity() {
     return Admin(
+        id: id,
+        userId: userId,
         name: name,
         noRek: noRek,
         address: address,
@@ -122,6 +134,8 @@ class AdminModel extends Equatable {
 
   @override
   List<Object> get props => [
+        id,
+        userId,
         name,
         noRek,
         address,
