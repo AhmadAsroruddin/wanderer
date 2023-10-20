@@ -16,7 +16,7 @@ class UserModel extends Equatable {
   final String imageUrl;
   final String telponNumber;
   final List<dynamic> markers;
-  final int role;
+  final String role;
 
   Map<String, dynamic> toMap() {
     return {

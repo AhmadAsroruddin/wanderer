@@ -29,7 +29,7 @@ class AuthDataSourceImpl implements AuthDataSource {
                     "https://cdn.pixabay.com/photo/2023/05/21/07/47/horse-8008038_1280.jpg",
                 telponNumber: telponNumber,
                 markers: [],
-                role: 0)
+                role: "")
             .toMap());
   }
 
@@ -74,7 +74,7 @@ class AuthDataSourceImpl implements AuthDataSource {
                 "https://cdn.pixabay.com/photo/2023/05/21/07/47/horse-8008038_1280.jpg",
             telponNumber: user.phoneNumber ?? "",
             markers: [],
-            role: 0,
+            role: "",
           ).toMap());
     }
   }

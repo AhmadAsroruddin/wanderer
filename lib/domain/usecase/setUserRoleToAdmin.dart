@@ -4,7 +4,7 @@ class SetUserRoleToAdmin {
   AdminRepos adminRepos;
   SetUserRoleToAdmin({required this.adminRepos});
 
-  Future<void> execute(String userId) async {
-    await adminRepos.setUserRole(userId);
+  Future<void> execute(String userId, String adminId) async {
+    await adminRepos.setUserRole(userId, adminId);
   }
 }

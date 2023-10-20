@@ -14,7 +14,7 @@ class Users extends Equatable {
   final String imageUrl;
   final String telponNumber;
   final List<dynamic> markers;
-  final int role;
+  final String role;
 
   @override
   List<Object> get props =>

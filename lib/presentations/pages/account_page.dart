@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:wanderer/presentations/bloc/favorite_bloc.dart';
 import 'package:wanderer/presentations/bloc/user_bloc.dart';
 import 'package:wanderer/presentations/pages/favorite_page.dart';
+import 'package:wanderer/presentations/pages/manage/admin_page.dart';
 
 import '../bloc/auth_bloc.dart';
 import '../shared/theme.dart';
@@ -89,20 +90,27 @@ class AccountPage extends StatelessWidget {
                       SizedBox(
                         height: deviceHeight * 0.03,
                       ),
-                      state.user.role == 1
-                          ? CardAccount(
-                              deviceWidth: deviceWidth,
-                              deviceHeight: deviceHeight,
-                              title: "Pengelolaan",
-                              child: Column(
-                                children: <Widget>[
-                                  AccountItem(
-                                    deviceWidth: deviceWidth,
-                                    deviceHeight: deviceHeight,
-                                    image: "marker",
-                                    name: "Kelola Tempat",
-                                  )
-                                ],
+                      state.user.role != ""
+                          ? GestureDetector(
+                              onTap: () async {
+                                Navigator.of(context).pushNamed(
+                                    AdminPage.routeName,
+                                    arguments: state.user.role);
+                              },
+                              child: CardAccount(
+                                deviceWidth: deviceWidth,
+                                deviceHeight: deviceHeight,
+                                title: "Pengelolaan",
+                                child: Column(
+                                  children: <Widget>[
+                                    AccountItem(
+                                      deviceWidth: deviceWidth,
+                                      deviceHeight: deviceHeight,
+                                      image: "marker",
+                                      name: "Kelola Tempat",
+                                    )
+                                  ],
+                                ),
                               ),
                             )
                           : Container(),

@@ -137,6 +137,7 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
                         imageLinks = state.links;
                         context.read<AdminCubit>().setImage(imageLinks);
                         print(imageLinks);
+
                         Navigator.of(context).pushNamed(Step3Page.routeName);
                       }
                     },

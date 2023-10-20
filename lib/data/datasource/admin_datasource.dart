@@ -9,6 +9,7 @@ abstract class AdminDataSource {
   Future<void> addTypeToAdmin(Tipe tipe, String adminId);
   Future<List<Admin>> getAdmin(String markerId);
   Future<List<Tipe>> getTypes(String adminId);
+  Future<void> updateAdminId(String adminId, String userId);
 }
 
 class AdminDataSourceImpl implements AdminDataSource {
@@ -58,18 +59,17 @@ class AdminDataSourceImpl implements AdminDataSource {
                 images: tipe.images,
                 capacity: tipe.capacity,
                 description: tipe.description,
-                adminId: tipe.adminId)
+                adminId: adminId)
             .toMap());
   }
 
   @override
-  Future<List<Admin>> getAdmin(String markerId) async {
+  Future<List<Admin>> getAdmin(String userId) async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     final adminQuery = await firebaseFirestore
         .collection('admin')
-        .where('markerId', isEqualTo: markerId)
+        .where('id', isEqualTo: userId)
         .get();
-
     final List<Admin> admin = adminQuery.docs
         .map<Admin>((doc) => AdminModel.fromDocumentSnapshot(doc).toEntity())
         .toList();
@@ -82,14 +82,20 @@ class AdminDataSourceImpl implements AdminDataSource {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     final dataQuery = await firebaseFirestore
         .collection('admin')
-        .doc("PnCcajPkmVGxhRKJJ4sP")
+        .doc(adminId)
         .collection('type')
         .get();
-    print("data ${dataQuery.size}");
+
     final List<Tipe> tipe = dataQuery.docs
         .map<Tipe>((doc) => TipeModel.fromDocumentSnapshot(doc).toEntity())
         .toList();
 
     return tipe;
+  }
+
+  @override
+  Future<void> updateAdminId(String adminId, String userId) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    firestore.collection('admin').doc(adminId).update({'userId': userId});
   }
 }

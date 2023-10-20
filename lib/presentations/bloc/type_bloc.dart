@@ -16,7 +16,6 @@ class TypeCubit extends Cubit<List<Tipe>> {
     final newList = List<Tipe>.from(currState);
     newList.add(tipe);
     emit(newList);
-    print(newList);
   }
 
   List<Tipe> getTipe() {
@@ -37,7 +36,7 @@ class TypeCubitData extends Cubit<TypeDataState> {
 
   Future<void> getType(String adminId) async {
     final result = await getAllTypes.execute(adminId);
-    print(result);
+
     emit(TypeDataSuccess(tipe: result));
   }
 }

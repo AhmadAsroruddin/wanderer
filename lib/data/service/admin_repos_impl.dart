@@ -30,6 +30,7 @@ class AdminReposImpl implements AdminRepos {
   @override
   Future<Admin> getAdmin(String markerId) async {
     final result = await adminDataSource.getAdmin(markerId);
+    print(result);
     return result.first;
   }
 
@@ -40,8 +41,11 @@ class AdminReposImpl implements AdminRepos {
   }
 
   @override
-  Future<void> setUserRole(String userId) async {
+  Future<void> setUserRole(String userId, String adminId) async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    await firebaseFirestore.collection('users').doc(userId).update({'role': 1});
+    await firebaseFirestore
+        .collection('users')
+        .doc(userId)
+        .update({'role': adminId});
   }
 }

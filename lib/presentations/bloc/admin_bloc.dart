@@ -38,8 +38,8 @@ class AdminCubit extends Cubit<Admin> {
     return result;
   }
 
-  Future<void> updateUserRole(String userId) async {
-    await setRole.execute(userId);
+  Future<void> updateUserRole(String userId, String adminId) async {
+    await setRole.execute(userId, adminId);
   }
 
   Future<void> getAdminData(String markerId) async {

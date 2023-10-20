@@ -7,5 +7,5 @@ abstract class AdminRepos {
   Future<Either<String, String>> addTypeToAdmin(Tipe tipe, String adminId);
   Future<Admin> getAdmin(String markerId);
   Future<List<Tipe>> getTypes(String adminId);
-  Future<void> setUserRole(String userId);
+  Future<void> setUserRole(String userId, String adminId);
 }

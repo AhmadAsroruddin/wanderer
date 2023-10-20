@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wanderer/presentations/bloc/admin_bloc.dart';
+import 'package:wanderer/presentations/bloc/auth_bloc.dart';
 
 import 'package:wanderer/presentations/pages/admin_page/facilities_page.dart';
 import 'package:wanderer/presentations/shared/customButton.dart';
@@ -60,7 +63,9 @@ class Step2Page extends StatelessWidget {
               ),
               const Expanded(child: SizedBox()),
               GestureDetector(
-                onTap: () {
+                onTap: () async {
+                  String id = await context.read<AuthCubit>().getCurrentUser();
+                  context.read<AdminCubit>().setUserId(id);
                   Navigator.of(context).pushNamed(FacilitiesPage.routeName);
                 },
                 child: const CustomButton(name: "Next"),

@@ -6,6 +6,7 @@ import 'package:wanderer/data/datasource/auth_datasource.dart';
 import 'package:wanderer/data/datasource/comment_datasource.dart';
 import 'package:wanderer/data/datasource/favorite_datasource.dart';
 import 'package:wanderer/data/datasource/markers_datasource.dart';
+import 'package:wanderer/data/datasource/order_datasource.dart';
 import 'package:wanderer/data/datasource/user_datasource.dart';
 import 'package:wanderer/data/service/admin_repos_impl.dart';
 import 'package:wanderer/data/service/auth_repos_impl.dart';
@@ -14,6 +15,7 @@ import 'package:wanderer/data/service/favorite_repos_impl.dart';
 import 'package:wanderer/data/service/image_repos_implementation.dart';
 import 'package:wanderer/data/service/location_data_repos_implementation.dart';
 import 'package:wanderer/data/service/markers_repos_implementation.dart';
+import 'package:wanderer/data/service/order_repos_impl.dart';
 import 'package:wanderer/data/service/user_repos_impl.dart';
 import 'package:wanderer/domain/repositories/admin_repository.dart';
 import 'package:wanderer/domain/repositories/auth_repository.dart';
@@ -22,6 +24,7 @@ import 'package:wanderer/domain/repositories/favorite_repository.dart';
 import 'package:wanderer/domain/repositories/image_repository.dart';
 import 'package:wanderer/domain/repositories/location_data_repository.dart';
 import 'package:wanderer/domain/repositories/marker_repository.dart';
+import 'package:wanderer/domain/repositories/order_repository.dart';
 import 'package:wanderer/domain/repositories/user_repository.dart';
 import 'package:wanderer/domain/usecase/addMarker.dart';
 import 'package:wanderer/domain/usecase/addMarkerAdmin.dart';
@@ -35,6 +38,7 @@ import 'package:wanderer/domain/usecase/getAllFavorites.dart';
 import 'package:wanderer/domain/usecase/getAllMarkers.dart';
 import 'package:wanderer/domain/usecase/getAllTypes.dart';
 import 'package:wanderer/domain/usecase/getCurrentUserId.dart';
+import 'package:wanderer/domain/usecase/getOrderDataByStatus.dart';
 import 'package:wanderer/domain/usecase/getUserData.dart';
 import 'package:wanderer/domain/usecase/isFavorite.dart';
 import 'package:wanderer/domain/usecase/isFirstTime.dart';
@@ -42,7 +46,9 @@ import 'package:wanderer/domain/usecase/login.dart';
 import 'package:wanderer/domain/usecase/logout.dart';
 import 'package:wanderer/domain/usecase/pushComments.dart';
 import 'package:wanderer/domain/usecase/removedFromFavorite.dart';
+import 'package:wanderer/domain/usecase/requestOrder.dart';
 import 'package:wanderer/domain/usecase/resetPassword.dart';
+import 'package:wanderer/domain/usecase/setUserRoleToAdmin.dart';
 import 'package:wanderer/domain/usecase/signInWithGoogle.dart';
 import 'package:wanderer/domain/usecase/updateUserIdMarker.dart';
 import 'package:wanderer/domain/usecase/uploadImages.dart';
@@ -54,6 +60,7 @@ import 'package:wanderer/presentations/bloc/favorite_bloc.dart';
 import 'package:wanderer/presentations/bloc/image_bloc.dart';
 import 'package:wanderer/presentations/bloc/location_data_cubit.dart';
 import 'package:wanderer/presentations/bloc/markers_bloc.dart';
+import 'package:wanderer/presentations/bloc/order_bloc.dart';
 import 'package:wanderer/presentations/bloc/router_bloc.dart';
 import 'package:wanderer/presentations/bloc/user_bloc.dart';
 
@@ -89,6 +96,11 @@ void init() {
       .registerLazySingleton(() => UpdateUseridMarker(markerRepos: locator()));
   locator.registerLazySingleton(() => GetCurrentUserId(authRepos: locator()));
   locator.registerLazySingleton(() => GetUserData(userRepository: locator()));
+  locator
+      .registerLazySingleton(() => SetUserRoleToAdmin(adminRepos: locator()));
+  locator.registerLazySingleton(() => RequestOrder(orderRepos: locator()));
+  locator
+      .registerLazySingleton(() => GetOrderDataByStatus(orderRepos: locator()));
 
   //REPOSITORY
   locator.registerLazySingleton<AuthRepos>(() => AuthReposImpl(
@@ -107,6 +119,8 @@ void init() {
       () => AdminReposImpl(adminDataSource: locator()));
   locator.registerLazySingleton<UserRepository>(
       () => UserReposImpl(userDataSource: locator()));
+  locator.registerLazySingleton<OrderRepos>(
+      () => OrderReposImpl(orderDataSource: locator()));
 
   //BLOC
   locator.registerFactory(() => AuthCubit(
@@ -127,6 +141,7 @@ void init() {
   locator.registerFactory(() => AdminDataCubit(locator(), locator()));
   locator.registerFactory(() => TypeCubitData(locator()));
   locator.registerFactory(() => UserCubit(locator()));
+  locator.registerFactory(() => OrderCubit(locator(), locator()));
 
   //DATA
 
@@ -139,6 +154,7 @@ void init() {
       () => FavoriteDataSourceImpl());
   locator.registerLazySingleton<AdminDataSource>(() => AdminDataSourceImpl());
   locator.registerLazySingleton<UserDataSource>(() => UserDataSourceImpl());
+  locator.registerLazySingleton<OrderDataSource>(() => OrderDataSourceImpl());
 
   //ROUTER
 

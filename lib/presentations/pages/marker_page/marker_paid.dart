@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wanderer/domain/entities/admin.dart';
+import 'package:wanderer/domain/entities/tipe.dart';
 import 'package:wanderer/presentations/bloc/admin_bloc.dart';
 import 'package:wanderer/presentations/bloc/type_bloc.dart';
+import 'package:wanderer/presentations/pages/order_page/order_page.dart';
 
 import '../../shared/theme.dart';
 import 'marker_detail_page.dart';
@@ -19,10 +21,13 @@ class PaidMarkerPage extends StatefulWidget {
 }
 
 class _PaidMarkerPageState extends State<PaidMarkerPage> {
+  int amount = 1;
+  String? adminName;
+
   @override
   void initState() {
     context.read<TypeCubitData>().getType(widget.widget.markers.userId);
-    context.read<AdminCubit>().getAdminData(widget.widget.markers.id);
+    context.read<AdminCubit>().getAdminData(widget.adminId);
     super.initState();
   }
 
@@ -38,7 +43,7 @@ class _PaidMarkerPageState extends State<PaidMarkerPage> {
                 return Column(
                   children: [
                     SizedBox(
-                      height: deviceHeight * 0.27,
+                      height: deviceHeight * 0.37,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemCount: state.tipe.length,
@@ -98,6 +103,8 @@ class _PaidMarkerPageState extends State<PaidMarkerPage> {
                                       right: deviceWidth * 0.03,
                                     ),
                                     child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: <Widget>[
@@ -111,18 +118,89 @@ class _PaidMarkerPageState extends State<PaidMarkerPage> {
                                             ),
                                           ),
                                         ),
-                                        Container(
-                                          width: deviceWidth * 0.25,
-                                          height: deviceHeight * 0.3,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                15,
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            SizedBox(
+                                              width: deviceWidth * 0.27,
+                                              child: Row(
+                                                children: <Widget>[
+                                                  IconButton(
+                                                    onPressed: () {
+                                                      if (amount > 1) {
+                                                        setState(() {
+                                                          amount = amount - 1;
+                                                        });
+                                                      }
+                                                    },
+                                                    icon: const Icon(
+                                                      Icons.remove,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    amount.toString(),
+                                                    style: TextStyle(
+                                                      fontSize:
+                                                          deviceWidth * 0.04,
+                                                    ),
+                                                  ),
+                                                  IconButton(
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        amount = amount + 1;
+                                                      });
+                                                    },
+                                                    icon: const Icon(
+                                                      Icons.add,
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
-                                              color: baseColor),
-                                          child: const Center(
-                                            child: Text("Pesan"),
-                                          ),
+                                            ),
+                                            GestureDetector(
+                                              onTap: () {
+                                                Navigator.of(context).pushNamed(
+                                                  OrderPage.routeName,
+                                                  arguments: [
+                                                    Tipe(
+                                                      name: state
+                                                          .tipe[index].name,
+                                                      price: state
+                                                          .tipe[index].price,
+                                                      facility: state
+                                                          .tipe[index].facility,
+                                                      images: state
+                                                          .tipe[index].images,
+                                                      capacity: state
+                                                          .tipe[index].capacity,
+                                                      description: state
+                                                          .tipe[index]
+                                                          .description,
+                                                      adminId: state
+                                                          .tipe[index].adminId,
+                                                    ),
+                                                    amount,
+                                                    adminName
+                                                  ],
+                                                );
+                                              },
+                                              child: Container(
+                                                width: deviceWidth * 0.25,
+                                                height: deviceHeight * 0.05,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                    15,
+                                                  ),
+                                                  color: baseColor,
+                                                ),
+                                                child: const Center(
+                                                  child: Text("Pesan"),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         )
                                       ],
                                     ),
@@ -146,7 +224,12 @@ class _PaidMarkerPageState extends State<PaidMarkerPage> {
         ),
         DetailContainer(
           widget: widget.widget,
-          widgetChild: BlocBuilder<AdminCubit, Admin>(
+          widgetChild: BlocConsumer<AdminCubit, Admin>(
+            listener: (context, state) {
+              setState(() {
+                adminName = state.name;
+              });
+            },
             builder: (context, state) {
               return Padding(
                 padding: EdgeInsets.symmetric(
@@ -191,7 +274,7 @@ class _PaidMarkerPageState extends State<PaidMarkerPage> {
                                           ),
                                         )
                                       : Image.asset(
-                                          "assets/admin/campervan/${state.facilities[indexFac].toString().toLowerCase()}.png",
+                                          "assets/admin/campsite/${state.facilities[indexFac].toString().toLowerCase()}.png",
                                           scale: 1.5,
                                         )
                                 ],

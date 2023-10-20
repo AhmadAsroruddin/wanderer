@@ -248,7 +248,7 @@ class _AddTypePageState extends State<AddTypePage> {
         jenis: admin.category,
         latitude: admin.latitude,
         longitude: admin.longitude,
-        userId: "",
+        userId: userId,
         contact: admin.noTelp,
         socialMedia: admin.instagram,
         address: admin.address,
@@ -263,7 +263,9 @@ class _AddTypePageState extends State<AddTypePage> {
     await context.read<MarkersCubit>().update(adminId, markerid);
 
     List<Tipe> types = context.read<TypeCubit>().getTipe();
+
     await context.read<TypeCubit>().addType(types, adminId);
-    context.read<AdminCubit>().updateUserRole(userId);
+
+    context.read<AdminCubit>().updateUserRole(userId, adminId);
   }
 }
