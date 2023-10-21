@@ -9,7 +9,7 @@ class GetOrderDataByStatus {
   GetOrderDataByStatus({required this.orderRepos});
 
   Future<Either<String, List<OrderData>>> execute(
-      String adminId, String status) async {
-    return orderRepos.getOrderDataByStatus(adminId, status);
+      String adminId, String status, bool isUser) async {
+    return orderRepos.getOrderDataByStatus(adminId, status, isUser);
   }
 }

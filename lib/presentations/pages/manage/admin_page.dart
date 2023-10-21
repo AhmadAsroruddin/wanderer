@@ -128,6 +128,7 @@ class _AdminPageState extends State<AdminPage>
                   ManageTab(
                     tabController: _tabController,
                     adminId: state.data.id,
+                    isUser: false,
                   )
                 ],
               );

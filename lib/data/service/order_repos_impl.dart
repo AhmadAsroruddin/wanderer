@@ -14,19 +14,30 @@ class OrderReposImpl extends OrderRepos {
       await orderDataSource.makeOrder(order);
       return const Right("Data Berhasil Dimasukkan");
     } catch (e) {
-      print(e);
       return Left(e.toString());
     }
   }
 
   @override
   Future<Either<String, List<OrderData>>> getOrderDataByStatus(
-      String adminId, String status) async {
+      String adminId, String status, bool isUser) async {
     try {
       final result =
-          await orderDataSource.getOrderDataByStatus(adminId, status);
+          await orderDataSource.getOrderDataByStatus(adminId, status, isUser);
       return Right(result);
     } catch (e) {
+      return Left(e.toString());
+    }
+  }
+
+  @override
+  Future<Either<String, String>> updateStatus(
+      String id, String adminId, String status) async {
+    try {
+      await orderDataSource.updateStatus(id, adminId, status);
+      return const Right("Berhasil dirubah");
+    } catch (e) {
+      print(e);
       return Left(e.toString());
     }
   }

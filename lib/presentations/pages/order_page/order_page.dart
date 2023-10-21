@@ -5,9 +5,11 @@ import 'package:wanderer/domain/entities/order.dart';
 import 'package:wanderer/domain/entities/tipe.dart';
 import 'package:wanderer/presentations/bloc/order_bloc.dart';
 import 'package:wanderer/presentations/shared/customTextField.dart';
+import 'package:wanderer/presentations/shared/dialogUtilsWithCustomRoute.dart';
 import 'package:wanderer/presentations/shared/theme.dart';
 
 import '../../bloc/auth_bloc.dart';
+import '../user_order_list_page/user_order_list_page.dart';
 
 class OrderPage extends StatefulWidget {
   const OrderPage({super.key});
@@ -118,7 +120,6 @@ class _OrderPageState extends State<OrderPage> {
                 Center(
                   child: Container(
                     width: deviceWidth * 0.9,
-                    height: deviceHeight * 0.31,
                     padding: EdgeInsets.zero,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
@@ -340,34 +341,63 @@ class _OrderPageState extends State<OrderPage> {
                 ),
                 SizedBox(
                   width: deviceWidth * 0.3,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: baseColor, // Warna latar belakang tombol
-                      // Ubah warna teks di sini
-                    ),
-                    onPressed: () async {
-                      String accountId =
-                          await context.read<AuthCubit>().getCurrentUser();
-                      context.read<OrderCubit>().makeOrder(
-                            OrderData(
-                              id: '',
-                              accountId: accountId,
-                              guestName: nama.text,
-                              orderedPlaceId: tipe.adminId,
-                              firstDate: formatDate(selectedDate.start),
-                              lastDate: formatDate(selectedDate.end),
-                              days: days,
-                              price: harga,
-                              status: 'request',
-                              message: permintaan.text,
-                            ),
-                          );
+                  child: BlocConsumer<OrderCubit, OrderState>(
+                    listener: (context, state) {
+                      if (state is OrderFailed) {
+                        DialogUtilsWithCustomRoute.alertDialogWithCustomRoute(
+                            context, "Gagal membuat pesanan", state.error, () {
+                          Navigator.of(context).pop();
+                        });
+                      } else if (state is OrderSuccess) {
+                        DialogUtilsWithCustomRoute.alertDialogWithCustomRoute(
+                            context,
+                            "Pesanan Berhasil dibuat",
+                            "Klik di sini untuk melihat pesanan anda",
+                            () async {
+                          String userId =
+                              await context.read<AuthCubit>().getCurrentUser();
+                          Navigator.of(context).pushNamed(
+                              UserOrderListPage.routeName,
+                              arguments: userId);
+                        });
+                      }
                     },
-                    child: Text(
-                      "Pesan",
-                      style: blackTextStyle.copyWith(
-                          fontSize: deviceWidth * 0.045),
-                    ),
+                    builder: (context, state) {
+                      return ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              baseColor, // Warna latar belakang tombol
+                          // Ubah warna teks di sini
+                        ),
+                        onPressed: () async {
+                          String accountId =
+                              await context.read<AuthCubit>().getCurrentUser();
+                          await context.read<OrderCubit>().makeOrder(
+                                OrderData(
+                                    id: '',
+                                    accountId: accountId,
+                                    guestName: nama.text,
+                                    orderedPlaceId: tipe.adminId,
+                                    firstDate: formatDate(selectedDate.start),
+                                    lastDate: formatDate(selectedDate.end),
+                                    days: days,
+                                    price: harga,
+                                    status: 'request',
+                                    message: permintaan.text,
+                                    name: tipe.name,
+                                    amountType: amount,
+                                    orderId: ""),
+                              );
+                        },
+                        child: state is OrderLoading
+                            ? const CircularProgressIndicator.adaptive()
+                            : Text(
+                                "Pesan",
+                                style: blackTextStyle.copyWith(
+                                    fontSize: deviceWidth * 0.045),
+                              ),
+                      );
+                    },
                   ),
                 )
               ],

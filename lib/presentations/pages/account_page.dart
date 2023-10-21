@@ -2,10 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'package:wanderer/presentations/bloc/favorite_bloc.dart';
 import 'package:wanderer/presentations/bloc/user_bloc.dart';
 import 'package:wanderer/presentations/pages/favorite_page.dart';
 import 'package:wanderer/presentations/pages/manage/admin_page.dart';
+import 'package:wanderer/presentations/pages/user_order_list_page/user_order_list_page.dart';
 
 import '../bloc/auth_bloc.dart';
 import '../shared/theme.dart';
@@ -16,6 +18,7 @@ class AccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<UserCubit>().getUser();
+
     return Scaffold(
       body: SafeArea(
         child: BlocBuilder<UserCubit, UserState>(
@@ -59,11 +62,21 @@ class AccountPage extends StatelessWidget {
                         deviceHeight: deviceHeight,
                         child: Column(
                           children: <Widget>[
-                            AccountItem(
-                              deviceWidth: deviceWidth,
-                              deviceHeight: deviceHeight,
-                              name: "Pesanan Saya",
-                              image: "tab_image/order",
+                            GestureDetector(
+                              onTap: () async {
+                                String userId = await context
+                                    .read<AuthCubit>()
+                                    .getCurrentUser();
+                                Navigator.of(context).pushNamed(
+                                    UserOrderListPage.routeName,
+                                    arguments: userId);
+                              },
+                              child: AccountItem(
+                                deviceWidth: deviceWidth,
+                                deviceHeight: deviceHeight,
+                                name: "Pesanan Saya",
+                                image: "tab_image/order",
+                              ),
                             ),
                             const Divider(
                               thickness: 2,

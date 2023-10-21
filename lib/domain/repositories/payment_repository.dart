@@ -1,0 +1,8 @@
+import 'package:dartz/dartz.dart';
+import 'package:wanderer/domain/entities/order.dart';
+
+import '../entities/paymentUrl.dart';
+
+abstract class PaymentRepos {
+  Future<Either<String, PaymentUrl>> getUrl(double price, OrderData order);
+}

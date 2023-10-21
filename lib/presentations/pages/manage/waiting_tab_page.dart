@@ -1,23 +1,79 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wanderer/presentations/bloc/order_bloc.dart';
+import 'package:wanderer/presentations/shared/cardManage.dart';
 import 'package:wanderer/presentations/shared/theme.dart';
 
-class WaitingTabPage extends StatelessWidget {
-  const WaitingTabPage({required this.adminId, super.key});
+class WaitingTabPage extends StatefulWidget {
+  const WaitingTabPage(
+      {required this.adminId,
+      required this.isUser,
+      required this.isNeddButton,
+      super.key});
   final String adminId;
+  final bool isUser;
+  final bool isNeddButton;
 
   @override
+  State<WaitingTabPage> createState() => _WaitingTabPageState();
+}
+
+class _WaitingTabPageState extends State<WaitingTabPage> {
+  @override
   Widget build(BuildContext context) {
-    context.read<OrderCubit>().getOrderDataByStatus(adminId, "request");
+    context
+        .read<OrderCubit>()
+        .getOrderDataByStatus(widget.adminId, "request", widget.isUser);
     return BlocConsumer<OrderCubit, OrderState>(
       builder: (context, state) {
+        print(state);
         if (state is OrderDataObtained) {
-          return ListView.builder(
-            itemCount: 100,
-            itemBuilder: (context, index) {
-              return Text("asd");
-            },
+          return Container(
+            padding: EdgeInsets.symmetric(
+              vertical: deviceHeight * 0.02,
+              horizontal: deviceWidth * 0.03,
+            ),
+            decoration: BoxDecoration(color: lightBackgroundColor),
+            child: ListView.builder(
+              itemCount: state.list.length,
+              itemBuilder: (context, index) {
+                return CardManage(
+                  orderData: state.list[index],
+                  isNeedButton: widget.isNeddButton,
+                  widgetButton: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      SizedBox(
+                        width: deviceWidth * 0.3,
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            await context.read<OrderCubit>().updateStatus(
+                                state.list[index].id,
+                                widget.adminId,
+                                "refused");
+                            setState(() {});
+                          },
+                          child: const Text("Tolak"),
+                        ),
+                      ),
+                      SizedBox(
+                        width: deviceWidth * 0.3,
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            await context.read<OrderCubit>().updateStatus(
+                                state.list[index].id,
+                                widget.adminId,
+                                "waiting");
+                            setState(() {});
+                          },
+                          child: const Text("Terima"),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
           );
         } else {
           return const Center(child: CircularProgressIndicator());

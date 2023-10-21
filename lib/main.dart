@@ -14,6 +14,7 @@ import 'package:wanderer/presentations/bloc/image_bloc.dart';
 import 'package:wanderer/presentations/bloc/location_data_cubit.dart';
 import 'package:wanderer/presentations/bloc/markers_bloc.dart';
 import 'package:wanderer/presentations/bloc/order_bloc.dart';
+import 'package:wanderer/presentations/bloc/payment_bloc.dart';
 import 'package:wanderer/presentations/bloc/toggle_boolean_bloc.dart';
 import 'package:wanderer/presentations/bloc/type_bloc.dart';
 import 'package:wanderer/presentations/bloc/user_bloc.dart';
@@ -84,6 +85,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (_) => di.locator<TypeCubitData>()),
         BlocProvider(create: (_) => di.locator<UserCubit>()),
         BlocProvider(create: (_) => di.locator<OrderCubit>()),
+        BlocProvider(create: (_) => di.locator<PaymentCubit>()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

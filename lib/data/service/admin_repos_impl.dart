@@ -30,7 +30,7 @@ class AdminReposImpl implements AdminRepos {
   @override
   Future<Admin> getAdmin(String markerId) async {
     final result = await adminDataSource.getAdmin(markerId);
-    print(result);
+
     return result.first;
   }
 

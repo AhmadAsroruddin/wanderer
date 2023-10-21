@@ -11,7 +11,10 @@ class OrderData extends Equatable {
       required this.days,
       required this.price,
       required this.status,
-      required this.message});
+      required this.message,
+      required this.amountType,
+      required this.name,
+      required this.orderId});
 
   final String id;
   final String orderedPlaceId; //Campervan or campsite where they order
@@ -23,6 +26,9 @@ class OrderData extends Equatable {
   final double price;
   final String status;
   final String message;
+  final String name;
+  final int amountType;
+  final String orderId;
 
   @override
   List<Object> get props => [
@@ -35,5 +41,8 @@ class OrderData extends Equatable {
         days,
         price,
         status,
+        name,
+        amountType,
+        orderId
       ];
 }
