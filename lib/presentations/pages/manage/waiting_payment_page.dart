@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wanderer/domain/entities/transactionStatus.dart';
 import 'package:wanderer/presentations/bloc/order_bloc.dart';
 import 'package:wanderer/presentations/bloc/payment_bloc.dart';
 import 'package:wanderer/presentations/shared/snapWebView.dart';
@@ -24,12 +25,30 @@ class WaitingPaymentPage extends StatefulWidget {
 }
 
 class _WaitingPaymentPageState extends State<WaitingPaymentPage> {
+  String transactionId = "";
+
   @override
   Widget build(BuildContext context) {
     context
         .read<OrderCubit>()
         .getOrderDataByStatus(widget.adminId, "waiting", widget.isUser);
-    return BlocBuilder<OrderCubit, OrderState>(
+    return BlocConsumer<OrderCubit, OrderState>(
+      listener: (context, state) async {
+        if (state is OrderDataObtained) {
+          for (var element in state.list) {
+            print(element.orderId);
+            TransactionStatus tStatus =
+                await context.read<PaymentCubit>().getResponse(element.orderId);
+
+            if (tStatus.transactionStatus == "settlement") {
+              context
+                  .read<OrderCubit>()
+                  .updateStatus(element.id, element.orderedPlaceId, "paid");
+              setState(() {});
+            }
+          }
+        }
+      },
       builder: (context, state) {
         if (state is OrderDataObtained) {
           if (state.list == []) {
@@ -47,7 +66,7 @@ class _WaitingPaymentPageState extends State<WaitingPaymentPage> {
                 itemBuilder: (context, index) {
                   final price = state.list[index].price;
                   OrderData orderData = state.list[index];
-                  print('asdas ${state.list[index].orderId}');
+
                   return CardManage(
                     orderData: state.list[index],
                     isNeedButton: widget.isNeedButton,

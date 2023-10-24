@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wanderer/presentations/pages/manage/active_order_tab_page.dart';
 import 'package:wanderer/presentations/shared/theme.dart';
 
 import '../manage/waiting_payment_page.dart';
@@ -71,7 +72,7 @@ class _UserOrderListPageState extends State<UserOrderListPage>
                 Container(
                   padding: const EdgeInsets.only(bottom: 10),
                   width: deviceWidth,
-                  height: deviceHeight * 0.5,
+                  height: deviceHeight * 0.85,
                   child: TabBarView(
                     controller: _tabController,
                     children: [
@@ -86,7 +87,11 @@ class _UserOrderListPageState extends State<UserOrderListPage>
                         isUser: true,
                         isNeedButton: true,
                       ),
-                      const Text("data 3"),
+                      ActiveOrderTabPage(
+                        adminId: userId,
+                        isNeedButton: false,
+                        isUser: true,
+                      ),
                       const Text("data 4")
                     ],
                   ),

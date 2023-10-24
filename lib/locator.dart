@@ -43,6 +43,7 @@ import 'package:wanderer/domain/usecase/getAllTypes.dart';
 import 'package:wanderer/domain/usecase/getCurrentUserId.dart';
 import 'package:wanderer/domain/usecase/getOrderDataByStatus.dart';
 import 'package:wanderer/domain/usecase/getPaymentUrl.dart';
+import 'package:wanderer/domain/usecase/getTransactionResponse.dart';
 import 'package:wanderer/domain/usecase/getUserData.dart';
 import 'package:wanderer/domain/usecase/isFavorite.dart';
 import 'package:wanderer/domain/usecase/isFirstTime.dart';
@@ -110,6 +111,8 @@ void init() {
       .registerLazySingleton(() => GetOrderDataByStatus(orderRepos: locator()));
   locator.registerLazySingleton(() => UpdateStatusOrder(orderRepos: locator()));
   locator.registerLazySingleton(() => GetPaymentUrl(repos: locator()));
+  locator.registerLazySingleton(
+      () => GetTransactionResponse(paymentRepos: locator()));
 
   //REPOSITORY
   locator.registerLazySingleton<AuthRepos>(() => AuthReposImpl(
@@ -153,7 +156,7 @@ void init() {
   locator.registerFactory(() => TypeCubitData(locator()));
   locator.registerFactory(() => UserCubit(locator()));
   locator.registerFactory(() => OrderCubit(locator(), locator(), locator()));
-  locator.registerFactory(() => PaymentCubit(locator()));
+  locator.registerFactory(() => PaymentCubit(locator(), locator()));
 
   //DATA
 

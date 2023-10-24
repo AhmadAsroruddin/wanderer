@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:wanderer/data/datasource/payment_datasource.dart';
 import 'package:wanderer/domain/entities/order.dart';
 import 'package:wanderer/domain/entities/paymentUrl.dart';
+import 'package:wanderer/domain/entities/transactionStatus.dart';
 import 'package:wanderer/domain/repositories/payment_repository.dart';
 
 class PaymentReposImpl implements PaymentRepos {
@@ -19,5 +20,12 @@ class PaymentReposImpl implements PaymentRepos {
       print("URL ERROR : $e");
       return Left(e.toString());
     }
+  }
+
+  @override
+  Future<TransactionStatus> getResponse(String orderId) async {
+    final response = await paymentDataSource.getStatus(orderId);
+
+    return response;
   }
 }

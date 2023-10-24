@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
+import 'package:wanderer/data/models/transaction_status_model.dart';
 import 'package:wanderer/domain/entities/order.dart';
 import 'package:wanderer/domain/entities/paymentUrl.dart';
 import 'package:wanderer/domain/entities/transactionStatus.dart';
@@ -76,7 +77,7 @@ class PaymentDataSourceImpl implements PaymentDataSource {
       'Authorization':
           'Basic U0ItTWlkLXNlcnZlci1IMGY3SU40VGVpbllQMUk2cXZGd011Tmg6'
     };
-    var dio = Dio();
+
     var response = await dio.request(
       'https://api.sandbox.midtrans.com/v2/$orderId/status',
       options: Options(
@@ -87,24 +88,12 @@ class PaymentDataSourceImpl implements PaymentDataSource {
 
     if (response.statusCode == 200) {
       final data = response.data;
-      return TransactionStatus(
-        transactionTime: data['transactionTime'],
-        grossAmount: data['grossAmount'],
-        currency: data['currency'],
-        orderId: data['orderId'],
-        paymentType: data['paymentType'],
-        signatureKey: data['signatureKey'],
-        statusCode: data['statusCode'],
-        transactionId: data['transactionId'],
-        transactionStatus: data['transactionStatus'],
-        fraudStatus: data['fraudStatus'],
-        expiryTime: data['expiryTime'],
-        settlementTime: data['settlementTime'],
-        statusMessage: data['statusMessage'],
-        merchantId: data['merchantId'],
-      );
+      TransactionStatusModel transactionData =
+          TransactionStatusModel.fromJson(data);
+
+      return transactionData.toEntity();
     } else {
-      print(response.statusMessage);
+      throw Exception("Failed to get link URL");
     }
   }
 }

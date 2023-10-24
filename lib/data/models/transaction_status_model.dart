@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
+import 'package:wanderer/domain/entities/transactionStatus.dart';
 
 class TransactionStatusModel extends Equatable {
   final DateTime transactionTime;
@@ -18,7 +19,7 @@ class TransactionStatusModel extends Equatable {
   final String statusMessage;
   final String merchantId;
 
-  TransactionStatusModel({
+  const TransactionStatusModel({
     required this.transactionTime,
     required this.grossAmount,
     required this.currency,
@@ -57,6 +58,23 @@ class TransactionStatusModel extends Equatable {
         statusMessage: json["status_message"],
         merchantId: json["merchant_id"],
       );
+  TransactionStatus toEntity() {
+    return TransactionStatus(
+        transactionTime: transactionTime,
+        grossAmount: grossAmount,
+        currency: currency,
+        orderId: orderId,
+        paymentType: paymentType,
+        signatureKey: signatureKey,
+        statusCode: statusCode,
+        transactionId: transactionId,
+        transactionStatus: transactionStatus,
+        fraudStatus: fraudStatus,
+        expiryTime: expiryTime,
+        settlementTime: settlementTime,
+        statusMessage: statusMessage,
+        merchantId: merchantId);
+  }
 
   Map<String, dynamic> toJson() => {
         "transaction_time": transactionTime.toIso8601String(),

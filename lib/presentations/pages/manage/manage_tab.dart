@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wanderer/presentations/pages/manage/active_order_tab_page.dart';
 import 'package:wanderer/presentations/pages/manage/waiting_payment_page.dart';
 import 'package:wanderer/presentations/pages/manage/waiting_tab_page.dart';
 
@@ -63,7 +64,11 @@ class ManageTab extends StatelessWidget {
                     isUser: false,
                     isNeedButton: false,
                   ),
-                  const Text("data 3"),
+                  ActiveOrderTabPage(
+                    adminId: adminId,
+                    isNeedButton: false,
+                    isUser: isUser,
+                  ),
                   const Text("data 4")
                 ],
               ),
