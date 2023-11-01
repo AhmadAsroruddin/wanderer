@@ -44,7 +44,6 @@ class _GMapsState extends State<GMaps> {
     return GoogleMap(
       myLocationButtonEnabled: false,
       myLocationEnabled: true,
-      zoomControlsEnabled: true,
       mapToolbarEnabled: false,
       mapType: MapType.normal,
       markers: markers,

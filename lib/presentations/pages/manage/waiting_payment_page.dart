@@ -28,15 +28,24 @@ class _WaitingPaymentPageState extends State<WaitingPaymentPage> {
   String transactionId = "";
 
   @override
+  void initState() {
+    Future.delayed(
+      const Duration(seconds: 1),
+      () async {
+        await context
+            .read<OrderCubit>()
+            .getOrderDataByStatus(widget.adminId, "waiting", widget.isUser);
+      },
+    );
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    context
-        .read<OrderCubit>()
-        .getOrderDataByStatus(widget.adminId, "waiting", widget.isUser);
     return BlocConsumer<OrderCubit, OrderState>(
       listener: (context, state) async {
-        if (state is OrderDataObtained) {
+        if (state is OrderDataWaitingPaymentObtained) {
           for (var element in state.list) {
-            print(element.orderId);
             TransactionStatus tStatus =
                 await context.read<PaymentCubit>().getResponse(element.orderId);
 
@@ -50,7 +59,8 @@ class _WaitingPaymentPageState extends State<WaitingPaymentPage> {
         }
       },
       builder: (context, state) {
-        if (state is OrderDataObtained) {
+        if (state is OrderDataWaitingPaymentObtained) {
+          print('data sadas ${state.list}');
           if (state.list == []) {
             return const Center(
               child: Text("Belum ada pesanan"),

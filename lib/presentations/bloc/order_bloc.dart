@@ -32,7 +32,15 @@ class OrderCubit extends Cubit<OrderState> {
 
     result.fold(
       (l) => emit(OrderFailed(error: l)),
-      (r) => emit(OrderDataObtained(list: r)),
+      (r) {
+        if (status == "waiting") {
+          emit(OrderDataWaitingPaymentObtained(list: r));
+        } else if (status == "paid") {
+          emit(OrderDataPaidObtained(list: r));
+        } else if (status == "request") {
+          emit(OrderDataRequestObtained(list: r));
+        }
+      },
     );
   }
 

@@ -6,7 +6,7 @@ import 'package:wanderer/presentations/shared/cardManage.dart';
 import '../../../domain/entities/order.dart';
 import '../../shared/theme.dart';
 
-class ActiveOrderTabPage extends StatelessWidget {
+class ActiveOrderTabPage extends StatefulWidget {
   const ActiveOrderTabPage(
       {required this.adminId,
       required this.isNeedButton,
@@ -18,13 +18,24 @@ class ActiveOrderTabPage extends StatelessWidget {
   final bool isNeedButton;
 
   @override
+  State<ActiveOrderTabPage> createState() => _ActiveOrderTabPageState();
+}
+
+class _ActiveOrderTabPageState extends State<ActiveOrderTabPage> {
+  @override
+  void initState() {
+    context
+        .read<OrderCubit>()
+        .getOrderDataByStatus(widget.adminId, "paid", widget.isUser);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    context.read<OrderCubit>().getOrderDataByStatus(adminId, "paid", isUser);
     return BlocBuilder<OrderCubit, OrderState>(
       builder: (context, state) {
-        if (state is OrderDataObtained) {
+        if (state is OrderDataPaidObtained) {
           if (state.list == []) {
-            print("object");
             return const Center(
               child: Text("Belum ada Pesanan"),
             );
@@ -40,7 +51,7 @@ class ActiveOrderTabPage extends StatelessWidget {
                   OrderData orderData = state.list[index];
                   return CardManage(
                     orderData: orderData,
-                    isNeedButton: isNeedButton,
+                    isNeedButton: widget.isNeedButton,
                     widgetButton: Container(),
                   );
                 },

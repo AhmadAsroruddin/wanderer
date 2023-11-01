@@ -20,14 +20,22 @@ class WaitingTabPage extends StatefulWidget {
 
 class _WaitingTabPageState extends State<WaitingTabPage> {
   @override
+  void initState() {
+    // TODO: implement initState
+    Future.delayed(const Duration(milliseconds: 1), () async {
+      await context
+          .read<OrderCubit>()
+          .getOrderDataByStatus(widget.adminId, "request", widget.isUser);
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    context
-        .read<OrderCubit>()
-        .getOrderDataByStatus(widget.adminId, "request", widget.isUser);
     return BlocConsumer<OrderCubit, OrderState>(
       builder: (context, state) {
         print(state);
-        if (state is OrderDataObtained) {
+        if (state is OrderDataRequestObtained) {
           return Container(
             padding: EdgeInsets.symmetric(
               vertical: deviceHeight * 0.02,

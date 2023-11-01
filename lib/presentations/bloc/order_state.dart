@@ -26,10 +26,28 @@ class OrderSuccess extends OrderState {
   List<Object> get props => [message];
 }
 
-class OrderDataObtained extends OrderState {
+class OrderDataWaitingPaymentObtained extends OrderState {
   final List<OrderData> list;
 
-  const OrderDataObtained({required this.list});
+  const OrderDataWaitingPaymentObtained({required this.list});
+
+  @override
+  List<Object> get props => [list];
+}
+
+class OrderDataPaidObtained extends OrderState {
+  final List<OrderData> list;
+
+  const OrderDataPaidObtained({required this.list});
+
+  @override
+  List<Object> get props => [list];
+}
+
+class OrderDataRequestObtained extends OrderState {
+  final List<OrderData> list;
+
+  const OrderDataRequestObtained({required this.list});
 
   @override
   List<Object> get props => [list];

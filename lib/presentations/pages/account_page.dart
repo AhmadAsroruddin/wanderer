@@ -26,166 +26,171 @@ class AccountPage extends StatelessWidget {
             if (state is UserSuccess) {
               return SingleChildScrollView(
                 child: Center(
-                  child: Column(
-                    children: <Widget>[
-                      const CircleAvatar(
-                        backgroundImage: AssetImage("assets/img/avatar.png"),
-                        radius: 100,
-                      ),
-                      SizedBox(
-                        height: deviceHeight * 0.03,
-                      ),
-                      Text(
-                        state.user.username,
-                        style: GoogleFonts.roboto().copyWith(fontSize: 20),
-                      ),
-                      SizedBox(
-                        height: deviceHeight * 0.05,
-                      ),
-                      CardAccount(
-                        title: "Akun",
-                        deviceWidth: deviceWidth,
-                        deviceHeight: deviceHeight,
-                        child: AccountItem(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Column(
+                      children: <Widget>[
+                        const CircleAvatar(
+                          backgroundImage: AssetImage("assets/img/avatar.png"),
+                          radius: 100,
+                        ),
+                        SizedBox(
+                          height: deviceHeight * 0.03,
+                        ),
+                        Text(
+                          state.user.username,
+                          style: GoogleFonts.roboto().copyWith(fontSize: 20),
+                        ),
+                        SizedBox(
+                          height: deviceHeight * 0.05,
+                        ),
+                        CardAccount(
+                          title: "Akun",
                           deviceWidth: deviceWidth,
                           deviceHeight: deviceHeight,
-                          name: "Edit Profile",
-                          image: "edit",
+                          child: AccountItem(
+                            deviceWidth: deviceWidth,
+                            deviceHeight: deviceHeight,
+                            name: "Edit Profile",
+                            image: "edit",
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: deviceHeight * 0.05,
-                      ),
-                      CardAccount(
-                        title: "Keperluan",
-                        deviceWidth: deviceWidth,
-                        deviceHeight: deviceHeight,
-                        child: Column(
-                          children: <Widget>[
-                            GestureDetector(
-                              onTap: () async {
-                                String userId = await context
-                                    .read<AuthCubit>()
-                                    .getCurrentUser();
-                                Navigator.of(context).pushNamed(
-                                    UserOrderListPage.routeName,
-                                    arguments: userId);
-                              },
-                              child: AccountItem(
-                                deviceWidth: deviceWidth,
-                                deviceHeight: deviceHeight,
-                                name: "Pesanan Saya",
-                                image: "tab_image/order",
-                              ),
-                            ),
-                            const Divider(
-                              thickness: 2,
-                            ),
-                            GestureDetector(
-                              onTap: () async {
-                                FirebaseAuth firebaseAuth =
-                                    FirebaseAuth.instance;
-                                String userId = firebaseAuth.currentUser!.uid;
-                                context.read<FavoriteCubit>().getAllFav(userId);
-                                Navigator.of(context)
-                                    .pushNamed(FavoritePage.routeName);
-                              },
-                              child: AccountItem(
-                                deviceWidth: deviceWidth,
-                                deviceHeight: deviceHeight,
-                                name: "Favorite Saya",
-                                image: "love",
-                              ),
-                            )
-                          ],
+                        SizedBox(
+                          height: deviceHeight * 0.05,
                         ),
-                      ),
-                      SizedBox(
-                        height: deviceHeight * 0.03,
-                      ),
-                      state.user.role != ""
-                          ? GestureDetector(
-                              onTap: () async {
-                                Navigator.of(context).pushNamed(
-                                    AdminPage.routeName,
-                                    arguments: state.user.role);
-                              },
-                              child: CardAccount(
-                                deviceWidth: deviceWidth,
-                                deviceHeight: deviceHeight,
-                                title: "Pengelolaan",
-                                child: Column(
-                                  children: <Widget>[
-                                    AccountItem(
-                                      deviceWidth: deviceWidth,
-                                      deviceHeight: deviceHeight,
-                                      image: "marker",
-                                      name: "Kelola Tempat",
-                                    )
-                                  ],
+                        CardAccount(
+                          title: "Keperluan",
+                          deviceWidth: deviceWidth,
+                          deviceHeight: deviceHeight,
+                          child: Column(
+                            children: <Widget>[
+                              GestureDetector(
+                                onTap: () async {
+                                  String userId = await context
+                                      .read<AuthCubit>()
+                                      .getCurrentUser();
+                                  Navigator.of(context).pushNamed(
+                                      UserOrderListPage.routeName,
+                                      arguments: userId);
+                                },
+                                child: AccountItem(
+                                  deviceWidth: deviceWidth,
+                                  deviceHeight: deviceHeight,
+                                  name: "Pesanan Saya",
+                                  image: "tab_image/order",
                                 ),
                               ),
-                            )
-                          : Container(),
-                      SizedBox(
-                        height: deviceHeight * 0.08,
-                      ),
-                      const Divider(
-                        thickness: 2,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Row(
-                          children: <Widget>[
-                            SizedBox(
-                              width: deviceWidth * 0.1,
-                              height: deviceHeight * 0.04,
-                              child: Image.asset(
-                                "assets/img/logout.png",
+                              const Divider(
+                                thickness: 2,
                               ),
-                            ),
-                            SizedBox(
-                              width: deviceWidth * 0.1,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                context.read<AuthCubit>().logout();
-                              },
-                              child: Text(
-                                "Keluar",
+                              GestureDetector(
+                                onTap: () async {
+                                  FirebaseAuth firebaseAuth =
+                                      FirebaseAuth.instance;
+                                  String userId = firebaseAuth.currentUser!.uid;
+                                  context
+                                      .read<FavoriteCubit>()
+                                      .getAllFav(userId);
+                                  Navigator.of(context)
+                                      .pushNamed(FavoritePage.routeName);
+                                },
+                                child: AccountItem(
+                                  deviceWidth: deviceWidth,
+                                  deviceHeight: deviceHeight,
+                                  name: "Favorite Saya",
+                                  image: "love",
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: deviceHeight * 0.03,
+                        ),
+                        state.user.role != ""
+                            ? GestureDetector(
+                                onTap: () async {
+                                  Navigator.of(context).pushNamed(
+                                      AdminPage.routeName,
+                                      arguments: state.user.role);
+                                },
+                                child: CardAccount(
+                                  deviceWidth: deviceWidth,
+                                  deviceHeight: deviceHeight,
+                                  title: "Pengelolaan",
+                                  child: Column(
+                                    children: <Widget>[
+                                      AccountItem(
+                                        deviceWidth: deviceWidth,
+                                        deviceHeight: deviceHeight,
+                                        image: "marker",
+                                        name: "Kelola Tempat",
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              )
+                            : Container(),
+                        SizedBox(
+                          height: deviceHeight * 0.08,
+                        ),
+                        const Divider(
+                          thickness: 2,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Row(
+                            children: <Widget>[
+                              SizedBox(
+                                width: deviceWidth * 0.1,
+                                height: deviceHeight * 0.04,
+                                child: Image.asset(
+                                  "assets/img/logout.png",
+                                ),
+                              ),
+                              SizedBox(
+                                width: deviceWidth * 0.1,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  context.read<AuthCubit>().logout();
+                                },
+                                child: Text(
+                                  "Keluar",
+                                  style: GoogleFonts.roboto()
+                                      .copyWith(fontSize: 18),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: deviceHeight * 0.03,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Row(
+                            children: <Widget>[
+                              SizedBox(
+                                width: deviceWidth * 0.1,
+                                height: deviceHeight * 0.04,
+                                child: Image.asset(
+                                  "assets/img/trashBin.png",
+                                ),
+                              ),
+                              SizedBox(
+                                width: deviceWidth * 0.1,
+                              ),
+                              Text(
+                                "Hapus Akun",
                                 style:
                                     GoogleFonts.roboto().copyWith(fontSize: 18),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: deviceHeight * 0.03,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Row(
-                          children: <Widget>[
-                            SizedBox(
-                              width: deviceWidth * 0.1,
-                              height: deviceHeight * 0.04,
-                              child: Image.asset(
-                                "assets/img/trashBin.png",
-                              ),
-                            ),
-                            SizedBox(
-                              width: deviceWidth * 0.1,
-                            ),
-                            Text(
-                              "Hapus Akun",
-                              style:
-                                  GoogleFonts.roboto().copyWith(fontSize: 18),
-                            )
-                          ],
-                        ),
-                      )
-                    ],
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               );

@@ -22,10 +22,20 @@ class _RegisterPageState extends State<RegisterPage> {
     final double deviceWidth = MediaQuery.of(context).size.width;
     final double deviceHeight = MediaQuery.of(context).size.height;
 
-    TextEditingController username = TextEditingController();
-    TextEditingController emailAddress = TextEditingController();
-    TextEditingController password = TextEditingController();
-    TextEditingController phoneNumber = TextEditingController();
+    TextEditingController _username = TextEditingController();
+    TextEditingController _emailAddress = TextEditingController();
+    TextEditingController _password = TextEditingController();
+    TextEditingController _phoneNumber = TextEditingController();
+
+    @override
+    void dispose() {
+      // Hapus controller ketika widget di-dispose
+      _username.dispose();
+      _emailAddress.dispose();
+      _password.dispose();
+      _phoneNumber.dispose();
+      super.dispose();
+    }
 
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
@@ -87,7 +97,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       TextFieldRegister(
                         deviceHeight: deviceHeight,
                         hintText: "Username",
-                        controller: username,
+                        controller: _username,
                       ),
                       const SizedBox(
                         height: 20,
@@ -95,7 +105,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       TextFieldRegister(
                         deviceHeight: deviceHeight,
                         hintText: "Email Address",
-                        controller: emailAddress,
+                        controller: _emailAddress,
                       ),
                       const SizedBox(
                         height: 20,
@@ -103,7 +113,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       TextFieldRegister(
                         deviceHeight: deviceHeight,
                         hintText: "Phone Number",
-                        controller: phoneNumber,
+                        controller: _phoneNumber,
                       ),
                       const SizedBox(
                         height: 20,
@@ -112,7 +122,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         deviceHeight: deviceHeight,
                         hintText: "Password",
                         obscure: true,
-                        controller: password,
+                        controller: _password,
                       ),
                     ],
                   ),
@@ -122,10 +132,10 @@ class _RegisterPageState extends State<RegisterPage> {
                   ElevatedButton(
                     onPressed: () async {
                       await context.read<AuthCubit>().createAccount(
-                          username.text,
-                          emailAddress.text,
-                          password.text,
-                          phoneNumber.text);
+                          _username.text,
+                          _emailAddress.text,
+                          _password.text,
+                          _phoneNumber.text);
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(

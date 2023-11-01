@@ -43,44 +43,47 @@ class CardManage extends StatelessWidget {
               SizedBox(
                 height: deviceHeight * 0.01,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      const Text("Check-in"),
-                      Text(
-                        orderData.firstDate,
-                        style: blackTextStyle.copyWith(
-                          fontSize: deviceWidth * 0.035,
-                          fontWeight: FontWeight.w900,
+              Container(
+                width: deviceWidth * 0.9,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        const Text("Check-in"),
+                        Text(
+                          orderData.firstDate,
+                          style: blackTextStyle.copyWith(
+                            fontSize: deviceWidth * 0.03,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(orderData.days.toString()),
+                        const Icon(
+                          FontAwesomeIcons.moon,
                         ),
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text(orderData.days.toString()),
-                      const Icon(
-                        FontAwesomeIcons.moon,
-                      ),
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      const Text("Check-out"),
-                      Text(
-                        orderData.lastDate,
-                        style: blackTextStyle.copyWith(
-                          fontSize: deviceWidth * 0.035,
-                          fontWeight: FontWeight.w900,
-                        ),
-                      )
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        const Text("Check-out"),
+                        Text(
+                          orderData.lastDate,
+                          style: blackTextStyle.copyWith(
+                            fontSize: deviceWidth * 0.03,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
               ),
               const Divider(
                 thickness: 1,

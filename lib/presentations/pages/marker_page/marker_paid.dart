@@ -244,8 +244,10 @@ class _PaidMarkerPageState extends State<PaidMarkerPage> {
                         fontSize: deviceWidth * 0.05,
                       ),
                     ),
-                    SizedBox(
+                    Container(
                       height: deviceHeight * 0.2,
+                      width: deviceWidth,
+                      alignment: Alignment.center,
                       child: GridView.builder(
                         gridDelegate:
                             const SliverGridDelegateWithMaxCrossAxisExtent(
@@ -269,7 +271,7 @@ class _PaidMarkerPageState extends State<PaidMarkerPage> {
                                       ? SizedBox(
                                           width: deviceWidth * 0.2,
                                           child: Image.asset(
-                                            "assets/admin/campsite/${state.facilities[indexFac].toString().toLowerCase()}.png",
+                                            "assets/admin/campervan/${state.facilities[indexFac].toString().toLowerCase()}.png",
                                             scale: 1.5,
                                           ),
                                         )
