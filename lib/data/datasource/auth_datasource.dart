@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:wanderer/data/datasource/user_datasource.dart';
 import 'package:wanderer/data/models/user_model.dart';
+import 'package:wanderer/domain/entities/user.dart';
 
 abstract class AuthDataSource {
   Future<void> createUser(
@@ -64,6 +66,9 @@ class AuthDataSourceImpl implements AuthDataSource {
           await auth.signInWithCredential(credential);
       final User? user = authResult.user;
 
+      UserDataSource dataSource = UserDataSourceImpl();
+      final Users userRole = await dataSource.getUserData();
+
       await FirebaseFirestore.instance
           .collection("users")
           .doc(user!.uid)
@@ -74,7 +79,7 @@ class AuthDataSourceImpl implements AuthDataSource {
                 "https://cdn.pixabay.com/photo/2023/05/21/07/47/horse-8008038_1280.jpg",
             telponNumber: user.phoneNumber ?? "",
             markers: [],
-            role: "",
+            role: userRole.role,
           ).toMap());
     }
   }

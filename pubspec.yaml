@@ -59,6 +59,7 @@ dependencies:
   custom_marker: ^1.0.0
   dio: ^5.3.3
   webview_flutter: ^3.0.4
+  rename: ^3.0.1
   
 dev_dependencies:
   flutter_test:

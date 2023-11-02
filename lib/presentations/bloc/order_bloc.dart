@@ -14,9 +14,10 @@ class OrderCubit extends Cubit<OrderState> {
 
   OrderCubit(this.requestOrder, this.getOrderDataByStatusUseCase,
       this.updateStatusOrder)
-      : super(OrderLoading());
+      : super(OrderInitial());
 
   Future<void> makeOrder(OrderData orderData) async {
+    emit(OrderLoading());
     final result = await requestOrder.execute(orderData);
 
     result.fold(
@@ -27,6 +28,7 @@ class OrderCubit extends Cubit<OrderState> {
 
   Future<void> getOrderDataByStatus(
       String adminId, String status, bool isUser) async {
+    emit(OrderLoading());
     final result =
         await getOrderDataByStatusUseCase.execute(adminId, status, isUser);
 

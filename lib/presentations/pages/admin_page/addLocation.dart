@@ -125,10 +125,11 @@ class _AddLocationState extends State<AddLocation> {
                           hintText: 'Masukkan teks di sini', // Contoh hint text
                         ),
                         onChanged: (value) {
-                          setState(() {
-                            alamat = value;
-                            print(alamat);
-                          });
+                          setState(
+                            () {
+                              alamat = value;
+                            },
+                          );
                         },
                       ),
                     ),
@@ -193,6 +194,7 @@ class _AddLocationState extends State<AddLocation> {
     setState(() {
       placemark = place;
       alamat = address;
+      selectedLatLng = LatLng(locationData.latitude!, locationData.longitude!);
     });
 
     defineMarker(latLng, street!, address);

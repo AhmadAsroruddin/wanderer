@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:wanderer/presentations/pages/account_page.dart';
 import 'package:wanderer/presentations/pages/campervan_page/campervan_page.dart';
 import 'package:wanderer/presentations/pages/home_page/home_page.dart';
+import 'package:wanderer/presentations/pages/user_order_list_page/user_order_list_page.dart';
 
 import 'account_check_page.dart';
 
@@ -27,7 +28,7 @@ class _TabScreenState extends State<TabScreen> {
     _pages = [
       {'page': HomePage(), 'title': 'home'},
       {'page': const CampervanPage(), 'title': 'Campervan'},
-      {'page': HomePage(), 'title': 'My Order'},
+      {'page': const UserOrderListPage(), 'title': 'My Order'},
       {'page': HomePage(), 'title': 'Articles'},
       {
         'page': user == null ? const AccountCheckPage() : const AccountPage(),

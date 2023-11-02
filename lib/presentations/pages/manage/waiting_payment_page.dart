@@ -112,7 +112,7 @@ class _WaitingPaymentPageState extends State<WaitingPaymentPage> {
             );
           }
         } else {
-          return const CircularProgressIndicator();
+          return const Center(child: CircularProgressIndicator());
         }
       },
     );

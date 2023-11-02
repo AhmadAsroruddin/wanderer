@@ -9,6 +9,8 @@ class OrderState extends Equatable {
 
 class OrderLoading extends OrderState {}
 
+class OrderInitial extends OrderState {}
+
 class OrderFailed extends OrderState {
   final String error;
   const OrderFailed({required this.error});

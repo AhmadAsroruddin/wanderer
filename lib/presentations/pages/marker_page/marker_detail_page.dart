@@ -31,7 +31,7 @@ class _DetailsPageState extends State<DetailsPage> {
   @override
   void initState() {
     super.initState();
-    print(widget.markers.userId);
+
     context.read<AdminDataCubit>().getAdminData(widget.markers.id);
   }
 
@@ -102,10 +102,12 @@ class _DetailsPageState extends State<DetailsPage> {
               textAlign: TextAlign.justify,
             ),
           ),
-          PaidMarkerPage(
-            widget: widget,
-            adminId: widget.markers.userId,
-          ),
+          if (widget.markers.jenis == "Campervan" ||
+              widget.markers.jenis == "Paid_Campsite")
+            PaidMarkerPage(
+              widget: widget,
+              adminId: widget.markers.userId,
+            ),
           DetailContainer(
             widget: widget,
             widgetChild: Column(

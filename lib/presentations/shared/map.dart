@@ -42,9 +42,9 @@ class _GMapsState extends State<GMaps> {
   @override
   Widget build(BuildContext context) {
     return GoogleMap(
-      myLocationButtonEnabled: false,
       myLocationEnabled: true,
       mapToolbarEnabled: false,
+      zoomControlsEnabled: false,
       mapType: MapType.normal,
       markers: markers,
       scrollGesturesEnabled: true,

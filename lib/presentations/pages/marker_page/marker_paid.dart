@@ -109,7 +109,6 @@ class _PaidMarkerPageState extends State<PaidMarkerPage> {
                                           MainAxisAlignment.spaceBetween,
                                       children: <Widget>[
                                         SizedBox(
-                                          width: deviceWidth * 0.3,
                                           child: Text(
                                             "Rp.${state.tipe[index].price.toString()}",
                                             style: blackTextStyle.copyWith(
@@ -123,7 +122,6 @@ class _PaidMarkerPageState extends State<PaidMarkerPage> {
                                               MainAxisAlignment.end,
                                           children: [
                                             SizedBox(
-                                              width: deviceWidth * 0.27,
                                               child: Row(
                                                 children: <Widget>[
                                                   IconButton(
@@ -245,27 +243,23 @@ class _PaidMarkerPageState extends State<PaidMarkerPage> {
                       ),
                     ),
                     Container(
-                      height: deviceHeight * 0.2,
-                      width: deviceWidth,
-                      alignment: Alignment.center,
-                      child: GridView.builder(
-                        gridDelegate:
-                            const SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 200,
-                          childAspectRatio: 4 / 3,
-                          crossAxisSpacing: 0,
-                          mainAxisSpacing: 0,
-                        ),
-                        padding: EdgeInsets.zero,
-                        itemCount: state.facilities.length,
-                        itemBuilder: (context, indexFac) {
-                          return Center(
-                            child: SizedBox(
-                              width: deviceWidth * 0.3,
+                        height: deviceHeight * 0.1,
+                        width: deviceWidth,
+                        alignment: Alignment.center,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: state.facilities.length,
+                          itemBuilder: (context, indexFac) {
+                            return Container(
+                              margin:
+                                  EdgeInsets.only(right: deviceWidth * 0.05),
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  Text(
-                                    state.facilities[indexFac],
+                                  Container(
+                                    child: Text(
+                                      state.facilities[indexFac],
+                                    ),
                                   ),
                                   state.category == "Campervan"
                                       ? SizedBox(
@@ -281,11 +275,9 @@ class _PaidMarkerPageState extends State<PaidMarkerPage> {
                                         )
                                 ],
                               ),
-                            ),
-                          );
-                        },
-                      ),
-                    )
+                            );
+                          },
+                        ))
                   ],
                 ),
               );
