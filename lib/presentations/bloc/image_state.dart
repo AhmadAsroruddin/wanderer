@@ -21,7 +21,7 @@ class ImageFailed extends ImageState {
 
 class ImageSuccess extends ImageState {
   final List<String> links;
-  ImageSuccess({required this.links});
+  const ImageSuccess({required this.links});
 
   @override
   List<Object> get props => [links];

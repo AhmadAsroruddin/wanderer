@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class PaymentUrl extends Equatable {
-  PaymentUrl({required this.token, required this.redirectUrl});
+  const PaymentUrl({required this.token, required this.redirectUrl});
 
   final String token;
   final String redirectUrl;

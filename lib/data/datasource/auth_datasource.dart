@@ -30,7 +30,7 @@ class AuthDataSourceImpl implements AuthDataSource {
                 imageUrl:
                     "https://cdn.pixabay.com/photo/2023/05/21/07/47/horse-8008038_1280.jpg",
                 telponNumber: telponNumber,
-                markers: [],
+                markers: const [],
                 role: "")
             .toMap());
   }
@@ -65,9 +65,20 @@ class AuthDataSourceImpl implements AuthDataSource {
       final UserCredential authResult =
           await auth.signInWithCredential(credential);
       final User? user = authResult.user;
+      Users userRole = Users(
+          username: "",
+          email: "",
+          imageUrl: "",
+          telponNumber: "",
+          markers: [],
+          role: "");
 
-      UserDataSource dataSource = UserDataSourceImpl();
-      final Users userRole = await dataSource.getUserData();
+      if (auth.currentUser!.uid == "") {
+        print("asidlasndlasdla");
+        UserDataSource dataSource = UserDataSourceImpl();
+
+        userRole = await dataSource.getUserData();
+      }
 
       await FirebaseFirestore.instance
           .collection("users")
@@ -78,8 +89,8 @@ class AuthDataSourceImpl implements AuthDataSource {
             imageUrl:
                 "https://cdn.pixabay.com/photo/2023/05/21/07/47/horse-8008038_1280.jpg",
             telponNumber: user.phoneNumber ?? "",
-            markers: [],
-            role: userRole.role,
+            markers: const [],
+            role: userRole.role == "" ? "" : userRole.role,
           ).toMap());
     }
   }

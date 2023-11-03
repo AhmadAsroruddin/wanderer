@@ -118,7 +118,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     SizedBox(
                       width: deviceWidth * 0.05,
                     ),
-                    Container(
+                    SizedBox(
                         width: deviceWidth * 0.8,
                         child: Text(widget.markers.address)),
                   ],

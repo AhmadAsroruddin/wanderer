@@ -26,7 +26,7 @@ class FavoritePage extends StatelessWidget {
               return ListView.builder(
                 itemCount: 5,
                 itemBuilder: (context, index) {
-                  return CampervanList();
+                  return const CampervanList();
                 },
               );
             } else {

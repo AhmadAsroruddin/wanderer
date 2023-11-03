@@ -32,6 +32,7 @@ void main() async {
   di.init();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
+    name: 'wanderer-3e072',
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(const MyApp());

@@ -80,7 +80,7 @@ class _WaitingPaymentPageState extends State<WaitingPaymentPage> {
                   return CardManage(
                     orderData: state.list[index],
                     isNeedButton: widget.isNeedButton,
-                    widgetButton: Container(
+                    widgetButton: SizedBox(
                       width: deviceWidth,
                       child: BlocConsumer<PaymentCubit, PaymentState>(
                         listener: (context, state) {

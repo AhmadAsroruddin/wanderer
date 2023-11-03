@@ -19,7 +19,7 @@ import '../../shared/button_add_marker.dart';
 import '../../shared/utils.dart';
 
 class AddMarkerPage extends StatefulWidget {
-  AddMarkerPage({super.key, required this.category});
+  const AddMarkerPage({super.key, required this.category});
 
   final String category;
   static const routeName = '/addMarkerPage';
@@ -43,7 +43,7 @@ class _AddMarkerPageState extends State<AddMarkerPage> {
 
   final TextEditingController harga = TextEditingController();
 
-  LatLng latLngMarker = LatLng(0, 0);
+  LatLng latLngMarker = const LatLng(0, 0);
   List<XFile>? images;
   List<String> imageLinks = [];
   BuildContext? dContext;

@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:wanderer/domain/entities/marker.dart';
 
 class MarkerModel extends Equatable {
-  MarkerModel(
+  const MarkerModel(
       {required this.name,
       required this.description,
       required this.image,

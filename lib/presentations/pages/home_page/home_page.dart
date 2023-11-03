@@ -9,7 +9,7 @@ import 'package:wanderer/presentations/shared/theme.dart';
 import 'popup_selected_marker.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key, this.isMarkerClicked = false});
+  const HomePage({super.key, this.isMarkerClicked = false});
   final bool isMarkerClicked;
   @override
   State<HomePage> createState() => _HomePageState();

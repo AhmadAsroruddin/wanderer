@@ -23,7 +23,7 @@ class MarkersSuccess extends MarkersState {
   final String message;
   final bool isClicked;
 
-  MarkersSuccess({required this.message, required this.isClicked});
+  const MarkersSuccess({required this.message, required this.isClicked});
 
   @override
   List<Object> get props => [message, isClicked];
@@ -42,7 +42,7 @@ class GetOneMarker extends MarkersState {
   final Markers marker;
   final bool isClicked;
 
-  GetOneMarker({required this.marker, required this.isClicked});
+  const GetOneMarker({required this.marker, required this.isClicked});
 
   @override
   List<Object> get props => [marker, isClicked];

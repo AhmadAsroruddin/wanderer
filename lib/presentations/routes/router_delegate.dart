@@ -137,7 +137,7 @@ class MyRouterDelegate extends RouterDelegate
         }
         if (settings.name == MarkerPage.routeName) {
           return MaterialPageRoute(
-            builder: (context) => MarkerPage(),
+            builder: (context) => const MarkerPage(),
             settings: settings,
           );
         }

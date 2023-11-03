@@ -43,7 +43,7 @@ class CardManage extends StatelessWidget {
               SizedBox(
                 height: deviceHeight * 0.01,
               ),
-              Container(
+              SizedBox(
                 width: deviceWidth * 0.9,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

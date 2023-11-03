@@ -26,10 +26,10 @@ class _TabScreenState extends State<TabScreen> {
     FirebaseAuth firebaseAuth = FirebaseAuth.instance;
     user = firebaseAuth.currentUser;
     _pages = [
-      {'page': HomePage(), 'title': 'home'},
+      {'page': const HomePage(), 'title': 'home'},
       {'page': const CampervanPage(), 'title': 'Campervan'},
       {'page': const UserOrderListPage(), 'title': 'My Order'},
-      {'page': HomePage(), 'title': 'Articles'},
+      {'page': const HomePage(), 'title': 'Articles'},
       {
         'page': user == null ? const AccountCheckPage() : const AccountPage(),
         'title': 'My Self'

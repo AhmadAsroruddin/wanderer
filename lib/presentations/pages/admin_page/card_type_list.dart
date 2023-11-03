@@ -130,7 +130,7 @@ class _ListTypeCardState extends State<ListTypeCard> {
                           Tipe(
                             name: name.text,
                             price: double.parse(price.text),
-                            facility: [],
+                            facility: const [],
                             images: imageLinks,
                             capacity: int.parse(capacity.text),
                             description: description.text,

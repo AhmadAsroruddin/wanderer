@@ -6,7 +6,7 @@ import 'package:wanderer/domain/usecase/getUserData.dart';
 part 'user_state.dart';
 
 class UserCubit extends Cubit<UserState> {
-  GetUserData _getUserData;
+  final GetUserData _getUserData;
 
   UserCubit(this._getUserData) : super(UserLoading());
 
