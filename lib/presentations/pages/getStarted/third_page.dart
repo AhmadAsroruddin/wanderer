@@ -21,8 +21,11 @@ class GettingStartedThird extends StatelessWidget {
                 children: <Widget>[
                   ElevatedButton(
                     onPressed: () async {
+                      (Router.of(context).routerDelegate as MyRouterDelegate)
+                          .firstTimeDone();
                       await context.read<RouterCubit>().firstTimeFalse();
-                      Navigator.of(context).pushNamed(LoginPage.routeName);
+                      Navigator.of(context)
+                          .pushReplacementNamed(LoginPage.routeName);
                     },
                     child: const Text("Login"),
                   ),

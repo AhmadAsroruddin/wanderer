@@ -44,6 +44,7 @@ class AdminCubit extends Cubit<Admin> {
 
   Future<void> getAdminData(String markerId) async {
     final result = await getAdmin.execute(markerId);
+
     emit(result);
   }
 

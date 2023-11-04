@@ -43,6 +43,7 @@ class _GMapsState extends State<GMaps> {
     return GoogleMap(
       myLocationEnabled: true,
       mapToolbarEnabled: false,
+      myLocationButtonEnabled: false,
       zoomControlsEnabled: false,
       mapType: MapType.normal,
       markers: markers,
@@ -137,7 +138,7 @@ class _GMapsState extends State<GMaps> {
   void defineMarker(LatLng latLng, String street, String address, String id,
       Markers markerData) async {
     final Uint8List markesrs = await getBytesFromAsset(
-        "assets/markers/${markerData.jenis.toLowerCase()}.png", 300);
+        "assets/markers/${markerData.jenis.toLowerCase()}.png", 250);
 
     final marker = Marker(
       markerId: MarkerId(id),

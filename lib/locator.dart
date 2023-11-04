@@ -36,11 +36,13 @@ import 'package:wanderer/domain/usecase/addToFavorite.dart';
 import 'package:wanderer/domain/usecase/addTypeToAdmin.dart';
 import 'package:wanderer/domain/usecase/createAccount.dart';
 import 'package:wanderer/domain/usecase/getAdmin.dart';
+import 'package:wanderer/domain/usecase/getAdminCampervan.dart';
 import 'package:wanderer/domain/usecase/getAllComments.dart';
 import 'package:wanderer/domain/usecase/getAllFavorites.dart';
 import 'package:wanderer/domain/usecase/getAllMarkers.dart';
 import 'package:wanderer/domain/usecase/getAllTypes.dart';
 import 'package:wanderer/domain/usecase/getCurrentUserId.dart';
+import 'package:wanderer/domain/usecase/getMarkerData.dart';
 import 'package:wanderer/domain/usecase/getOrderDataByStatus.dart';
 import 'package:wanderer/domain/usecase/getPaymentUrl.dart';
 import 'package:wanderer/domain/usecase/getTransactionResponse.dart';
@@ -113,6 +115,8 @@ void init() {
   locator.registerLazySingleton(() => GetPaymentUrl(repos: locator()));
   locator.registerLazySingleton(
       () => GetTransactionResponse(paymentRepos: locator()));
+  locator.registerLazySingleton(() => GetAdminCampervan(adminRepos: locator()));
+  locator.registerLazySingleton(() => GetMarkerData(markerRepos: locator()));
 
   //REPOSITORY
   locator.registerLazySingleton<AuthRepos>(() => AuthReposImpl(
@@ -144,15 +148,16 @@ void init() {
         firstTimeDone: locator(),
       ));
   locator.registerFactory(() => LocationDataCubit(locator()));
-  locator.registerFactory(
-      () => MarkersCubit(locator(), locator(), locator(), locator()));
+  locator.registerFactory(() =>
+      MarkersCubit(locator(), locator(), locator(), locator(), locator()));
   locator.registerFactory(() => CommentCubit(locator(), locator()));
   locator.registerFactory(
       () => FavoriteCubit(locator(), locator(), locator(), locator()));
   locator.registerFactory(() => ImageCubit(locator()));
   locator.registerFactory(() => AdminCubit(locator(), locator(), locator()));
   locator.registerFactory(() => TypeCubit(locator()));
-  locator.registerFactory(() => AdminDataCubit(locator(), locator()));
+  locator
+      .registerFactory(() => AdminDataCubit(locator(), locator(), locator()));
   locator.registerFactory(() => TypeCubitData(locator()));
   locator.registerFactory(() => UserCubit(locator()));
   locator.registerFactory(() => OrderCubit(locator(), locator(), locator()));

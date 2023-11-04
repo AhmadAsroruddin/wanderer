@@ -9,6 +9,8 @@ class AdminDataState extends Equatable {
 
 class AdminDataLoading extends AdminDataState {}
 
+class AdminDataInitial extends AdminDataState {}
+
 class AdminDataFailed extends AdminDataState {
   final String error;
   const AdminDataFailed({required this.error});
@@ -31,4 +33,12 @@ class TypeDataSuccess extends AdminDataState {
 
   @override
   List<Object> get props => [tipe];
+}
+
+class AdminDataCampervan extends AdminDataState {
+  final List<Admin> campervan;
+  const AdminDataCampervan({required this.campervan});
+
+  @override
+  List<Object> get props => [campervan];
 }

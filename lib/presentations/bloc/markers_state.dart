@@ -47,3 +47,12 @@ class GetOneMarker extends MarkersState {
   @override
   List<Object> get props => [marker, isClicked];
 }
+
+class GetMarkerForFavorite extends MarkersState {
+  final Markers marker;
+
+  const GetMarkerForFavorite({required this.marker});
+
+  @override
+  List<Object> get props => [marker];
+}

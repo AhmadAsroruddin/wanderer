@@ -62,4 +62,9 @@ class MarkersReposImpl implements MarkerRepos {
       print(e);
     }
   }
+
+  @override
+  Future<Markers> getOneMarker(String markerId) async {
+    return await markersDataSource.getMarker(markerId);
+  }
 }

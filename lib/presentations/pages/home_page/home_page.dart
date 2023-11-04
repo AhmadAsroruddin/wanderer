@@ -41,20 +41,10 @@ class _HomePageState extends State<HomePage> {
                 children: <Widget>[
                   const GMaps(),
                   Positioned(
-                    top: deviceHeight * 0.01,
+                    top: deviceHeight * 0.015,
                     left: 0,
                     right: 0,
                     child: SearchBarHome(),
-                  ),
-                  Positioned(
-                    top: deviceHeight * 0.1,
-                    right: 0,
-                    child: FloatingActionButton(
-                      onPressed: () {},
-                      child: const Icon(
-                        Icons.my_location,
-                      ),
-                    ),
                   ),
                   Positioned(
                     bottom: 16,

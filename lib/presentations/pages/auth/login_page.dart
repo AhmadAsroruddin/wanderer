@@ -24,8 +24,11 @@ class LoginPage extends StatelessWidget {
 
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
+        print(state);
         if (state is AuthLogin) {
-          Navigator.of(context).pushNamed(TabScreen.routeName);
+          Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => const TabScreen()),
+              (route) => false);
         } else if (state is AuthError) {
           DialogUtils.alertDialog(context, "Error", state.error);
         }
@@ -87,8 +90,8 @@ class LoginPage extends StatelessWidget {
                     height: screenSize.height * 0.02,
                   ),
                   GestureDetector(
-                    onTap: () {
-                      context
+                    onTap: () async {
+                      await context
                           .read<AuthCubit>()
                           .login(email.text, password.text);
                     },

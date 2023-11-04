@@ -7,6 +7,7 @@ import 'package:wanderer/presentations/bloc/favorite_bloc.dart';
 import 'package:wanderer/presentations/bloc/user_bloc.dart';
 import 'package:wanderer/presentations/pages/favorite_page.dart';
 import 'package:wanderer/presentations/pages/manage/admin_page.dart';
+import 'package:wanderer/presentations/pages/tab_screen.dart';
 import 'package:wanderer/presentations/pages/user_order_list_page/user_order_list_page.dart';
 
 import '../bloc/auth_bloc.dart';
@@ -152,8 +153,11 @@ class AccountPage extends StatelessWidget {
                                 width: deviceWidth * 0.1,
                               ),
                               GestureDetector(
-                                onTap: () {
-                                  context.read<AuthCubit>().logout();
+                                onTap: () async {
+                                  print("fired");
+                                  await context.read<AuthCubit>().logout();
+                                  Navigator.of(context)
+                                      .pushNamed(TabScreen.routeName);
                                 },
                                 child: Text(
                                   "Keluar",
@@ -167,28 +171,6 @@ class AccountPage extends StatelessWidget {
                         SizedBox(
                           height: deviceHeight * 0.03,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Row(
-                            children: <Widget>[
-                              SizedBox(
-                                width: deviceWidth * 0.1,
-                                height: deviceHeight * 0.04,
-                                child: Image.asset(
-                                  "assets/img/trashBin.png",
-                                ),
-                              ),
-                              SizedBox(
-                                width: deviceWidth * 0.1,
-                              ),
-                              Text(
-                                "Hapus Akun",
-                                style:
-                                    GoogleFonts.roboto().copyWith(fontSize: 18),
-                              )
-                            ],
-                          ),
-                        )
                       ],
                     ),
                   ),

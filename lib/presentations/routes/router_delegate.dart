@@ -63,10 +63,14 @@ class MyRouterDelegate extends RouterDelegate
   }
 
   _init() async {
-    await routerCubit.checkLoginStatus();
-    isFirstTime = routerCubit.state;
-    print("start $isFirstTime");
-    notifyListeners();
+    Future.delayed(
+      const Duration(seconds: 3),
+      () async {
+        await routerCubit.checkLoginStatus();
+        isFirstTime = routerCubit.state;
+        notifyListeners();
+      },
+    );
   }
 
   List<Page> _historyStack = [];
@@ -280,6 +284,7 @@ class MyRouterDelegate extends RouterDelegate
   List<Page> get _loggedOutStack => [
         const MaterialPage(key: ValueKey('tabscreen'), child: TabScreen()),
       ];
+
   List<Page> get _splashScreen => [
         const MaterialPage(
           key: ValueKey('value'),

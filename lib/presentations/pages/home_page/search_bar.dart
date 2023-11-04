@@ -16,7 +16,8 @@ class SearchBarHome extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(10),
       margin: EdgeInsets.symmetric(
-          horizontal: isCamper ? deviceWidth * 0.00 : deviceWidth * 0.04),
+        horizontal: isCamper ? deviceWidth * 0.00 : deviceWidth * 0.04,
+      ),
       width: deviceWidth * 0.97,
       height: deviceHeight * 0.055,
       decoration: BoxDecoration(

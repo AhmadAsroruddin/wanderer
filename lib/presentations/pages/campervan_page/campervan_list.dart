@@ -5,8 +5,13 @@ import '../../shared/theme.dart';
 
 class CampervanList extends StatelessWidget {
   const CampervanList({
+    required this.image,
+    required this.name,
     super.key,
   });
+
+  final String image;
+  final String name;
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +33,8 @@ class CampervanList extends StatelessWidget {
                 height: deviceHeight * (0.1),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  image: const DecorationImage(
-                    image: AssetImage("assets/img/campsite.jpg"),
+                  image: DecorationImage(
+                    image: NetworkImage(image),
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -42,29 +47,11 @@ class CampervanList extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    "Suzuki APV Arena 2022",
+                    name,
                     style: GoogleFonts.inter().copyWith(
                       fontSize: 14,
                       fontWeight: bold,
                     ),
-                  ),
-                  Row(
-                    children: <Widget>[
-                      SizedBox(
-                        height: deviceHeight * 0.04,
-                        width: deviceWidth * 0.45,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: 5,
-                          itemBuilder: (context, index) {
-                            return const Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                            );
-                          },
-                        ),
-                      )
-                    ],
                   ),
                   Row(
                     children: <Widget>[

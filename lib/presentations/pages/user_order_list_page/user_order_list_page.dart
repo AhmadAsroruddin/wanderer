@@ -19,7 +19,7 @@ class UserOrderListPage extends StatefulWidget {
 class _UserOrderListPageState extends State<UserOrderListPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  late String userId;
+  String userId = "";
 
   @override
   void initState() {

@@ -7,9 +7,10 @@ import 'package:wanderer/domain/entities/tipe.dart';
 abstract class AdminDataSource {
   Future<String> addToAdmin(Admin admin, String adminId);
   Future<void> addTypeToAdmin(Tipe tipe, String adminId);
-  Future<List<Admin>> getAdmin(String markerId);
+  Future<Admin> getAdmin(String markerId);
   Future<List<Tipe>> getTypes(String adminId);
   Future<void> updateAdminId(String adminId, String userId);
+  Future<List<Admin>> getCampervanRental();
 }
 
 class AdminDataSourceImpl implements AdminDataSource {
@@ -64,17 +65,17 @@ class AdminDataSourceImpl implements AdminDataSource {
   }
 
   @override
-  Future<List<Admin>> getAdmin(String userId) async {
+  Future<Admin> getAdmin(String adminId) async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     final adminQuery = await firebaseFirestore
         .collection('admin')
-        .where('id', isEqualTo: userId)
+        .where('id', isEqualTo: adminId)
         .get();
     final List<Admin> admin = adminQuery.docs
         .map<Admin>((doc) => AdminModel.fromDocumentSnapshot(doc).toEntity())
         .toList();
 
-    return admin;
+    return admin.first;
   }
 
   @override
@@ -97,5 +98,20 @@ class AdminDataSourceImpl implements AdminDataSource {
   Future<void> updateAdminId(String adminId, String userId) async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     firestore.collection('admin').doc(adminId).update({'userId': userId});
+  }
+
+  @override
+  Future<List<Admin>> getCampervanRental() async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    final dataQuery = await firestore
+        .collection('admin')
+        .where('category', isEqualTo: 'Campervan')
+        .get();
+
+    final List<Admin> admin = dataQuery.docs
+        .map<Admin>((e) => AdminModel.fromDocumentSnapshot(e).toEntity())
+        .toList();
+    return admin;
   }
 }

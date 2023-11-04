@@ -11,4 +11,5 @@ abstract class MarkerRepos {
       String name, double price, String address);
   Future<String> addMarkerAdmin(Markers markers, link);
   Future<void> updateUserId(String id, String markerId);
+  Future<Markers> getOneMarker(String markerId);
 }

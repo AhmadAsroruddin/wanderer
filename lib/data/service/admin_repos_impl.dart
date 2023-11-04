@@ -31,7 +31,7 @@ class AdminReposImpl implements AdminRepos {
   Future<Admin> getAdmin(String markerId) async {
     final result = await adminDataSource.getAdmin(markerId);
 
-    return result.first;
+    return result;
   }
 
   @override
@@ -47,5 +47,15 @@ class AdminReposImpl implements AdminRepos {
         .collection('users')
         .doc(userId)
         .update({'role': adminId});
+  }
+
+  @override
+  Future<Either<String, List<Admin>>> getCampervanRental() async {
+    try {
+      final result = await adminDataSource.getCampervanRental();
+      return Right(result);
+    } catch (e) {
+      return Left(e.toString());
+    }
   }
 }

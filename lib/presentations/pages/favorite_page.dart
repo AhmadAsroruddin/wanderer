@@ -1,11 +1,27 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wanderer/domain/entities/marker.dart';
 import 'package:wanderer/presentations/bloc/favorite_bloc.dart';
+import 'package:wanderer/presentations/bloc/markers_bloc.dart';
 import 'package:wanderer/presentations/pages/campervan_page/campervan_list.dart';
 
-class FavoritePage extends StatelessWidget {
+class FavoritePage extends StatefulWidget {
   const FavoritePage({super.key});
   static const routeName = "/favoritePage";
+
+  @override
+  State<FavoritePage> createState() => _FavoritePageState();
+}
+
+class _FavoritePageState extends State<FavoritePage> {
+  @override
+  void initState() {
+    String userId = FirebaseAuth.instance.currentUser!.uid;
+    context.read<FavoriteCubit>().getAllFav(userId);
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +40,31 @@ class FavoritePage extends StatelessWidget {
               );
             } else if (state is AllFavorites) {
               return ListView.builder(
-                itemCount: 5,
+                itemCount: state.favorite.length,
                 itemBuilder: (context, index) {
-                  return const CampervanList();
+                  return FutureBuilder<Markers>(
+                    future: context
+                        .read<MarkersCubit>()
+                        .getMarkerForFavorite(state.favorite[index].markerId),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        // Tampilkan widget loading atau indikator progres di sini jika diperlukan
+                        return const CircularProgressIndicator();
+                      } else if (snapshot.hasError) {
+                        // Tangani kesalahan jika diperlukan
+                        return Text('Error: ${snapshot.error}');
+                      } else if (snapshot.hasData) {
+                        // Akses data Admin saat sudah tersedia
+                        return CampervanList(
+                          name: snapshot.data!.name,
+                          image: snapshot.data!.image[0],
+                        );
+                      } else {
+                        // Tampilkan sesuatu jika tidak ada data
+                        return Text('Tidak ada data');
+                      }
+                    },
+                  );
                 },
               );
             } else {

@@ -15,6 +15,7 @@ abstract class MarkersDataSource {
       String name, double price, String address);
   Future<String> addMarkerAdmin(Markers markers, List<dynamic> link);
   Future<void> updateUserId(String id, String markerId);
+  Future<Markers> getMarker(String markerId);
 }
 
 class MarkersDatasourceImpl implements MarkersDataSource {
@@ -109,5 +110,20 @@ class MarkersDatasourceImpl implements MarkersDataSource {
   Future<void> updateUserId(String id, String markerId) async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     firestore.collection('markers').doc(markerId).update({'userId': id});
+  }
+
+  @override
+  Future<Markers> getMarker(String markerId) async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    final adminQuery = await firebaseFirestore
+        .collection('markers')
+        .where('id', isEqualTo: markerId)
+        .get();
+
+    final List<Markers> admin = adminQuery.docs
+        .map<Markers>((doc) => MarkerModel.fromDocumentSnapshot(doc).toEntity())
+        .toList();
+
+    return admin[0];
   }
 }
