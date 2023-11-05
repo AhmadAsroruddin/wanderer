@@ -32,7 +32,11 @@ class LocationDetailsPage extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: deviceWidth * 0.05),
+            padding: EdgeInsets.only(
+              bottom: deviceHeight * 0.02,
+              left: deviceWidth * 0.02,
+              right: deviceWidth * 0.02,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[

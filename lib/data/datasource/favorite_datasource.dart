@@ -2,10 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:wanderer/data/models/favorite_model.dart';
 import 'package:wanderer/domain/entities/favorite.dart';
 
-import '../../domain/entities/marker.dart';
-
 abstract class FavoriteDataSource {
-  Future<void> addToFavorite(String userId, String markerId, Markers marker);
+  Future<void> addToFavorite(String userId, String markerId);
   Future<List<String>> getFavorites(String selectedMarkerId, String userId);
   Future<void> removeFromFavorite(String favId, String userId);
   Future<List<Favorite>> getAllFavorites(String userId);
@@ -13,8 +11,7 @@ abstract class FavoriteDataSource {
 
 class FavoriteDataSourceImpl implements FavoriteDataSource {
   @override
-  Future<void> addToFavorite(
-      String userId, String markerId, Markers marker) async {
+  Future<void> addToFavorite(String userId, String markerId) async {
     final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
     final userCollection = firebaseFirestore.collection('users').doc(userId);

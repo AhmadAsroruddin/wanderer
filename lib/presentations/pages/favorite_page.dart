@@ -58,10 +58,13 @@ class _FavoritePageState extends State<FavoritePage> {
                         return CampervanList(
                           name: snapshot.data!.name,
                           image: snapshot.data!.image[0],
+                          address: snapshot.data!.address,
+                          markerId: snapshot.data!.id,
+                          isNeedButtonLove: false,
                         );
                       } else {
                         // Tampilkan sesuatu jika tidak ada data
-                        return Text('Tidak ada data');
+                        return const Text('Tidak ada data');
                       }
                     },
                   );

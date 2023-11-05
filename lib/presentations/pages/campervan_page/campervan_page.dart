@@ -57,6 +57,8 @@ class CampervanPage extends StatelessWidget {
                         return CampervanList(
                           image: state.campervan[index].image[0],
                           name: state.campervan[index].name,
+                          address: state.campervan[index].address,
+                          markerId: state.campervan[index].markerId,
                         );
                       },
                     ),
@@ -64,7 +66,6 @@ class CampervanPage extends StatelessWidget {
                 ],
               );
             } else if (state is AdminDataFailed) {
-              print(state.error);
               return Container();
             } else {
               return const Center(

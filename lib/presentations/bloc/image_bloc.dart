@@ -19,4 +19,14 @@ class ImageCubit extends Cubit<ImageState> {
       (r) => emit(ImageSuccess(links: r)),
     );
   }
+
+  Future<List<String>> uploadImageType(List<XFile> images) async {
+    emit(ImageLoading());
+    final result = await uploadImages.execute(images);
+    List<String> links = [];
+
+    result.fold((l) => l, (r) => links = r);
+
+    return links;
+  }
 }

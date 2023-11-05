@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:wanderer/domain/entities/marker.dart';
 import 'package:wanderer/domain/repositories/favorite_repository.dart';
 
 class AddToFavorite {
@@ -7,8 +6,7 @@ class AddToFavorite {
 
   AddToFavorite({required this.favoriteRepos});
 
-  Future<Either<String, String>> execute(
-      Markers markers, String userId, String markerId) {
-    return favoriteRepos.addToFavorite(markerId, markers, userId);
+  Future<Either<String, String>> execute(String userId, String markerId) {
+    return favoriteRepos.addToFavorite(markerId, userId);
   }
 }

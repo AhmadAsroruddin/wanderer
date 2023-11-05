@@ -3,8 +3,6 @@ import 'package:wanderer/data/datasource/favorite_datasource.dart';
 import 'package:wanderer/domain/entities/favorite.dart';
 import 'package:wanderer/domain/repositories/favorite_repository.dart';
 
-import '../../domain/entities/marker.dart';
-
 class FavoriteReposImpl implements FavoriteRepos {
   final FavoriteDataSource favoriteDataSource;
 
@@ -12,9 +10,12 @@ class FavoriteReposImpl implements FavoriteRepos {
 
   @override
   Future<Either<String, String>> addToFavorite(
-      String markerId, Markers markers, String userId) async {
+      String markerId, String userId) async {
     try {
-      await favoriteDataSource.addToFavorite(userId, markerId, markers);
+      await favoriteDataSource.addToFavorite(
+        userId,
+        markerId,
+      );
       return const Right("Favorite added");
     } catch (e) {
       print(e);

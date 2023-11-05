@@ -49,108 +49,118 @@ class _AddLocationState extends State<AddLocation> {
         centerTitle: false,
       ),
       body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.symmetric(
-                  horizontal: deviceWidth * 0.05,
-                  vertical: deviceHeight * 0.02),
-              child: Text(
-                "Where`s your place located?",
-                style: GoogleFonts.roboto().copyWith(
-                  fontSize: deviceWidth * 0.06,
-                  fontWeight: FontWeight.w300,
-                ),
-                textAlign: TextAlign.start,
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: deviceWidth * 0.05),
-              child: const Text(
-                "Your address is only shared with guests after they have made reservation.",
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            SizedBox(
-              width: deviceWidth,
-              height: deviceHeight * 0.6,
-              child: Stack(
-                children: <Widget>[
-                  GoogleMap(
-                    initialCameraPosition: CameraPosition(
-                      target: deviceLocation,
-                      zoom: 14,
+        child: Padding(
+          padding: EdgeInsets.only(bottom: deviceHeight * 0.02),
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(
+                      horizontal: deviceWidth * 0.05,
+                      vertical: deviceHeight * 0.02),
+                  child: Text(
+                    "Where`s your place located?",
+                    style: GoogleFonts.roboto().copyWith(
+                      fontSize: deviceWidth * 0.06,
+                      fontWeight: FontWeight.w300,
                     ),
-                    markers: markers,
-                    onMapCreated: (GoogleMapController controller) async {
-                      _controller.complete(controller);
-                      await _controller.future.then(
-                        (value) async {
-                          mapController = await _controller.future;
-                        },
-                      );
-                    },
-                    onTap: (argument) {
-                      onPressMaps(argument);
-                    },
+                    textAlign: TextAlign.start,
                   ),
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: Container(
-                      width: deviceWidth * 0.8,
-                      height: deviceHeight * 0.05,
-                      margin: EdgeInsets.only(top: deviceHeight * 0.01),
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.white,
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.grey, // Warna bayangan
-                            offset: Offset(0,
-                                2), // Geser bayangan secara horizontal dan vertikal
-                            blurRadius: 4.0, // Radius blur bayangan
-                            spreadRadius:
-                                0.0, // Seberapa jauh bayangan tersebar
-                          ),
-                        ],
-                      ),
-                      child: TextField(
-                        controller: controller,
-                        decoration: const InputDecoration(
-                          border: InputBorder.none, // Menghilangkan garis bawah
-                          hintText: 'Masukkan teks di sini', // Contoh hint text
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: deviceWidth * 0.05),
+                  child: const Text(
+                    "Your address is only shared with guests after they have made reservation.",
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                SizedBox(
+                  width: deviceWidth,
+                  height: deviceHeight * 0.65,
+                  child: Stack(
+                    children: <Widget>[
+                      GoogleMap(
+                        initialCameraPosition: CameraPosition(
+                          target: deviceLocation,
+                          zoom: 14,
                         ),
-                        onChanged: (value) {
-                          setState(
-                            () {
-                              alamat = value;
+                        markers: markers,
+                        onMapCreated: (GoogleMapController controller) async {
+                          _controller.complete(controller);
+                          await _controller.future.then(
+                            (value) async {
+                              mapController = await _controller.future;
                             },
                           );
                         },
+                        onTap: (argument) {
+                          onPressMaps(argument);
+                        },
                       ),
-                    ),
-                  )
-                ],
-              ),
+                      Align(
+                        alignment: Alignment.topCenter,
+                        child: Container(
+                          width: deviceWidth * 0.8,
+                          height: deviceHeight * 0.05,
+                          margin: EdgeInsets.only(top: deviceHeight * 0.01),
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.white,
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Colors.grey, // Warna bayangan
+                                offset: Offset(0,
+                                    2), // Geser bayangan secara horizontal dan vertikal
+                                blurRadius: 4.0, // Radius blur bayangan
+                                spreadRadius:
+                                    0.0, // Seberapa jauh bayangan tersebar
+                              ),
+                            ],
+                          ),
+                          child: TextField(
+                            controller: controller,
+                            decoration: const InputDecoration(
+                              border:
+                                  InputBorder.none, // Menghilangkan garis bawah
+                              hintText:
+                                  'Masukkan teks di sini', // Contoh hint text
+                            ),
+                            onChanged: (value) {
+                              setState(
+                                () {
+                                  alamat = value;
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: deviceHeight * 0.05,
+                ),
+                GestureDetector(
+                  onTap: () async {
+                    context.read<AdminCubit>().setAddress(alamat);
+                    context.read<AdminCubit>().setLatLng(
+                        selectedLatLng.latitude, selectedLatLng.longitude);
+                    Navigator.of(context)
+                        .pushNamed(LocationDetailsPage.routeName);
+                  },
+                  child: SizedBox(
+                    width: deviceWidth * 0.8,
+                    child: const CustomButton(name: "Next"),
+                  ),
+                )
+              ],
             ),
-            const Expanded(child: SizedBox()),
-            GestureDetector(
-              onTap: () async {
-                context.read<AdminCubit>().setAddress(alamat);
-                context.read<AdminCubit>().setLatLng(
-                    selectedLatLng.latitude, selectedLatLng.longitude);
-                Navigator.of(context).pushNamed(LocationDetailsPage.routeName);
-              },
-              child: SizedBox(
-                width: deviceWidth * 0.8,
-                child: const CustomButton(name: "Next"),
-              ),
-            )
-          ],
+          ),
         ),
       ),
     );

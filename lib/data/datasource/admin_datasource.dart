@@ -75,7 +75,7 @@ class AdminDataSourceImpl implements AdminDataSource {
         .map<Admin>((doc) => AdminModel.fromDocumentSnapshot(doc).toEntity())
         .toList();
 
-    return admin.first;
+    return admin[0];
   }
 
   @override

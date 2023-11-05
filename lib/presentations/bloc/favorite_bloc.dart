@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wanderer/domain/entities/favorite.dart';
-import 'package:wanderer/domain/entities/marker.dart';
+
 import 'package:wanderer/domain/usecase/addToFavorite.dart';
 import 'package:wanderer/domain/usecase/getAllFavorites.dart';
 import 'package:wanderer/domain/usecase/isFavorite.dart';
@@ -19,9 +19,8 @@ class FavoriteCubit extends Cubit<FavoriteState> {
       this.getAllFavorites)
       : super(FavoriteInitial());
 
-  Future<void> addMarkerToFavorite(
-      Markers markers, String userId, String markerId) async {
-    final result = await addToFavorite.execute(markers, userId, markerId);
+  Future<void> addMarkerToFavorite(String userId, String markerId) async {
+    final result = await addToFavorite.execute(userId, markerId);
 
     result.fold(
       (l) => emit(FavoriteFailed(error: l)),

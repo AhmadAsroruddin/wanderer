@@ -17,7 +17,6 @@ class ListTypeCard extends StatefulWidget {
 }
 
 class _ListTypeCardState extends State<ListTypeCard> {
-  List<String> imageLinks = [];
   List<XFile>? images;
   bool ready = false;
 
@@ -72,6 +71,7 @@ class _ListTypeCardState extends State<ListTypeCard> {
                     images = pickedImage;
                   });
                 }
+                print("asdasds $images");
               },
               child: Container(
                 margin: const EdgeInsets.symmetric(vertical: 15),
@@ -112,20 +112,20 @@ class _ListTypeCardState extends State<ListTypeCard> {
                       ),
                     ),
                   )
-                : Container(
-                    child: const Text("asd"),
+                : const Center(
+                    child: Text("asd"),
                   ),
             BlocBuilder<ImageCubit, ImageState>(
               builder: (context, state) {
                 return ElevatedButton(
                   style: ElevatedButton.styleFrom(foregroundColor: baseColor),
                   onPressed: () async {
-                    await context.read<ImageCubit>().upload(images!);
-                    if (state is ImageSuccess) {
-                      setState(() {
-                        imageLinks = state.links;
-                      });
-                    }
+                    List<String> imageLinks = await context
+                        .read<ImageCubit>()
+                        .uploadImageType(images!);
+
+                    print(imageLinks);
+
                     context.read<TypeCubit>().setType(
                           Tipe(
                             name: name.text,
@@ -138,11 +138,7 @@ class _ListTypeCardState extends State<ListTypeCard> {
                           ),
                         );
                   },
-                  child: state is ImageLoading
-                      ? const Center(
-                          child: CircularProgressIndicator(),
-                        )
-                      : const Text("Simpan"),
+                  child: const Text("Simpan"),
                 );
               },
             )

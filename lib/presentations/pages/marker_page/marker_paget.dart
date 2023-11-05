@@ -50,8 +50,9 @@ class _MarkerPageState extends State<MarkerPage>
                     String userId = firebaseAuth.currentUser!.uid.toString();
 
                     if (isFavorite == false) {
-                      await context.read<FavoriteCubit>().addMarkerToFavorite(
-                          state.marker, userId, state.marker.id);
+                      await context
+                          .read<FavoriteCubit>()
+                          .addMarkerToFavorite(userId, state.marker.id);
                     } else {
                       await context
                           .read<FavoriteCubit>()
@@ -157,7 +158,9 @@ class _MarkerPageState extends State<MarkerPage>
             ),
           );
         } else {
-          return Container();
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
         }
       },
     );
