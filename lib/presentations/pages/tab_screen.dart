@@ -4,6 +4,7 @@ import 'package:wanderer/presentations/pages/account_page.dart';
 import 'package:wanderer/presentations/pages/campervan_page/campervan_page.dart';
 import 'package:wanderer/presentations/pages/home_page/home_page.dart';
 import 'package:wanderer/presentations/pages/user_order_list_page/user_order_list_page.dart';
+import 'package:wanderer/presentations/pages/article/ArticlePage.dart';
 
 import 'account_check_page.dart';
 
@@ -26,10 +27,10 @@ class _TabScreenState extends State<TabScreen> {
     FirebaseAuth firebaseAuth = FirebaseAuth.instance;
     user = firebaseAuth.currentUser;
     _pages = [
-      {'page': const HomePage(), 'title': 'home'},
+      {'page': HomePage(), 'title': 'home'},
       {'page': const CampervanPage(), 'title': 'Campervan'},
       {'page': const UserOrderListPage(), 'title': 'My Order'},
-      {'page': const HomePage(), 'title': 'Articles'},
+      {'page': ArticlePage(), 'title': 'Articles'},
       {
         'page': user == null ? const AccountCheckPage() : const AccountPage(),
         'title': 'My Self'

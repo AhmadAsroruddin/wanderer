@@ -8,6 +8,7 @@ import 'package:wanderer/domain/usecase/firstTimeDone.dart';
 import 'package:wanderer/domain/usecase/isFirstTime.dart';
 import 'package:wanderer/presentations/bloc/admin_bloc.dart';
 import 'package:wanderer/presentations/bloc/admin_data_bloc.dart';
+import 'package:wanderer/presentations/bloc/article_bloc.dart';
 import 'package:wanderer/presentations/bloc/comment_bloc.dart';
 import 'package:wanderer/presentations/bloc/favorite_bloc.dart';
 import 'package:wanderer/presentations/bloc/image_bloc.dart';
@@ -87,6 +88,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (_) => di.locator<UserCubit>()),
         BlocProvider(create: (_) => di.locator<OrderCubit>()),
         BlocProvider(create: (_) => di.locator<PaymentCubit>()),
+        BlocProvider(create: (_) => di.locator<ArticleCubit>()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:wanderer/data/datasource/admin_datasource.dart';
+import 'package:wanderer/data/datasource/article_datasource.dart';
 import 'package:wanderer/data/datasource/auth_datasource.dart';
 import 'package:wanderer/data/datasource/comment_datasource.dart';
 import 'package:wanderer/data/datasource/favorite_datasource.dart';
@@ -10,6 +11,7 @@ import 'package:wanderer/data/datasource/markers_datasource.dart';
 import 'package:wanderer/data/datasource/order_datasource.dart';
 import 'package:wanderer/data/datasource/user_datasource.dart';
 import 'package:wanderer/data/service/admin_repos_impl.dart';
+import 'package:wanderer/data/service/article_repos_impl.dart';
 import 'package:wanderer/data/service/auth_repos_impl.dart';
 import 'package:wanderer/data/service/comment_repos_impl.dart';
 import 'package:wanderer/data/service/favorite_repos_impl.dart';
@@ -20,6 +22,7 @@ import 'package:wanderer/data/service/order_repos_impl.dart';
 import 'package:wanderer/data/service/payment_repos_impl.dart';
 import 'package:wanderer/data/service/user_repos_impl.dart';
 import 'package:wanderer/domain/repositories/admin_repository.dart';
+import 'package:wanderer/domain/repositories/article_repository.dart';
 import 'package:wanderer/domain/repositories/auth_repository.dart';
 import 'package:wanderer/domain/repositories/comment_repository.dart';
 import 'package:wanderer/domain/repositories/favorite_repository.dart';
@@ -41,6 +44,7 @@ import 'package:wanderer/domain/usecase/getAllComments.dart';
 import 'package:wanderer/domain/usecase/getAllFavorites.dart';
 import 'package:wanderer/domain/usecase/getAllMarkers.dart';
 import 'package:wanderer/domain/usecase/getAllTypes.dart';
+import 'package:wanderer/domain/usecase/getArticleUrl.dart';
 import 'package:wanderer/domain/usecase/getCurrentUserId.dart';
 import 'package:wanderer/domain/usecase/getMarkerData.dart';
 import 'package:wanderer/domain/usecase/getOrderDataByStatus.dart';
@@ -62,6 +66,7 @@ import 'package:wanderer/domain/usecase/updateUserIdMarker.dart';
 import 'package:wanderer/domain/usecase/uploadImages.dart';
 import 'package:wanderer/presentations/bloc/admin_bloc.dart';
 import 'package:wanderer/presentations/bloc/admin_data_bloc.dart';
+import 'package:wanderer/presentations/bloc/article_bloc.dart';
 import 'package:wanderer/presentations/bloc/auth_bloc.dart';
 import 'package:wanderer/presentations/bloc/comment_bloc.dart';
 import 'package:wanderer/presentations/bloc/favorite_bloc.dart';
@@ -117,6 +122,7 @@ void init() {
       () => GetTransactionResponse(paymentRepos: locator()));
   locator.registerLazySingleton(() => GetAdminCampervan(adminRepos: locator()));
   locator.registerLazySingleton(() => GetMarkerData(markerRepos: locator()));
+  locator.registerLazySingleton(() => GetArticleUrl(articleRepos: locator()));
 
   //REPOSITORY
   locator.registerLazySingleton<AuthRepos>(() => AuthReposImpl(
@@ -139,6 +145,8 @@ void init() {
       () => OrderReposImpl(orderDataSource: locator()));
   locator.registerLazySingleton<PaymentRepos>(
       () => PaymentReposImpl(paymentDataSource: locator()));
+  locator.registerLazySingleton<ArticleRepos>(
+      () => ArticleReposImpl(articleDataSource: locator()));
 
   //BLOC
   locator.registerFactory(() => AuthCubit(
@@ -162,6 +170,7 @@ void init() {
   locator.registerFactory(() => UserCubit(locator()));
   locator.registerFactory(() => OrderCubit(locator(), locator(), locator()));
   locator.registerFactory(() => PaymentCubit(locator(), locator()));
+  locator.registerFactory(() => ArticleCubit(locator()));
 
   //DATA
 
@@ -177,6 +186,8 @@ void init() {
   locator.registerLazySingleton<OrderDataSource>(() => OrderDataSourceImpl());
   locator.registerLazySingleton<PaymentDataSource>(
       () => PaymentDataSourceImpl(dio: Dio()));
+  locator
+      .registerLazySingleton<ArticleDataSource>(() => ArticleDataSourceImpl());
 
   //ROUTER
 
