@@ -8,6 +8,7 @@ import 'package:wanderer/domain/usecase/getMarkerData.dart';
 import 'package:wanderer/domain/usecase/updateUserIdMarker.dart';
 
 import '../../domain/entities/marker.dart';
+import '../../domain/usecase/searcMarker.dart';
 
 part 'markers_state.dart';
 
@@ -17,9 +18,10 @@ class MarkersCubit extends Cubit<MarkersState> {
   final AddMarkerAdmin _addMarkerAdmin;
   final UpdateUseridMarker _updateUseridMarker;
   final GetMarkerData getMarkerData;
+  final SearchMarker searchMarkers;
 
   MarkersCubit(this._addMarkers, this._getAllMarkers, this._addMarkerAdmin,
-      this._updateUseridMarker, this.getMarkerData)
+      this._updateUseridMarker, this.getMarkerData, this.searchMarkers)
       : super(MarkersInitial());
 
   Future<void> addMarkers(Markers markers, List<XFile> images, bool adminCheck,
@@ -64,5 +66,12 @@ class MarkersCubit extends Cubit<MarkersState> {
 
   Future<void> update(String id, String markerId) async {
     await _updateUseridMarker.execute(id, markerId);
+  }
+
+  Future<void> searchMarker(String key) async {
+    emit(MarkersLoading());
+    final result = await searchMarkers.execute(key);
+
+    emit(SearchMarkers(marker: result));
   }
 }

@@ -27,6 +27,7 @@ import 'package:wanderer/presentations/pages/splashScreen.dart';
 import 'package:wanderer/presentations/pages/tab_screen.dart';
 import 'package:wanderer/presentations/pages/add_marker/tambah_marker.dart';
 import 'package:wanderer/presentations/pages/user_order_list_page/user_order_list_page.dart';
+import 'package:wanderer/presentations/shared/search_page.dart';
 import 'package:wanderer/presentations/shared/snapWebView.dart';
 import '../../domain/entities/marker.dart';
 import '../pages/admin_page/step3_page.dart';
@@ -219,6 +220,10 @@ class MyRouterDelegate extends RouterDelegate
           return MaterialPageRoute(
               builder: (context) => const SnapWebViewScreen(),
               settings: settings);
+        }
+        if (settings.name == SearchPage.routeName) {
+          return MaterialPageRoute(
+              builder: (context) => const SearchPage(), settings: settings);
         }
 
         return null;

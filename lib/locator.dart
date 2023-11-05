@@ -59,6 +59,7 @@ import 'package:wanderer/domain/usecase/pushComments.dart';
 import 'package:wanderer/domain/usecase/removedFromFavorite.dart';
 import 'package:wanderer/domain/usecase/requestOrder.dart';
 import 'package:wanderer/domain/usecase/resetPassword.dart';
+import 'package:wanderer/domain/usecase/searcMarker.dart';
 import 'package:wanderer/domain/usecase/setUserRoleToAdmin.dart';
 import 'package:wanderer/domain/usecase/signInWithGoogle.dart';
 import 'package:wanderer/domain/usecase/updateStatusOrder.dart';
@@ -123,6 +124,7 @@ void init() {
   locator.registerLazySingleton(() => GetAdminCampervan(adminRepos: locator()));
   locator.registerLazySingleton(() => GetMarkerData(markerRepos: locator()));
   locator.registerLazySingleton(() => GetArticleUrl(articleRepos: locator()));
+  locator.registerLazySingleton(() => SearchMarker(markerRepos: locator()));
 
   //REPOSITORY
   locator.registerLazySingleton<AuthRepos>(() => AuthReposImpl(
@@ -156,8 +158,8 @@ void init() {
         firstTimeDone: locator(),
       ));
   locator.registerFactory(() => LocationDataCubit(locator()));
-  locator.registerFactory(() =>
-      MarkersCubit(locator(), locator(), locator(), locator(), locator()));
+  locator.registerFactory(() => MarkersCubit(
+      locator(), locator(), locator(), locator(), locator(), locator()));
   locator.registerFactory(() => CommentCubit(locator(), locator()));
   locator.registerFactory(
       () => FavoriteCubit(locator(), locator(), locator(), locator()));

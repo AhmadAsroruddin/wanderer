@@ -67,4 +67,15 @@ class MarkersReposImpl implements MarkerRepos {
   Future<Markers> getOneMarker(String markerId) async {
     return await markersDataSource.getMarker(markerId);
   }
+
+  @override
+  Future<List<Markers>> searchMarker(String key) async {
+    try {
+      final result = await markersDataSource.searchMarker(key);
+      return result;
+    } catch (e) {
+      print(e);
+      return [];
+    }
+  }
 }

@@ -56,3 +56,12 @@ class GetMarkerForFavorite extends MarkersState {
   @override
   List<Object> get props => [marker];
 }
+
+class SearchMarkers extends MarkersState {
+  final List<Markers> marker;
+
+  const SearchMarkers({required this.marker});
+
+  @override
+  List<Object> get props => [marker];
+}

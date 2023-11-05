@@ -44,7 +44,9 @@ class _HomePageState extends State<HomePage> {
                     top: deviceHeight * 0.015,
                     left: 0,
                     right: 0,
-                    child: SearchBarHome(),
+                    child: SearchBarHome(
+                      isHomePage: true,
+                    ),
                   ),
                   Positioned(
                     bottom: 16,
