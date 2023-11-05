@@ -101,7 +101,7 @@ class ArticleComponent extends StatelessWidget {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return ModalTitikTiga();
+                            return const ModalTitikTiga();
                           },
                         );
                       },

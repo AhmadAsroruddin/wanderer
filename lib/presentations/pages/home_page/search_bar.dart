@@ -36,7 +36,10 @@ class SearchBarHome extends StatelessWidget {
             width: deviceWidth * 0.01,
           ),
           Expanded(
-            child: TextField(
+            child: TextFormField(
+              onTap: () {
+                print("fired");
+              },
               decoration: InputDecoration(
                 prefixIcon: Image.asset(
                   "assets/img/loopSearch.png",

@@ -47,7 +47,7 @@ class _ArticlePageState extends State<ArticlePage> {
                       itemBuilder: (context, index) {
                         print(state);
                         return ArticleComponent(
-                          title: state.data[index].title,
+                          title: state.data[index].title.toString(),
                           articleUrl: state.data[index].url,
                           imgUrl: state.data[index].photoUrl,
                         );
