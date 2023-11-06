@@ -65,7 +65,7 @@ class AuthDataSourceImpl implements AuthDataSource {
       final UserCredential authResult =
           await auth.signInWithCredential(credential);
       final User? user = authResult.user;
-      Users userRole = Users(
+      Users userRole = const Users(
           username: "",
           email: "",
           imageUrl: "",
@@ -73,7 +73,7 @@ class AuthDataSourceImpl implements AuthDataSource {
           markers: [],
           role: "");
 
-      if (auth.currentUser!.uid == "") {
+      if (auth.currentUser!.uid != "") {
         print("asidlasndlasdla");
         UserDataSource dataSource = UserDataSourceImpl();
 

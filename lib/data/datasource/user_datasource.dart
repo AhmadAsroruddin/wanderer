@@ -5,6 +5,7 @@ import 'package:wanderer/domain/entities/user.dart';
 
 abstract class UserDataSource {
   Future<Users> getUserData();
+  Future<void> updateUserProfile(UserModel userData);
 }
 
 class UserDataSourceImpl extends UserDataSource {
@@ -22,5 +23,17 @@ class UserDataSourceImpl extends UserDataSource {
     Users users = UserModel.fromMap(data);
 
     return users;
+  }
+
+  @override
+  Future<void> updateUserProfile(UserModel userData) async {
+    final currUser = firebaseAuth.currentUser;
+    await currUser!.updateDisplayName(userData.username);
+    await currUser.updateEmail(userData.email);
+    await currUser.updatePhotoURL(userData.imageUrl);
+    await firestore
+        .collection('users')
+        .doc(currUser.uid)
+        .update(userData.toMap());
   }
 }

@@ -50,9 +50,10 @@ class AdminReposImpl implements AdminRepos {
   }
 
   @override
-  Future<Either<String, List<Admin>>> getCampervanRental() async {
+  Future<Either<String, List<Admin>>> getCampervanRental(
+      bool onSearch, String key) async {
     try {
-      final result = await adminDataSource.getCampervanRental();
+      final result = await adminDataSource.getCampervanRental(onSearch, key);
       return Right(result);
     } catch (e) {
       return Left(e.toString());

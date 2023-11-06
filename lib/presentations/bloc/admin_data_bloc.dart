@@ -24,9 +24,9 @@ class AdminDataCubit extends Cubit<AdminDataState> {
     emit(AdminDataSuccess(data: result));
   }
 
-  Future<void> getAllAdminCampervan() async {
+  Future<void> getAllAdminCampervan(bool onSearch, String key) async {
     emit(AdminDataLoading());
-    final result = await getAdminCampervan.execute();
+    final result = await getAdminCampervan.execute(onSearch, key);
 
     result.fold(
       (l) => {emit(AdminDataFailed(error: l))},

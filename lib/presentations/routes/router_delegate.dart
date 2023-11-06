@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:wanderer/presentations/bloc/router_bloc.dart';
+import 'package:wanderer/presentations/pages/account_page.dart';
 import 'package:wanderer/presentations/pages/admin_page/addLocation.dart';
 import 'package:wanderer/presentations/pages/admin_page/addPhoto_page.dart';
 import 'package:wanderer/presentations/pages/admin_page/addType_page.dart';
@@ -15,6 +16,7 @@ import 'package:wanderer/presentations/pages/auth/login_page.dart';
 import 'package:wanderer/presentations/pages/auth/register_page.dart';
 import 'package:wanderer/presentations/pages/auth/resetConfirmation.dart';
 import 'package:wanderer/presentations/pages/auth/reset_page.dart';
+import 'package:wanderer/presentations/pages/edit_profile_page.dart';
 import 'package:wanderer/presentations/pages/favorite_page.dart';
 import 'package:wanderer/presentations/pages/getStarted/first_page.dart';
 import 'package:wanderer/presentations/pages/getStarted/third_page.dart';
@@ -224,6 +226,15 @@ class MyRouterDelegate extends RouterDelegate
         if (settings.name == SearchPage.routeName) {
           return MaterialPageRoute(
               builder: (context) => const SearchPage(), settings: settings);
+        }
+        if (settings.name == EditProfilePage.routeName) {
+          return MaterialPageRoute(
+              builder: (context) => const EditProfilePage(),
+              settings: settings);
+        }
+        if (settings.name == AccountPage.routeName) {
+          return MaterialPageRoute(
+              builder: (context) => const AccountPage(), settings: settings);
         }
 
         return null;

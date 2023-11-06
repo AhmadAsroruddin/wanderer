@@ -10,7 +10,7 @@ abstract class AdminDataSource {
   Future<Admin> getAdmin(String markerId);
   Future<List<Tipe>> getTypes(String adminId);
   Future<void> updateAdminId(String adminId, String userId);
-  Future<List<Admin>> getCampervanRental();
+  Future<List<Admin>> getCampervanRental(bool onSearch, String key);
 }
 
 class AdminDataSourceImpl implements AdminDataSource {
@@ -101,13 +101,23 @@ class AdminDataSourceImpl implements AdminDataSource {
   }
 
   @override
-  Future<List<Admin>> getCampervanRental() async {
+  Future<List<Admin>> getCampervanRental(bool onSearch, String key) async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-    final dataQuery = await firestore
-        .collection('admin')
-        .where('category', isEqualTo: 'Campervan')
-        .get();
+    final QuerySnapshot<Map<String, dynamic>> dataQuery;
+    if (onSearch) {
+      print("opp");
+      dataQuery = await firestore
+          .collection('admin')
+          .where('category', isEqualTo: 'Campervan')
+          .where('name', isGreaterThanOrEqualTo: key)
+          .where('name', isLessThanOrEqualTo: key + '\uf8ff')
+          .get();
+    } else {
+      dataQuery = await firestore
+          .collection('admin')
+          .where('category', isEqualTo: 'Campervan')
+          .get();
+    }
 
     final List<Admin> admin = dataQuery.docs
         .map<Admin>((e) => AdminModel.fromDocumentSnapshot(e).toEntity())

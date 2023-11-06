@@ -89,7 +89,12 @@ class _AddTypePageState extends State<AddTypePage> {
               GestureDetector(
                 onTap: () async {
                   addToFirestore();
-                  Navigator.of(context).pushNamed(TabScreen.routeName);
+                  Future.delayed(
+                    const Duration(seconds: 5),
+                    () {
+                      Navigator.of(context).pushNamed(TabScreen.routeName);
+                    },
+                  );
                 },
                 child: const CustomButton(name: "Next"),
               )

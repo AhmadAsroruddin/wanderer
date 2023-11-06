@@ -24,7 +24,7 @@ class _OrderPageState extends State<OrderPage> {
   TextEditingController nomor = TextEditingController();
   TextEditingController permintaan = TextEditingController();
   double harga = 0;
-  int days = 0;
+  int days = 1;
 
   DateTimeRange selectedDate = DateTimeRange(
     start: DateTime.now(),
@@ -101,6 +101,9 @@ class _OrderPageState extends State<OrderPage> {
     Tipe tipe = data[0];
     int amount = data[1];
     String adminName = data[2];
+    setState(() {
+      harga = ((tipe.price * amount) * 1);
+    });
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -191,7 +194,7 @@ class _OrderPageState extends State<OrderPage> {
                                     Text(
                                       formatDate(selectedDate.start),
                                       style: blackTextStyle.copyWith(
-                                        fontSize: deviceWidth * 0.035,
+                                        fontSize: deviceWidth * 0.03,
                                         fontWeight: FontWeight.w900,
                                       ),
                                     )
@@ -207,7 +210,7 @@ class _OrderPageState extends State<OrderPage> {
                                     Text(
                                       formatDate(selectedDate.end),
                                       style: blackTextStyle.copyWith(
-                                        fontSize: deviceWidth * 0.035,
+                                        fontSize: deviceWidth * 0.03,
                                         fontWeight: FontWeight.w900,
                                       ),
                                     )

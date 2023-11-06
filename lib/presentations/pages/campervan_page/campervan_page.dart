@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:wanderer/presentations/bloc/admin_data_bloc.dart';
+import 'package:wanderer/presentations/bloc/markers_bloc.dart';
 import 'package:wanderer/presentations/pages/home_page/search_bar.dart';
 import 'package:wanderer/presentations/shared/theme.dart';
 
+import '../../../domain/entities/marker.dart';
+import '../marker_page/marker_paget.dart';
 import 'campervan_list.dart';
 
 class CampervanPage extends StatelessWidget {
@@ -12,7 +15,7 @@ class CampervanPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<AdminDataCubit>().getAllAdminCampervan();
+    context.read<AdminDataCubit>().getAllAdminCampervan(false, "");
     return SafeArea(
       child: Scaffold(
         body: BlocBuilder<AdminDataCubit, AdminDataState>(
@@ -54,11 +57,25 @@ class CampervanPage extends StatelessWidget {
                     child: ListView.builder(
                       itemCount: state.campervan.length,
                       itemBuilder: (context, index) {
-                        return CampervanList(
-                          image: state.campervan[index].image[0],
-                          name: state.campervan[index].name,
-                          address: state.campervan[index].address,
-                          markerId: state.campervan[index].markerId,
+                        return GestureDetector(
+                          onTap: () async {
+                            Markers marker = await context
+                                .read<MarkersCubit>()
+                                .getMarkerForFavorite(
+                                    state.campervan[index].markerId);
+
+                            context
+                                .read<MarkersCubit>()
+                                .getMarker(true, marker);
+                            Navigator.of(context)
+                                .pushNamed(MarkerPage.routeName);
+                          },
+                          child: CampervanList(
+                            image: state.campervan[index].image[0],
+                            name: state.campervan[index].name,
+                            address: state.campervan[index].address,
+                            markerId: state.campervan[index].markerId,
+                          ),
                         );
                       },
                     ),

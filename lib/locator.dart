@@ -63,6 +63,7 @@ import 'package:wanderer/domain/usecase/searcMarker.dart';
 import 'package:wanderer/domain/usecase/setUserRoleToAdmin.dart';
 import 'package:wanderer/domain/usecase/signInWithGoogle.dart';
 import 'package:wanderer/domain/usecase/updateStatusOrder.dart';
+import 'package:wanderer/domain/usecase/updateUser.dart';
 import 'package:wanderer/domain/usecase/updateUserIdMarker.dart';
 import 'package:wanderer/domain/usecase/uploadImages.dart';
 import 'package:wanderer/presentations/bloc/admin_bloc.dart';
@@ -125,6 +126,7 @@ void init() {
   locator.registerLazySingleton(() => GetMarkerData(markerRepos: locator()));
   locator.registerLazySingleton(() => GetArticleUrl(articleRepos: locator()));
   locator.registerLazySingleton(() => SearchMarker(markerRepos: locator()));
+  locator.registerLazySingleton(() => UpdateUser(userRepository: locator()));
 
   //REPOSITORY
   locator.registerLazySingleton<AuthRepos>(() => AuthReposImpl(
@@ -169,7 +171,7 @@ void init() {
   locator
       .registerFactory(() => AdminDataCubit(locator(), locator(), locator()));
   locator.registerFactory(() => TypeCubitData(locator()));
-  locator.registerFactory(() => UserCubit(locator()));
+  locator.registerFactory(() => UserCubit(locator(), locator()));
   locator.registerFactory(() => OrderCubit(locator(), locator(), locator()));
   locator.registerFactory(() => PaymentCubit(locator(), locator()));
   locator.registerFactory(() => ArticleCubit(locator()));

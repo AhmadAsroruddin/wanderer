@@ -71,7 +71,6 @@ class _ListTypeCardState extends State<ListTypeCard> {
                     images = pickedImage;
                   });
                 }
-                print("asdasds $images");
               },
               child: Container(
                 margin: const EdgeInsets.symmetric(vertical: 15),

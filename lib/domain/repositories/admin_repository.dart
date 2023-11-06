@@ -8,5 +8,6 @@ abstract class AdminRepos {
   Future<Admin> getAdmin(String markerId);
   Future<List<Tipe>> getTypes(String adminId);
   Future<void> setUserRole(String userId, String adminId);
-  Future<Either<String, List<Admin>>> getCampervanRental();
+  Future<Either<String, List<Admin>>> getCampervanRental(
+      bool onSearch, String key);
 }

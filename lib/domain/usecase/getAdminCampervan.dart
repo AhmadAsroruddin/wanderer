@@ -8,7 +8,7 @@ class GetAdminCampervan {
 
   GetAdminCampervan({required this.adminRepos});
 
-  Future<Either<String, List<Admin>>> execute() {
-    return adminRepos.getCampervanRental();
+  Future<Either<String, List<Admin>>> execute(bool onSearch, String key) {
+    return adminRepos.getCampervanRental(onSearch, key);
   }
 }

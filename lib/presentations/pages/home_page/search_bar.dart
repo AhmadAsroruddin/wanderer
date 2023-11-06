@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wanderer/presentations/bloc/markers_bloc.dart';
 import 'package:wanderer/presentations/shared/search_page.dart';
 
+import '../../bloc/admin_data_bloc.dart';
 import '../../shared/theme.dart';
 
 // ignore: must_be_immutable
@@ -66,7 +67,13 @@ class SearchBarHome extends StatelessWidget {
               decoration: InputDecoration(
                 prefixIcon: GestureDetector(
                   onTap: () {
-                    context.read<MarkersCubit>().searchMarker(value.text);
+                    if (isHomePage == true) {
+                      context.read<MarkersCubit>().searchMarker(value.text);
+                    } else if (isCamper == true) {
+                      context
+                          .read<AdminDataCubit>()
+                          .getAllAdminCampervan(true, value.text);
+                    }
                   },
                   child: Image.asset(
                     "assets/img/loopSearch.png",
