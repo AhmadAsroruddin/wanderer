@@ -47,14 +47,9 @@ class SearchBarHome extends StatelessWidget {
         children: <Widget>[
           isSearchPage == true
               ? Container()
-              : GestureDetector(
-                  onTap: () {
-                    _showHalfWidthPopup(context);
-                  },
-                  child: Image.asset(
-                    "assets/img/list.png",
-                    scale: 1.8,
-                  ),
+              : Image.asset(
+                  "assets/img/list.png",
+                  scale: 1.8,
                 ),
           SizedBox(
             width: deviceWidth * 0.01,
