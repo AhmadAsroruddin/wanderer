@@ -7,7 +7,8 @@ class GetArticleUrl {
 
   const GetArticleUrl({required this.articleRepos});
 
-  Future<Either<String, List<ArticleUrl>>> execute() async {
-    return await articleRepos.getArticleData();
+  Future<Either<String, List<ArticleUrl>>> execute(
+      bool isSearch, String key) async {
+    return await articleRepos.getArticleData(isSearch, key);
   }
 }

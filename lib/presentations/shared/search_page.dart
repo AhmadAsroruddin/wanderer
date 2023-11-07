@@ -4,6 +4,8 @@ import 'package:wanderer/presentations/bloc/markers_bloc.dart';
 import 'package:wanderer/presentations/pages/home_page/search_bar.dart';
 import 'package:wanderer/presentations/shared/theme.dart';
 
+import '../pages/marker_page/marker_paget.dart';
+
 class SearchPage extends StatelessWidget {
   const SearchPage({super.key});
   static const routeName = "/searchPage";
@@ -42,54 +44,64 @@ class SearchPage extends StatelessWidget {
                         : ListView.builder(
                             itemCount: state.marker.length,
                             itemBuilder: (context, index) {
-                              return Container(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: deviceWidth * 0.05,
-                                  vertical: deviceWidth * 0.05,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: whiteColor,
-                                ),
-                                child: Row(
-                                  children: <Widget>[
-                                    Container(
-                                      width: deviceWidth * 0.3,
-                                      height: deviceHeight * 0.12,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(15),
-                                        image: DecorationImage(
-                                            image: NetworkImage(
-                                              state.marker[index].image[0],
-                                            ),
-                                            fit: BoxFit.fill),
+                              return GestureDetector(
+                                onTap: () {
+                                  context
+                                      .read<MarkersCubit>()
+                                      .getMarker(true, state.marker[index]);
+                                  Navigator.of(context)
+                                      .pushNamed(MarkerPage.routeName);
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: deviceWidth * 0.05,
+                                    vertical: deviceWidth * 0.05,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: whiteColor,
+                                  ),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Container(
+                                        width: deviceWidth * 0.3,
+                                        height: deviceHeight * 0.12,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          image: DecorationImage(
+                                              image: NetworkImage(
+                                                state.marker[index].image[0],
+                                              ),
+                                              fit: BoxFit.fill),
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      width: deviceWidth * 0.02,
-                                    ),
-                                    Column(
-                                      children: [
-                                        SizedBox(
-                                          width: deviceWidth * 0.55,
-                                          child: Text(
-                                            state.marker[index].name,
-                                            style: blackTextStyle.copyWith(
-                                              fontWeight: bold,
-                                              fontSize: deviceWidth * 0.035,
+                                      SizedBox(
+                                        width: deviceWidth * 0.02,
+                                      ),
+                                      Column(
+                                        children: [
+                                          SizedBox(
+                                            width: deviceWidth * 0.55,
+                                            child: Text(
+                                              state.marker[index].name,
+                                              style: blackTextStyle.copyWith(
+                                                fontWeight: bold,
+                                                fontSize: deviceWidth * 0.035,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        IconList(
-                                          icon: "marker",
-                                          data: state.marker[index].address,
-                                        ),
-                                        const IconList(
-                                          icon: "jam",
-                                          data: "12.00 - 24.00",
-                                        ),
-                                      ],
-                                    )
-                                  ],
+                                          IconList(
+                                            icon: "marker",
+                                            data: state.marker[index].address,
+                                          ),
+                                          const IconList(
+                                            icon: "jam",
+                                            data: "12.00 - 24.00",
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
                                 ),
                               );
                             },

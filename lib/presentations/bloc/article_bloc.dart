@@ -10,10 +10,10 @@ class ArticleCubit extends Cubit<ArticleState> {
 
   ArticleCubit(this.getArticleUrl) : super(ArticleInitial());
 
-  Future<void> getArticle() async {
+  Future<void> getArticle(bool isSearch, String key) async {
     emit(ArticleLoading());
 
-    final result = await getArticleUrl.execute();
+    final result = await getArticleUrl.execute(isSearch, key);
 
     result.fold(
       (l) => emit(ArticleError(error: l)),

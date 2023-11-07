@@ -134,7 +134,7 @@ class MarkersDatasourceImpl implements MarkersDataSource {
     final query = await firestore
         .collection('markers')
         .where('name', isGreaterThanOrEqualTo: key)
-        .where('name', isLessThanOrEqualTo: key + '\uf8ff')
+        .where('name', isLessThanOrEqualTo: '$key\uf8ff')
         .get();
     final List<Markers> marker = query.docs
         .map<Markers>((e) => MarkerModel.fromDocumentSnapshot(e).toEntity())

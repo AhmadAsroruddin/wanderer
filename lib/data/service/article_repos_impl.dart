@@ -9,13 +9,13 @@ class ArticleReposImpl implements ArticleRepos {
   const ArticleReposImpl({required this.articleDataSource});
 
   @override
-  Future<Either<String, List<ArticleUrl>>> getArticleData() async {
+  Future<Either<String, List<ArticleUrl>>> getArticleData(
+      bool isSearch, String key) async {
     try {
-      final result = await articleDataSource.getArticleUrl();
+      final result = await articleDataSource.getArticleUrl(isSearch, key);
 
       return Right(result);
     } catch (e) {
-      print("kukgljgkg $e");
       return Left(e.toString());
     }
   }

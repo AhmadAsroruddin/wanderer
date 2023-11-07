@@ -4,6 +4,7 @@ import 'package:wanderer/presentations/bloc/markers_bloc.dart';
 import 'package:wanderer/presentations/shared/search_page.dart';
 
 import '../../bloc/admin_data_bloc.dart';
+import '../../bloc/article_bloc.dart';
 import '../../shared/theme.dart';
 
 // ignore: must_be_immutable
@@ -12,12 +13,14 @@ class SearchBarHome extends StatelessWidget {
     this.isCamper = false,
     this.isHomePage = false,
     this.isSearchPage = false,
+    this.isArticle = false,
     super.key,
   });
 
   bool isCamper;
   bool isHomePage;
   bool isSearchPage;
+  bool isArticle;
 
   TextEditingController value = TextEditingController();
   @override
@@ -73,6 +76,11 @@ class SearchBarHome extends StatelessWidget {
                       context
                           .read<AdminDataCubit>()
                           .getAllAdminCampervan(true, value.text);
+                    } else if (isSearchPage == true) {
+                      context.read<MarkersCubit>().searchMarker(value.text);
+                    } else if (isArticle == true) {
+                      print("object");
+                      context.read<ArticleCubit>().getArticle(true, value.text);
                     }
                   },
                   child: Image.asset(

@@ -179,7 +179,7 @@ class _PaidMarkerPageState extends State<PaidMarkerPage> {
                                                           .tipe[index].adminId,
                                                     ),
                                                     amount,
-                                                    adminName
+                                                    adminName,
                                                   ],
                                                 );
                                               },

@@ -15,7 +15,7 @@ class ArticlePage extends StatefulWidget {
 class _ArticlePageState extends State<ArticlePage> {
   @override
   Widget build(BuildContext context) {
-    context.read<ArticleCubit>().getArticle();
+    context.read<ArticleCubit>().getArticle(false, "");
     return SafeArea(
       child: BlocBuilder<ArticleCubit, ArticleState>(
         builder: (context, state) {
@@ -32,20 +32,19 @@ class _ArticlePageState extends State<ArticlePage> {
                       ),
                       Center(
                         child: SearchBarHome(
-                          isCamper: true,
+                          isArticle: true,
                         ),
                       )
                     ],
                   ),
                 ),
                 if (state is ArticleSuccess)
-                  Container(
+                  SizedBox(
                     height: deviceHeight * 0.5,
                     width: deviceWidth,
                     child: ListView.builder(
                       itemCount: state.data.length,
                       itemBuilder: (context, index) {
-                        print(state);
                         return ArticleComponent(
                           title: state.data[index].title.toString(),
                           articleUrl: state.data[index].url,
