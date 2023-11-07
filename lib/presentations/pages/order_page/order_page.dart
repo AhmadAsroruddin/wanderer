@@ -23,6 +23,7 @@ class _OrderPageState extends State<OrderPage> {
   TextEditingController nama = TextEditingController();
   TextEditingController nomor = TextEditingController();
   TextEditingController permintaan = TextEditingController();
+  Tipe? t;
   double harga = 0;
   int days = 1;
 
@@ -101,9 +102,12 @@ class _OrderPageState extends State<OrderPage> {
     Tipe tipe = data[0];
     int amount = data[1];
     String adminName = data[2];
-    setState(() {
-      harga = ((tipe.price * amount) * 1);
-    });
+
+    if (harga == 0) {
+      setState(() {
+        harga = ((tipe.price * amount));
+      });
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -352,17 +356,9 @@ class _OrderPageState extends State<OrderPage> {
                           Navigator.of(context).pop();
                         });
                       } else if (state is OrderSuccess) {
-                        DialogUtilsWithCustomRoute.alertDialogWithCustomRoute(
-                            context,
-                            "Pesanan Berhasil dibuat",
-                            "Klik di sini untuk melihat pesanan anda",
-                            () async {
-                          String userId =
-                              await context.read<AuthCubit>().getCurrentUser();
-                          Navigator.of(context).pushNamed(
-                              UserOrderListPage.routeName,
-                              arguments: userId);
-                        });
+                        Navigator.of(context).pushNamed(
+                          UserOrderListPage.routeName,
+                        );
                       }
                     },
                     builder: (context, state) {

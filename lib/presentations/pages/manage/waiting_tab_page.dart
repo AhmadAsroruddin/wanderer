@@ -21,7 +21,7 @@ class WaitingTabPage extends StatefulWidget {
 class _WaitingTabPageState extends State<WaitingTabPage> {
   @override
   void initState() {
-    // TODO: implement initState
+    print("INI BISAHFIONAK;FJNADLKJFDSNFSDKLJFNKSDF");
     Future.delayed(const Duration(milliseconds: 1), () async {
       await context
           .read<OrderCubit>()

@@ -73,12 +73,9 @@ class AuthDataSourceImpl implements AuthDataSource {
           markers: [],
           role: "");
 
-      if (auth.currentUser!.uid != "") {
-        print("asidlasndlasdla");
-        UserDataSource dataSource = UserDataSourceImpl();
+      UserDataSource dataSource = UserDataSourceImpl();
 
-        userRole = await dataSource.getUserData();
-      }
+      userRole = await dataSource.getUserData();
 
       await FirebaseFirestore.instance
           .collection("users")

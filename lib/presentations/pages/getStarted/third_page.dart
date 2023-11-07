@@ -29,13 +29,6 @@ class GettingStartedThird extends StatelessWidget {
                     },
                     child: const Text("Login"),
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      (Router.of(context).routerDelegate as MyRouterDelegate)
-                          .firstTimeDone();
-                    },
-                    child: const Text("Skip"),
-                  )
                 ],
               ),
             ],

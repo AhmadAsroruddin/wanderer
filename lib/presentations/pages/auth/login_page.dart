@@ -26,9 +26,7 @@ class LoginPage extends StatelessWidget {
       listener: (context, state) {
         print(state);
         if (state is AuthLogin) {
-          Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (context) => const TabScreen()),
-              (route) => false);
+          Navigator.of(context).pushReplacementNamed(TabScreen.routeName);
         } else if (state is AuthError) {
           DialogUtils.alertDialog(context, "Error", state.error);
         }
