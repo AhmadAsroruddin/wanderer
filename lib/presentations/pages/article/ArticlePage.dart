@@ -39,9 +39,7 @@ class _ArticlePageState extends State<ArticlePage> {
                   ),
                 ),
                 if (state is ArticleSuccess)
-                  SizedBox(
-                    height: deviceHeight * 0.5,
-                    width: deviceWidth,
+                  Expanded(
                     child: ListView.builder(
                       itemCount: state.data.length,
                       itemBuilder: (context, index) {
