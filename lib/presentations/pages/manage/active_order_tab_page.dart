@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wanderer/data/models/report_model.dart';
 import 'package:wanderer/presentations/bloc/order_bloc.dart';
+import 'package:wanderer/presentations/bloc/user_bloc.dart';
 import 'package:wanderer/presentations/shared/cardManage.dart';
+import 'package:wanderer/presentations/shared/customButton.dart';
 
 import '../../../domain/entities/order.dart';
 import '../../shared/theme.dart';
+import '../../shared/utils.dart';
 
 class ActiveOrderTabPage extends StatefulWidget {
   const ActiveOrderTabPage(
@@ -30,6 +34,8 @@ class _ActiveOrderTabPageState extends State<ActiveOrderTabPage> {
     super.initState();
   }
 
+  TextEditingController report = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<OrderCubit, OrderState>(
@@ -52,7 +58,114 @@ class _ActiveOrderTabPageState extends State<ActiveOrderTabPage> {
                   return CardManage(
                     orderData: orderData,
                     isNeedButton: widget.isNeedButton,
-                    widgetButton: Container(),
+                    widgetButton: Column(
+                      children: [
+                        const CustomButton(name: "Check-in"),
+                        SizedBox(
+                          height: deviceHeight * 0.01,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  content: SizedBox(
+                                    height: deviceHeight * 0.2,
+                                    width: deviceWidth * .8,
+                                    child: Column(
+                                      children: <Widget>[
+                                        TextField(
+                                          controller: report,
+                                          maxLines: 4,
+                                          decoration: InputDecoration(
+                                            hintText: 'Masukkan teks',
+                                            filled: true,
+                                            fillColor: Colors.grey[
+                                                200], // Warna latar belakang
+                                            contentPadding: const EdgeInsets
+                                                    .all(
+                                                16), // Padding teks di dalam TextField
+                                            border: OutlineInputBorder(
+                                              // Bentuk bulat
+                                              borderRadius:
+                                                  BorderRadius.circular(30),
+                                            ),
+                                            enabledBorder: OutlineInputBorder(
+                                              // Garis tepi saat tidak digunakan (bisa disesuaikan)
+                                              borderSide: BorderSide(
+                                                  color: Colors.grey[200]!),
+                                              borderRadius:
+                                                  BorderRadius.circular(30),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              // Garis tepi saat fokus (bisa disesuaikan)
+                                              borderSide: const BorderSide(
+                                                  color: Colors.blue),
+                                              borderRadius:
+                                                  BorderRadius.circular(30),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: deviceHeight * 0.02,
+                                        ),
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            context.read<UserCubit>().report(
+                                                ReportModel(
+                                                    report.text,
+                                                    orderData.accountId,
+                                                    orderData.id,
+                                                    orderData.orderedPlaceId));
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors
+                                                .red, // Warna latar belakang kuning
+                                            padding: const EdgeInsets.all(
+                                                16.0), // Atur padding untuk membuat tombol besar
+                                            minimumSize: Size(
+                                              deviceWidth * 0.4,
+                                              deviceHeight * 0.02,
+                                            ), // Lebar maksimum dengan tinggi 48.0
+                                          ),
+                                          child: Text(
+                                            'Tombol Besar',
+                                            style: TextStyle(
+                                              fontSize: deviceWidth * 0.04,
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                          child: Container(
+                            width: double.infinity,
+                            height: deviceHeight * 0.05,
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Center(
+                              child: Text(
+                                "Report",
+                                style: SafeGoogleFont(
+                                  'Inter',
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                  height: 1.2125,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   );
                 },
               ),

@@ -29,14 +29,16 @@ class _WaitingPaymentPageState extends State<WaitingPaymentPage> {
 
   @override
   void initState() {
-    Future.delayed(
-      const Duration(seconds: 1),
-      () async {
-        await context
-            .read<OrderCubit>()
-            .getOrderDataByStatus(widget.adminId, "waiting", widget.isUser);
-      },
-    );
+    if (mounted) {
+      Future.delayed(
+        Duration.zero,
+        () async {
+          await context
+              .read<OrderCubit>()
+              .getOrderDataByStatus(widget.adminId, "waiting", widget.isUser);
+        },
+      );
+    }
     super.initState();
   }
 
@@ -53,14 +55,15 @@ class _WaitingPaymentPageState extends State<WaitingPaymentPage> {
               context
                   .read<OrderCubit>()
                   .updateStatus(element.id, element.orderedPlaceId, "paid");
-              setState(() {});
+              if (this.mounted) {
+                setState(() {});
+              }
             }
           }
         }
       },
       builder: (context, state) {
         if (state is OrderDataWaitingPaymentObtained) {
-          print('data sadas ${state.list}');
           if (state.list == []) {
             return const Center(
               child: Text("Belum ada pesanan"),

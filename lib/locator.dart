@@ -57,6 +57,7 @@ import 'package:wanderer/domain/usecase/login.dart';
 import 'package:wanderer/domain/usecase/logout.dart';
 import 'package:wanderer/domain/usecase/pushComments.dart';
 import 'package:wanderer/domain/usecase/removedFromFavorite.dart';
+import 'package:wanderer/domain/usecase/report.dart';
 import 'package:wanderer/domain/usecase/requestOrder.dart';
 import 'package:wanderer/domain/usecase/resetPassword.dart';
 import 'package:wanderer/domain/usecase/searcMarker.dart';
@@ -127,6 +128,7 @@ void init() {
   locator.registerLazySingleton(() => GetArticleUrl(articleRepos: locator()));
   locator.registerLazySingleton(() => SearchMarker(markerRepos: locator()));
   locator.registerLazySingleton(() => UpdateUser(userRepository: locator()));
+  locator.registerLazySingleton(() => AddReport(userRepos: locator()));
 
   //REPOSITORY
   locator.registerLazySingleton<AuthRepos>(() => AuthReposImpl(
@@ -171,7 +173,7 @@ void init() {
   locator
       .registerFactory(() => AdminDataCubit(locator(), locator(), locator()));
   locator.registerFactory(() => TypeCubitData(locator()));
-  locator.registerFactory(() => UserCubit(locator(), locator()));
+  locator.registerFactory(() => UserCubit(locator(), locator(), locator()));
   locator.registerFactory(() => OrderCubit(locator(), locator(), locator()));
   locator.registerFactory(() => PaymentCubit(locator(), locator()));
   locator.registerFactory(() => ArticleCubit(locator()));

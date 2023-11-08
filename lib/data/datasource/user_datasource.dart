@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:wanderer/data/models/report_model.dart';
 import 'package:wanderer/data/models/user_model.dart';
 import 'package:wanderer/domain/entities/user.dart';
 
 abstract class UserDataSource {
   Future<Users> getUserData(String uid);
   Future<void> updateUserProfile(UserModel userData);
+  Future<void> reportSend(ReportModel report);
 }
 
 class UserDataSourceImpl extends UserDataSource {
@@ -32,5 +34,10 @@ class UserDataSourceImpl extends UserDataSource {
         .collection('users')
         .doc(currUser.uid)
         .update(userData.toMap());
+  }
+
+  @override
+  Future<void> reportSend(ReportModel report) async {
+    firestore.collection("report").doc().set(report.toMap());
   }
 }

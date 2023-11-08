@@ -21,12 +21,15 @@ class WaitingTabPage extends StatefulWidget {
 class _WaitingTabPageState extends State<WaitingTabPage> {
   @override
   void initState() {
-    print("INI BISAHFIONAK;FJNADLKJFDSNFSDKLJFNKSDF");
-    Future.delayed(const Duration(milliseconds: 1), () async {
-      await context
-          .read<OrderCubit>()
-          .getOrderDataByStatus(widget.adminId, "request", widget.isUser);
-    });
+    if (mounted) {
+      print("INI BISAHFIONAK;FJNADLKJFDSNFSDKLJFNKSDF");
+      Future.delayed(Duration.zero, () async {
+        await context
+            .read<OrderCubit>()
+            .getOrderDataByStatus(widget.adminId, "request", widget.isUser);
+        setState(() {});
+      });
+    }
     super.initState();
   }
 
@@ -34,7 +37,6 @@ class _WaitingTabPageState extends State<WaitingTabPage> {
   Widget build(BuildContext context) {
     return BlocConsumer<OrderCubit, OrderState>(
       builder: (context, state) {
-        print(state);
         if (state is OrderDataRequestObtained) {
           return Container(
             padding: EdgeInsets.symmetric(
