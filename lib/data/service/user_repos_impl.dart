@@ -10,9 +10,9 @@ class UserReposImpl extends UserRepository {
   UserReposImpl({required this.userDataSource});
 
   @override
-  Future<Either<String, Users>> getUserData() async {
+  Future<Either<String, Users>> getUserData(String uid) async {
     try {
-      final data = await userDataSource.getUserData();
+      final data = await userDataSource.getUserData(uid);
       return Right(data);
     } catch (e) {
       print(e);

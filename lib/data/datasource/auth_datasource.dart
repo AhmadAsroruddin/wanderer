@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:wanderer/data/datasource/user_datasource.dart';
 import 'package:wanderer/data/models/user_model.dart';
-import 'package:wanderer/domain/entities/user.dart';
 
 abstract class AuthDataSource {
   Future<void> createUser(
@@ -65,30 +63,28 @@ class AuthDataSourceImpl implements AuthDataSource {
       final UserCredential authResult =
           await auth.signInWithCredential(credential);
       final User? user = authResult.user;
-      Users userRole = const Users(
-          username: "",
-          email: "",
-          imageUrl: "",
-          telponNumber: "",
-          markers: [],
-          role: "");
 
-      UserDataSource dataSource = UserDataSourceImpl();
+      if (user != null) {
+        final DocumentSnapshot userDoc = await FirebaseFirestore.instance
+            .collection("users")
+            .doc(user.uid)
+            .get();
 
-      userRole = await dataSource.getUserData();
-
-      await FirebaseFirestore.instance
-          .collection("users")
-          .doc(user!.uid)
-          .set(UserModel(
-            username: user.displayName!,
-            email: user.email!,
-            imageUrl:
-                "https://cdn.pixabay.com/photo/2023/05/21/07/47/horse-8008038_1280.jpg",
-            telponNumber: user.phoneNumber ?? "",
-            markers: const [],
-            role: userRole.role == "" ? "" : userRole.role,
-          ).toMap());
+        if (!userDoc.exists) {
+          await FirebaseFirestore.instance
+              .collection("users")
+              .doc(user.uid)
+              .set(UserModel(
+                username: user.displayName!,
+                email: user.email!,
+                imageUrl:
+                    "https://cdn.pixabay.com/photo/2023/05/21/07/47/horse-8008038_1280.jpg",
+                telponNumber: user.phoneNumber ?? "",
+                markers: const [],
+                role: "",
+              ).toMap());
+        }
+      }
     }
   }
 

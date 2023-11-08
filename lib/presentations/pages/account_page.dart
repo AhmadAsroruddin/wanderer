@@ -25,7 +25,7 @@ class AccountPage extends StatefulWidget {
 class _AccountPageState extends State<AccountPage> {
   @override
   Widget build(BuildContext context) {
-    context.read<UserCubit>().getUser();
+    context.read<UserCubit>().getUser(FirebaseAuth.instance.currentUser!.uid);
 
     return Scaffold(
       body: RefreshIndicator(

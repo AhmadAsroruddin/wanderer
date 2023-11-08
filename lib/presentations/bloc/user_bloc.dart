@@ -13,8 +13,8 @@ class UserCubit extends Cubit<UserState> {
 
   UserCubit(this._getUserData, this._updateUser) : super(UserLoading());
 
-  Future<void> getUser() async {
-    final result = await _getUserData.execute();
+  Future<void> getUser(String uid) async {
+    final result = await _getUserData.execute(uid);
 
     result.fold(
       (l) => emit(UserFailed(error: l)),

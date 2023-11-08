@@ -7,7 +7,7 @@ class GetUserData {
 
   GetUserData({required this.userRepository});
 
-  Future<Either<String, Users>> execute() {
-    return userRepository.getUserData();
+  Future<Either<String, Users>> execute(String uid) {
+    return userRepository.getUserData(uid);
   }
 }

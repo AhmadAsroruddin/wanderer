@@ -71,6 +71,7 @@ class MyRouterDelegate extends RouterDelegate
       () async {
         await routerCubit.checkLoginStatus();
         isFirstTime = routerCubit.state;
+        print(isFirstTime);
         notifyListeners();
       },
     );

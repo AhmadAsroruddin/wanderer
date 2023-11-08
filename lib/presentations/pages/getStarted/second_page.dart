@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wanderer/presentations/pages/getStarted/get_started_widget.dart';
 import 'package:wanderer/presentations/routes/router_delegate.dart';
 
 class GettingStartedSecond extends StatelessWidget {
@@ -7,23 +8,15 @@ class GettingStartedSecond extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Center(
-              child: Text("ini halaman kedua"),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                (Router.of(context).routerDelegate as MyRouterDelegate)
-                    .nextThird();
-              },
-              child: const Text("next"),
-            ),
-          ],
-        ),
-      ),
-    );
+        body: GetStartedWidget(
+      number: "2",
+      image: "second",
+      title: "Explore with Wanderer",
+      subtitle:
+          "Explore Limitless Adventures with Us! Wanderer, Your Ultimate Travel Companion.",
+      onTapCallback: () {
+        (Router.of(context).routerDelegate as MyRouterDelegate).nextThird();
+      },
+    ));
   }
 }
