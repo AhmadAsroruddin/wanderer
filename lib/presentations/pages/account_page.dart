@@ -65,7 +65,7 @@ class _AccountPageState extends State<AccountPage> {
                                   arguments: state.user);
                             },
                             child: CardAccount(
-                              title: "Akun",
+                              title: "Account",
                               deviceWidth: deviceWidth,
                               deviceHeight: deviceHeight,
                               child: AccountItem(
@@ -80,7 +80,7 @@ class _AccountPageState extends State<AccountPage> {
                             height: deviceHeight * 0.05,
                           ),
                           CardAccount(
-                            title: "Keperluan",
+                            title: "Your necessity",
                             deviceWidth: deviceWidth,
                             deviceHeight: deviceHeight,
                             child: Column(
@@ -97,7 +97,7 @@ class _AccountPageState extends State<AccountPage> {
                                   child: AccountItem(
                                     deviceWidth: deviceWidth,
                                     deviceHeight: deviceHeight,
-                                    name: "Pesanan Saya",
+                                    name: "My Order",
                                     image: "tab_image/order",
                                   ),
                                 ),
@@ -119,7 +119,7 @@ class _AccountPageState extends State<AccountPage> {
                                   child: AccountItem(
                                     deviceWidth: deviceWidth,
                                     deviceHeight: deviceHeight,
-                                    name: "Favorite Saya",
+                                    name: "My Favorite",
                                     image: "love",
                                   ),
                                 )
@@ -139,14 +139,14 @@ class _AccountPageState extends State<AccountPage> {
                                   child: CardAccount(
                                     deviceWidth: deviceWidth,
                                     deviceHeight: deviceHeight,
-                                    title: "Pengelolaan",
+                                    title: "Your Place",
                                     child: Column(
                                       children: <Widget>[
                                         AccountItem(
                                           deviceWidth: deviceWidth,
                                           deviceHeight: deviceHeight,
                                           image: "marker",
-                                          name: "Kelola Tempat",
+                                          name: "Manage",
                                         )
                                       ],
                                     ),

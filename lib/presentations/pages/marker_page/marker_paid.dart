@@ -269,9 +269,12 @@ class _PaidMarkerPageState extends State<PaidMarkerPage> {
                                             scale: 1.5,
                                           ),
                                         )
-                                      : Image.asset(
-                                          "assets/admin/campsite/${state.facilities[indexFac].toString().toLowerCase()}.png",
-                                          scale: 1.5,
+                                      : SizedBox(
+                                          width: deviceWidth * 0.2,
+                                          child: Image.asset(
+                                            "assets/admin/campsite/${state.facilities[indexFac].toString().toLowerCase()}.png",
+                                            scale: 1.5,
+                                          ),
                                         )
                                 ],
                               ),

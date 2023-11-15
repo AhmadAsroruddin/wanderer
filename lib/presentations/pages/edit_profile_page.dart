@@ -137,7 +137,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             ),
             CustomtextField(
               controller: name,
-              label: "Nama",
+              label: "Name",
             ),
             CustomtextField(
               controller: email,
@@ -145,7 +145,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             ),
             CustomtextField(
               controller: number,
-              label: "Nomor Telepon",
+              label: "Phone Number",
             )
           ],
         ),

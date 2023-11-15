@@ -4,6 +4,7 @@ import 'package:wanderer/presentations/pages/auth/register_page.dart';
 
 class AccountCheckPage extends StatelessWidget {
   const AccountCheckPage({super.key});
+  static const routeName = '/accountCheckPage';
 
   @override
   Widget build(BuildContext context) {

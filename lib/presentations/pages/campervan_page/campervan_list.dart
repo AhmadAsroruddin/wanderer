@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:wanderer/presentations/bloc/auth_bloc.dart';
+import 'package:wanderer/presentations/pages/account_check_page.dart';
 
 import '../../bloc/favorite_bloc.dart';
 import '../../shared/theme.dart';
@@ -81,11 +83,14 @@ class _CampervanListState extends State<CampervanList> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(
-                    widget.name,
-                    style: GoogleFonts.inter().copyWith(
-                      fontSize: deviceWidth * 0.045,
-                      fontWeight: bold,
+                  SizedBox(
+                    width: deviceWidth * 0.45,
+                    child: Text(
+                      widget.name,
+                      style: GoogleFonts.inter().copyWith(
+                        fontSize: deviceWidth * 0.045,
+                        fontWeight: bold,
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -119,21 +124,27 @@ class _CampervanListState extends State<CampervanList> {
               widget.isNeedButtonLove == true
                   ? IconButton(
                       onPressed: () async {
-                        String userId =
-                            await context.read<AuthCubit>().getCurrentUser();
-                        if (isFavorite == false) {
-                          await context
-                              .read<FavoriteCubit>()
-                              .addMarkerToFavorite(userId, widget.markerId);
+                        if (FirebaseAuth.instance.currentUser == null) {
+                          Navigator.of(context)
+                              .pushNamed(AccountCheckPage.routeName);
                         } else {
-                          await context
-                              .read<FavoriteCubit>()
-                              .remove(widget.markerId, userId);
-                        }
+                          String userId =
+                              await context.read<AuthCubit>().getCurrentUser();
 
-                        setState(() {
-                          isFavorite = !isFavorite!;
-                        });
+                          if (isFavorite == false) {
+                            await context
+                                .read<FavoriteCubit>()
+                                .addMarkerToFavorite(userId, widget.markerId);
+                          } else {
+                            await context
+                                .read<FavoriteCubit>()
+                                .remove(widget.markerId, userId);
+                          }
+
+                          setState(() {
+                            isFavorite = !isFavorite!;
+                          });
+                        }
                       },
                       icon: isFavorite == true
                           ? const Icon(

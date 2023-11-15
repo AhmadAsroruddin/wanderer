@@ -17,9 +17,9 @@ class MarkerCategoryPage extends StatelessWidget {
     {'image': 'campervan', 'name': 'Campervan'},
     {'image': 'campsite', 'name': 'Paid_Campsite'},
     {'image': 'campsite', 'name': 'Free_Campsite'},
-    {'image': 'gunung', 'name': 'Gunung'},
-    {'image': 'pantai', 'name': 'Pantai'},
-    {'image': 'danau', 'name': 'Danau'},
+    {'image': 'gunung', 'name': 'Mountain'},
+    {'image': 'pantai', 'name': 'Beach'},
+    {'image': 'danau', 'name': 'Lake'},
   ];
 
   @override
@@ -27,7 +27,7 @@ class MarkerCategoryPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Kategori",
+          "Category",
           style: blackTextStyle,
         ),
       ),

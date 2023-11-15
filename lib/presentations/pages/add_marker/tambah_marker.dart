@@ -52,7 +52,7 @@ class _AddMarkerPageState extends State<AddMarkerPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Tambah Lokasi",
+          "Add Location",
           style: blackTextStyle,
         ),
       ),
@@ -64,11 +64,11 @@ class _AddMarkerPageState extends State<AddMarkerPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                "Detail Lokasi",
+                "Location Details",
                 style: GoogleFonts.roboto().copyWith(fontSize: 16),
               ),
               Text(
-                "Berikan beberapa informasi tentang tempat yang ingin di tambahkan",
+                "Give us informations about this location",
                 style: GoogleFonts.inter().copyWith(
                   fontSize: 13,
                   color: Colors.grey[600],
@@ -76,7 +76,7 @@ class _AddMarkerPageState extends State<AddMarkerPage> {
               ),
               CustomTextFormFieldAddMarker(
                 controller: name,
-                hintText: "Nama Tempat (wajib)",
+                hintText: "Name",
               ),
               CustomTextFormFieldAddMarker(
                 hintText: widget.category,
@@ -85,7 +85,7 @@ class _AddMarkerPageState extends State<AddMarkerPage> {
               ),
               CustomTextFormFieldAddMarker(
                 controller: description,
-                hintText: "Deskripsikan tentang tempat ini",
+                hintText: "Describes about this place",
                 maxLines: 5,
               ),
               Container(
@@ -111,8 +111,7 @@ class _AddMarkerPageState extends State<AddMarkerPage> {
                           controller: address,
                           decoration: const InputDecoration(
                             border: InputBorder.none,
-                            hintText:
-                                "SILAHKAN PILIH TITIK YANG SESUAI PADA PETA",
+                            hintText: "Please choose location on map",
                           ),
                         ),
                         TextButton(
@@ -120,7 +119,7 @@ class _AddMarkerPageState extends State<AddMarkerPage> {
                             Navigator.of(context)
                                 .pushNamed(MapFullPage.routeName);
                           },
-                          child: const Text("Pilih Di Peta"),
+                          child: const Text("Open Map"),
                         ),
                       ],
                     );
@@ -132,8 +131,12 @@ class _AddMarkerPageState extends State<AddMarkerPage> {
               ),
               Text(
                 "Kontak",
-                style: GoogleFonts.roboto()
-                    .copyWith(fontSize: 16, fontWeight: FontWeight.w100),
+                style: GoogleFonts.roboto().copyWith(
+                    fontSize: deviceWidth * 0.05, fontWeight: FontWeight.w100),
+              ),
+              const Text(
+                "This informations is Optional",
+                style: TextStyle(fontSize: 12),
               ),
               CustomTextFormFieldAddMarker(
                 hintText: "Social Media",
@@ -144,14 +147,14 @@ class _AddMarkerPageState extends State<AddMarkerPage> {
                 controller: contact,
               ),
               CustomTextFormFieldAddMarker(
-                hintText: "Harga",
+                hintText: "Price",
                 controller: harga,
               ),
               SizedBox(
                 height: deviceHeight * 0.02,
               ),
               Text(
-                "Tambah Foto",
+                "Add Photos",
                 style: GoogleFonts.roboto()
                     .copyWith(fontSize: 16, fontWeight: FontWeight.w100),
               ),
@@ -170,7 +173,7 @@ class _AddMarkerPageState extends State<AddMarkerPage> {
                   child: Row(
                     children: <Widget>[
                       Image.asset("assets/img/addImage.png", scale: 1.4),
-                      const Text("Tambah Foto"),
+                      const Text("Add Photos"),
                     ],
                   ),
                 ),
@@ -196,7 +199,7 @@ class _AddMarkerPageState extends State<AddMarkerPage> {
                       ),
                     )
                   : Container(
-                      child: const Text("Pilih Foto"),
+                      child: const Text("Add Photos"),
                     ),
               BlocConsumer<MarkersCubit, MarkersState>(
                 listener: (context, state) {
@@ -220,7 +223,7 @@ class _AddMarkerPageState extends State<AddMarkerPage> {
                     if (dContext != null) {
                       Navigator.pop(dContext!);
                     }
-                    DialogUtils.alertDialog(context, "Berhasil", state.message);
+                    DialogUtils.alertDialog(context, "Success", state.message);
                     Navigator.of(context).pushNamed(TabScreen.routeName);
                   }
                 },
@@ -229,7 +232,7 @@ class _AddMarkerPageState extends State<AddMarkerPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       ButtonAddWidget(
-                        name: "Simpan",
+                        name: "Save",
                         red: 255,
                         green: 248,
                         blue: 248,

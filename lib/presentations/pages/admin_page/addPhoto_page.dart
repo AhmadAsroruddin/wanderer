@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:wanderer/presentations/bloc/admin_bloc.dart';
 import 'package:wanderer/presentations/bloc/image_bloc.dart';
-import 'package:wanderer/presentations/pages/admin_page/step3_page.dart';
+import 'package:wanderer/presentations/pages/admin_page/addType_page.dart';
 
 import '../../shared/theme.dart';
 import '../../shared/utils.dart';
@@ -22,6 +22,7 @@ class AddPhotoPage extends StatefulWidget {
 class _AddPhotoPageState extends State<AddPhotoPage> {
   List<XFile>? images;
   List<String> imageLinks = [];
+  bool not = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +40,7 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                "Tambahkan Foto Tempat Kalian",
+                "Upload Photos",
                 style: GoogleFonts.roboto().copyWith(
                   fontSize: deviceWidth * 0.05,
                   fontWeight: FontWeight.w400,
@@ -49,7 +50,7 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
                 height: deviceHeight * 0.01,
               ),
               const Text(
-                "Anda bisa menambahkan 1 atau lebih foto dari tempat kalian. Jangan lupa pilih foto terbaik yang anda punya",
+                "You can upload more than 1 photos, so choose your best photos",
               ),
               SizedBox(
                 height: deviceHeight * 0.05,
@@ -74,9 +75,12 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
                     GestureDetector(
                       onTap: () {
                         _pickImages();
+                        setState(() {
+                          not = true;
+                        });
                       },
                       child: Text(
-                        "Pilih Foto",
+                        "Pick Photos",
                         style: TextStyle(fontSize: deviceWidth * 0.05),
                       ),
                     )
@@ -116,7 +120,7 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
                       ),
                       child: const Center(
                         child: Text(
-                          "Belum ada foto yang anda upload",
+                          "You haven't upload any photos yet",
                         ),
                       ),
                     ),
@@ -130,40 +134,61 @@ class _AddPhotoPageState extends State<AddPhotoPage> {
                   }
                 },
                 builder: (context, state) {
-                  return GestureDetector(
-                    onTap: () async {
-                      await context.read<ImageCubit>().upload(images!);
-                      if (state is ImageSuccess) {
-                        imageLinks = state.links;
-                        context.read<AdminCubit>().setImage(imageLinks);
-                        print(imageLinks);
-
-                        Navigator.of(context).pushNamed(Step3Page.routeName);
-                      }
-                    },
-                    child: Container(
-                      width: double.infinity,
-                      height: deviceHeight * 0.05,
-                      decoration: BoxDecoration(
-                        color: const Color.fromRGBO(255, 215, 0, 1),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Center(
-                        child: state is ImageLoading
-                            ? const CircularProgressIndicator()
-                            : Text(
-                                "Next",
-                                style: SafeGoogleFont(
-                                  'Inter',
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                  height: 1.2125,
-                                  color: const Color(0xff000000),
-                                ),
+                  return not == false
+                      ? Container(
+                          width: double.infinity,
+                          height: deviceHeight * 0.05,
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(43, 255, 217, 0),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Center(
+                            child: Text(
+                              "Next",
+                              style: SafeGoogleFont(
+                                'Inter',
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                height: 1.2125,
+                                color: const Color(0xff000000),
                               ),
-                      ),
-                    ),
-                  );
+                            ),
+                          ),
+                        )
+                      : GestureDetector(
+                          onTap: () async {
+                            await context.read<ImageCubit>().upload(images!);
+                            if (state is ImageSuccess) {
+                              imageLinks = state.links;
+                              context.read<AdminCubit>().setImage(imageLinks);
+
+                              Navigator.of(context)
+                                  .pushNamed(AddTypePage.routeName);
+                            }
+                          },
+                          child: Container(
+                            width: double.infinity,
+                            height: deviceHeight * 0.05,
+                            decoration: BoxDecoration(
+                              color: const Color.fromRGBO(255, 215, 0, 1),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Center(
+                              child: state is ImageLoading
+                                  ? const CircularProgressIndicator()
+                                  : Text(
+                                      "Next",
+                                      style: SafeGoogleFont(
+                                        'Inter',
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400,
+                                        height: 1.2125,
+                                        color: const Color(0xff000000),
+                                      ),
+                                    ),
+                            ),
+                          ),
+                        );
                 },
               )
             ],

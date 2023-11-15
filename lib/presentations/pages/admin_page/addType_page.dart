@@ -5,13 +5,14 @@ import 'package:wanderer/domain/entities/admin.dart';
 import 'package:wanderer/domain/entities/tipe.dart';
 import 'package:wanderer/presentations/bloc/auth_bloc.dart';
 import 'package:wanderer/presentations/bloc/type_bloc.dart';
-import 'package:wanderer/presentations/pages/tab_screen.dart';
+import 'package:wanderer/presentations/pages/admin_page/step3_page.dart';
 import 'package:wanderer/presentations/shared/customButton.dart';
 
 import '../../../domain/entities/marker.dart';
 import '../../bloc/admin_bloc.dart';
 import '../../bloc/markers_bloc.dart';
 import '../../shared/theme.dart';
+import '../../shared/utils.dart';
 import 'card_type_list.dart';
 
 class AddTypePage extends StatefulWidget {
@@ -24,7 +25,7 @@ class AddTypePage extends StatefulWidget {
 }
 
 class _AddTypePageState extends State<AddTypePage> {
-  bool ready = true;
+  bool isReady = false;
   int i = 1;
   @override
   Widget build(BuildContext context) {
@@ -38,7 +39,8 @@ class _AddTypePageState extends State<AddTypePage> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: deviceWidth * 0.05),
+          padding: EdgeInsets.symmetric(
+              horizontal: deviceWidth * 0.05, vertical: deviceWidth * 0.05),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -66,7 +68,13 @@ class _AddTypePageState extends State<AddTypePage> {
                   child: ListView.builder(
                     itemCount: i,
                     itemBuilder: (context, index) {
-                      return const ListTypeCard();
+                      return ListTypeCard(
+                        isReady: (value) {
+                          setState(() {
+                            isReady = value;
+                          });
+                        },
+                      );
                     },
                   ),
                 ),
@@ -86,18 +94,40 @@ class _AddTypePageState extends State<AddTypePage> {
                   child: const Text("Add More"),
                 ),
               ),
-              GestureDetector(
-                onTap: () async {
-                  addToFirestore();
-                  Future.delayed(
-                    const Duration(seconds: 5),
-                    () {
-                      Navigator.of(context).pushNamed(TabScreen.routeName);
-                    },
-                  );
-                },
-                child: const CustomButton(name: "Next"),
-              )
+              isReady == false
+                  ? Container(
+                      width: double.infinity,
+                      height: deviceHeight * 0.05,
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(43, 255, 217, 0),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Center(
+                        child: Text(
+                          "Next",
+                          style: SafeGoogleFont(
+                            'Inter',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            height: 1.2125,
+                            color: const Color(0xff000000),
+                          ),
+                        ),
+                      ),
+                    )
+                  : GestureDetector(
+                      onTap: () async {
+                        addToFirestore();
+                        Future.delayed(
+                          const Duration(seconds: 5),
+                          () {
+                            Navigator.of(context)
+                                .pushNamed(Step3Page.routeName);
+                          },
+                        );
+                      },
+                      child: const CustomButton(name: "Next"),
+                    )
             ],
           ),
         ),

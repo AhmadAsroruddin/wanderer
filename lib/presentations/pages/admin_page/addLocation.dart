@@ -87,6 +87,9 @@ class _AddLocationState extends State<AddLocation> {
                           target: deviceLocation,
                           zoom: 14,
                         ),
+                        myLocationEnabled: true,
+                        mapToolbarEnabled: false,
+                        myLocationButtonEnabled: false,
                         markers: markers,
                         onMapCreated: (GoogleMapController controller) async {
                           _controller.complete(controller);
@@ -96,6 +99,7 @@ class _AddLocationState extends State<AddLocation> {
                             },
                           );
                         },
+                        scrollGesturesEnabled: true,
                         onTap: (argument) {
                           onPressMaps(argument);
                         },

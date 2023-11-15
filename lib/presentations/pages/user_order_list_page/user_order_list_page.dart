@@ -47,7 +47,7 @@ class _UserOrderListPageState extends State<UserOrderListPage>
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Pesanan Saya",
+          "My Order",
           style: blackTextStyle,
         ),
       ),
@@ -64,16 +64,16 @@ class _UserOrderListPageState extends State<UserOrderListPage>
                   isScrollable: true,
                   tabs: const [
                     Tab(
-                      text: "Menunggu Konfirmasi",
+                      text: "Waiting Confirmation",
                     ),
                     Tab(
-                      text: "Menunggu Pembayaran",
+                      text: "Waiting Payment",
                     ),
                     Tab(
-                      text: "Aktif",
+                      text: "Active",
                     ),
                     Tab(
-                      text: "Selesai",
+                      text: "Done",
                     )
                   ],
                 ),

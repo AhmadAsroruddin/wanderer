@@ -10,15 +10,14 @@ import '../../bloc/type_bloc.dart';
 import '../../shared/theme.dart';
 
 class ListTypeCard extends StatefulWidget {
-  const ListTypeCard({super.key});
-
+  const ListTypeCard({super.key, required this.isReady});
+  final ValueChanged<bool> isReady;
   @override
   State<ListTypeCard> createState() => _ListTypeCardState();
 }
 
 class _ListTypeCardState extends State<ListTypeCard> {
   List<XFile>? images;
-  bool ready = false;
 
   TextEditingController name = TextEditingController();
   TextEditingController price = TextEditingController();
@@ -136,6 +135,7 @@ class _ListTypeCardState extends State<ListTypeCard> {
                             adminId: "",
                           ),
                         );
+                    widget.isReady(true);
                   },
                   child: const Text("Simpan"),
                 );

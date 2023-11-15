@@ -111,13 +111,16 @@ class _ActiveOrderTabPageState extends State<ActiveOrderTabPage> {
                                           height: deviceHeight * 0.02,
                                         ),
                                         ElevatedButton(
-                                          onPressed: () {
+                                          onPressed: () async {
                                             context.read<UserCubit>().report(
-                                                ReportModel(
+                                                  ReportModel(
                                                     report.text,
                                                     orderData.accountId,
                                                     orderData.id,
-                                                    orderData.orderedPlaceId));
+                                                    orderData.orderedPlaceId,
+                                                  ),
+                                                );
+                                            Navigator.of(context).pop();
                                           },
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor: Colors

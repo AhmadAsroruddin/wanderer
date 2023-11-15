@@ -60,32 +60,32 @@ class LocationDetailsPage extends StatelessWidget {
                   height: deviceHeight * 0.03,
                 ),
                 CustomTextField(
-                  hintText: "Nama tempat (Wajib)",
+                  hintText: "Name (Required)",
                   controller: name,
                   onChanged: (data) {
                     context.read<AdminCubit>().setName(name.text);
                   },
                 ),
                 CustomTextField(
-                  hintText: "Nomor Rekening (Wajib)",
+                  hintText: "Account Number (Required)",
                   controller: rekening,
                   onChanged: (data) {
                     context.read<AdminCubit>().setNoRek(rekening.text);
                   },
                 ),
                 CustomTextField(
-                  hintText: "Email (wajib)",
+                  hintText: "Email (Required)",
                   controller: email,
                   onChanged: (data) {
                     context.read<AdminCubit>().setEmail(email.text);
                   },
                 ),
                 Text(
-                  "Jam",
+                  "Time",
                   style: TextStyle(fontSize: deviceWidth * 0.04),
                 ),
                 CustomTextField(
-                  hintText: "Jam Operasional (contoh : 14.00 - 21.00)",
+                  hintText: "Operational Time (eg : 14.00 - 21.00)",
                   controller: time,
                   onChanged: (data) {
                     context.read<AdminCubit>().setTime(time.text);
@@ -96,7 +96,7 @@ class LocationDetailsPage extends StatelessWidget {
                   style: TextStyle(fontSize: deviceWidth * 0.04),
                 ),
                 CustomTextField(
-                  hintText: "Nomor Handphone",
+                  hintText: "Phone Number",
                   controller: phoneNumber,
                   onChanged: (data) {
                     context.read<AdminCubit>().setNoTelp(phoneNumber.text);
@@ -135,7 +135,7 @@ class LocationDetailsPage extends StatelessWidget {
                     maxLines: 6,
                     decoration: const InputDecoration(
                       border: InputBorder.none,
-                      hintText: "Tulisakan deskripsi mengenai tempat kalian",
+                      hintText: "Describes about your place",
                     ),
                   ),
                 ),

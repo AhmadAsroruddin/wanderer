@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:wanderer/presentations/bloc/router_bloc.dart';
+import 'package:wanderer/presentations/pages/account_check_page.dart';
 import 'package:wanderer/presentations/pages/account_page.dart';
 import 'package:wanderer/presentations/pages/admin_page/addLocation.dart';
 import 'package:wanderer/presentations/pages/admin_page/addPhoto_page.dart';
@@ -66,6 +68,8 @@ class MyRouterDelegate extends RouterDelegate
   }
 
   _init() async {
+    String user = FirebaseAuth.instance.currentUser.toString();
+    print(" CURRENT USER : $user");
     Future.delayed(
       const Duration(seconds: 3),
       () async {
@@ -236,6 +240,11 @@ class MyRouterDelegate extends RouterDelegate
         if (settings.name == AccountPage.routeName) {
           return MaterialPageRoute(
               builder: (context) => const AccountPage(), settings: settings);
+        }
+        if (settings.name == AccountCheckPage.routeName) {
+          return MaterialPageRoute(
+              builder: (context) => const AccountCheckPage(),
+              settings: settings);
         }
 
         return null;
