@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:wanderer/presentations/pages/auth/login_page.dart';
 import 'package:wanderer/presentations/pages/auth/register_page.dart';
 
+import '../shared/theme.dart';
+
 class AccountCheckPage extends StatelessWidget {
   const AccountCheckPage({super.key});
   static const routeName = '/accountCheckPage';
@@ -11,20 +13,52 @@ class AccountCheckPage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         body: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(LoginPage.routeName);
-                },
-                child: const Text("Login"),
+              Center(
+                child: Container(
+                  width: deviceWidth * 0.9,
+                  height: deviceHeight * 0.3,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(
+                        'assets/getStarted/check.png',
+                      ),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
               ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(RegisterPage.routeName);
-                },
-                child: const Text("SignUp"),
+              SizedBox(
+                height: deviceHeight * 0.05,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(LoginPage.routeName);
+                    },
+                    child: Container(
+                      width: deviceWidth * 0.3,
+                      height: deviceHeight * 0.05,
+                      decoration: BoxDecoration(color: baseColor),
+                      child: const Center(child: Text("Login")),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(RegisterPage.routeName);
+                    },
+                    child: Container(
+                      width: deviceWidth * 0.3,
+                      height: deviceHeight * 0.05,
+                      decoration: BoxDecoration(color: baseColor),
+                      child: const Center(child: Text("SignUp")),
+                    ),
+                  ),
+                ],
               )
             ],
           ),
