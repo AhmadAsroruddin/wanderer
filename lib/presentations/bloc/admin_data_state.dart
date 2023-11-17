@@ -42,3 +42,10 @@ class AdminDataCampervan extends AdminDataState {
   @override
   List<Object> get props => [campervan];
 }
+
+class OwnerSuccess extends AdminDataState {
+  final String message;
+  const OwnerSuccess({required this.message});
+  @override
+  List<Object> get props => [message];
+}

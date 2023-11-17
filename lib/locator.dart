@@ -9,6 +9,7 @@ import 'package:wanderer/data/datasource/comment_datasource.dart';
 import 'package:wanderer/data/datasource/favorite_datasource.dart';
 import 'package:wanderer/data/datasource/markers_datasource.dart';
 import 'package:wanderer/data/datasource/order_datasource.dart';
+import 'package:wanderer/data/datasource/owner_datasource.dart';
 import 'package:wanderer/data/datasource/user_datasource.dart';
 import 'package:wanderer/data/service/admin_repos_impl.dart';
 import 'package:wanderer/data/service/article_repos_impl.dart';
@@ -19,6 +20,7 @@ import 'package:wanderer/data/service/image_repos_implementation.dart';
 import 'package:wanderer/data/service/location_data_repos_implementation.dart';
 import 'package:wanderer/data/service/markers_repos_implementation.dart';
 import 'package:wanderer/data/service/order_repos_impl.dart';
+import 'package:wanderer/data/service/owner_repos_impl.dart';
 import 'package:wanderer/data/service/payment_repos_impl.dart';
 import 'package:wanderer/data/service/user_repos_impl.dart';
 import 'package:wanderer/domain/repositories/admin_repository.dart';
@@ -30,10 +32,12 @@ import 'package:wanderer/domain/repositories/image_repository.dart';
 import 'package:wanderer/domain/repositories/location_data_repository.dart';
 import 'package:wanderer/domain/repositories/marker_repository.dart';
 import 'package:wanderer/domain/repositories/order_repository.dart';
+import 'package:wanderer/domain/repositories/owner_reposiroty.dart';
 import 'package:wanderer/domain/repositories/payment_repository.dart';
 import 'package:wanderer/domain/repositories/user_repository.dart';
 import 'package:wanderer/domain/usecase/addMarker.dart';
 import 'package:wanderer/domain/usecase/addMarkerAdmin.dart';
+import 'package:wanderer/domain/usecase/addOwner.dart';
 import 'package:wanderer/domain/usecase/addToAdmin.dart';
 import 'package:wanderer/domain/usecase/addToFavorite.dart';
 import 'package:wanderer/domain/usecase/addTypeToAdmin.dart';
@@ -67,6 +71,7 @@ import 'package:wanderer/domain/usecase/updateStatusOrder.dart';
 import 'package:wanderer/domain/usecase/updateUser.dart';
 import 'package:wanderer/domain/usecase/updateUserIdMarker.dart';
 import 'package:wanderer/domain/usecase/uploadImages.dart';
+import 'package:wanderer/domain/usecase/uploadOneImage.dart';
 import 'package:wanderer/presentations/bloc/admin_bloc.dart';
 import 'package:wanderer/presentations/bloc/admin_data_bloc.dart';
 import 'package:wanderer/presentations/bloc/article_bloc.dart';
@@ -129,6 +134,8 @@ void init() {
   locator.registerLazySingleton(() => SearchMarker(markerRepos: locator()));
   locator.registerLazySingleton(() => UpdateUser(userRepository: locator()));
   locator.registerLazySingleton(() => AddReport(userRepos: locator()));
+  locator.registerLazySingleton(() => UploadOneImages(imageRepos: locator()));
+  locator.registerLazySingleton(() => AddOwner(ownerRepository: locator()));
 
   //REPOSITORY
   locator.registerLazySingleton<AuthRepos>(() => AuthReposImpl(
@@ -153,6 +160,8 @@ void init() {
       () => PaymentReposImpl(paymentDataSource: locator()));
   locator.registerLazySingleton<ArticleRepos>(
       () => ArticleReposImpl(articleDataSource: locator()));
+  locator.registerLazySingleton<OwnerRepository>(
+      () => OwnerReposImpl(ownerDataSource: locator()));
 
   //BLOC
   locator.registerFactory(() => AuthCubit(
@@ -167,11 +176,11 @@ void init() {
   locator.registerFactory(() => CommentCubit(locator(), locator()));
   locator.registerFactory(
       () => FavoriteCubit(locator(), locator(), locator(), locator()));
-  locator.registerFactory(() => ImageCubit(locator()));
+  locator.registerFactory(() => ImageCubit(locator(), locator()));
   locator.registerFactory(() => AdminCubit(locator(), locator(), locator()));
   locator.registerFactory(() => TypeCubit(locator()));
-  locator
-      .registerFactory(() => AdminDataCubit(locator(), locator(), locator()));
+  locator.registerFactory(
+      () => AdminDataCubit(locator(), locator(), locator(), locator()));
   locator.registerFactory(() => TypeCubitData(locator()));
   locator.registerFactory(() => UserCubit(locator(), locator(), locator()));
   locator.registerFactory(() => OrderCubit(locator(), locator(), locator()));
@@ -194,6 +203,7 @@ void init() {
       () => PaymentDataSourceImpl(dio: Dio()));
   locator
       .registerLazySingleton<ArticleDataSource>(() => ArticleDataSourceImpl());
+  locator.registerLazySingleton<OwnerDataSource>(() => OwnerDataSourceImpl());
 
   //ROUTER
 

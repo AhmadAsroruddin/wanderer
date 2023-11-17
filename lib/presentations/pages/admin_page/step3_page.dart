@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:wanderer/presentations/pages/admin_page/owner_verification.dart';
 
 import 'package:wanderer/presentations/shared/customButton.dart';
 import 'package:wanderer/presentations/shared/theme.dart';
-
-import '../tab_screen.dart';
 
 class Step3Page extends StatelessWidget {
   const Step3Page({super.key});
@@ -62,7 +61,7 @@ class Step3Page extends StatelessWidget {
               const Expanded(child: SizedBox()),
               GestureDetector(
                 onTap: () {
-                  Navigator.of(context).pushNamed(TabScreen.routeName);
+                  Navigator.of(context).pushNamed(OwnerVerification.routeName);
                 },
                 child: const CustomButton(name: "Next"),
               ),

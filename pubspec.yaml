@@ -60,6 +60,8 @@ dependencies:
   dio: ^5.3.3
   webview_flutter: ^3.0.4
   rename: ^3.0.1
+  flutter_tesseract_ocr: ^0.4.23
+  
   
 dev_dependencies:
   flutter_test:
@@ -123,6 +125,8 @@ flutter:
     - assets/markers/
     - assets/modal/
     - assets/getStarted/
+    - assets/tessdata/
+    - assets/
    
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

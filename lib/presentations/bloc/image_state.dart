@@ -26,3 +26,19 @@ class ImageSuccess extends ImageState {
   @override
   List<Object> get props => [links];
 }
+
+class ImageSuccessKtp extends ImageState {
+  final String links;
+  const ImageSuccessKtp({required this.links});
+
+  @override
+  List<Object> get props => [links];
+}
+
+class ImageSuccessKtpandBody extends ImageState {
+  final String links;
+  const ImageSuccessKtpandBody({required this.links});
+
+  @override
+  List<Object> get props => [links];
+}

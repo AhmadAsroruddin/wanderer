@@ -11,6 +11,7 @@ import 'package:wanderer/presentations/pages/admin_page/chooseType_page.dart';
 import 'package:wanderer/presentations/pages/admin_page/facilities_page.dart';
 import 'package:wanderer/presentations/pages/admin_page/getStarted_page.dart';
 import 'package:wanderer/presentations/pages/admin_page/location_details_page.dart';
+import 'package:wanderer/presentations/pages/admin_page/owner_verification.dart';
 import 'package:wanderer/presentations/pages/admin_page/step1_page.dart';
 import 'package:wanderer/presentations/pages/admin_page/step2_page.dart';
 
@@ -241,12 +242,17 @@ class MyRouterDelegate extends RouterDelegate
           return MaterialPageRoute(
               builder: (context) => const AccountPage(), settings: settings);
         }
+
         if (settings.name == AccountCheckPage.routeName) {
           return MaterialPageRoute(
               builder: (context) => const AccountCheckPage(),
               settings: settings);
         }
-
+        if (settings.name == OwnerVerification.routeName) {
+          return MaterialPageRoute(
+              builder: (context) => const OwnerVerification(),
+              settings: settings);
+        }
         return null;
       },
       onPopPage: (route, result) {

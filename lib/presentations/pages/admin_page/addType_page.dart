@@ -5,6 +5,7 @@ import 'package:wanderer/domain/entities/admin.dart';
 import 'package:wanderer/domain/entities/tipe.dart';
 import 'package:wanderer/presentations/bloc/auth_bloc.dart';
 import 'package:wanderer/presentations/bloc/type_bloc.dart';
+import 'package:wanderer/presentations/pages/admin_page/owner_verification.dart';
 import 'package:wanderer/presentations/pages/admin_page/step3_page.dart';
 import 'package:wanderer/presentations/shared/customButton.dart';
 
@@ -117,14 +118,8 @@ class _AddTypePageState extends State<AddTypePage> {
                     )
                   : GestureDetector(
                       onTap: () async {
+                        print("fired");
                         addToFirestore();
-                        Future.delayed(
-                          const Duration(seconds: 5),
-                          () {
-                            Navigator.of(context)
-                                .pushNamed(Step3Page.routeName);
-                          },
-                        );
                       },
                       child: const CustomButton(name: "Next"),
                     )
@@ -157,12 +152,15 @@ class _AddTypePageState extends State<AddTypePage> {
 
     String adminId =
         await context.read<AdminCubit>().addToAdmin(admin, markerid);
+
     await context.read<MarkersCubit>().update(adminId, markerid);
 
     List<Tipe> types = context.read<TypeCubit>().getTipe();
 
     await context.read<TypeCubit>().addType(types, adminId);
 
-    context.read<AdminCubit>().updateUserRole(userId, adminId);
+    await context.read<AdminCubit>().updateUserRole(userId, adminId);
+    Navigator.of(context)
+        .pushNamed(OwnerVerification.routeName, arguments: adminId);
   }
 }

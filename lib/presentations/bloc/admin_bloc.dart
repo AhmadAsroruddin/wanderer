@@ -472,6 +472,12 @@ class AdminCubit extends Cubit<Admin> {
     return state.category;
   }
 
+  String setAdmin() {
+    final currState = state;
+
+    return currState.id;
+  }
+
   Admin getAllAdmin() {
     final currState = state;
     return Admin(

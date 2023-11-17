@@ -34,4 +34,33 @@ class ImageReposImpl extends ImageRepos {
       return Left(error);
     }
   }
+
+  @override
+  Future<Either<String, String>> uploadOneImage(XFile images) async {
+    try {
+      String links = "";
+
+      final ext = images.path.split('.').last.toLowerCase();
+
+      if (ext != 'jpg' && ext != 'png') {
+        throw (Exception("File harus berjenis png atau jpg"));
+      }
+
+      final Reference storageReference = FirebaseStorage.instance
+          .ref()
+          .child('ktp')
+          .child('${DateTime.now().millisecondsSinceEpoch}.$ext');
+      final File imageFile = File(images.path);
+      final UploadTask uploadTask = storageReference.putFile(imageFile);
+      final TaskSnapshot taskSnapshot =
+          await uploadTask.whenComplete(() => null);
+      final imageURL = await taskSnapshot.ref.getDownloadURL();
+      links = imageURL;
+
+      return Right(links);
+    } catch (e) {
+      String error = "$e";
+      return Left(error);
+    }
+  }
 }
