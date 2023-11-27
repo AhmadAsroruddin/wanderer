@@ -10,17 +10,43 @@ class ArticleComponent extends StatelessWidget {
   final String articleUrl;
   final String imgUrl;
 
-  const ArticleComponent(
-      {super.key,
-      required this.title,
-      required this.articleUrl,
-      required this.imgUrl});
+  const ArticleComponent({
+    super.key,
+    required this.title,
+    required this.articleUrl,
+    required this.imgUrl
+  });
 
   void _launchUrl(String url) async {
     final Uri a = Uri.parse(url);
     if (!await launchUrl(a)) {
       throw Exception('Could not access URL');
     }
+  }
+
+  void _shareToWhatsApp() {
+    String whatsappUrl = "whatsapp://send?text=$title\n$articleUrl";
+    _launchUrl(whatsappUrl);
+  }
+
+  void _shareToLine() {
+    String lineUrl = "https://social-plugins.line.me/lineit/share?url=$articleUrl&text=$title";
+    _launchUrl(lineUrl);
+  }
+
+  void _shareToFB() {
+    String url = "https://www.facebook.com/sharer/sharer.php?u=$articleUrl";
+    _launchUrl(url);
+  }
+
+  void _shareToX() {
+    String url = "https://twitter.com/intent/tweet?url=$articleUrl&text=%20$title%0A";
+    _launchUrl(url);
+  }
+
+  void _shareToIG() {
+    String url = "instagram://send?text=$title&url=$imgUrl";
+    _launchUrl(url);
   }
 
   @override
@@ -86,7 +112,14 @@ class ArticleComponent extends StatelessWidget {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return ModalShare(title: title);
+                            return ModalShare(
+                              title: title,
+                              share_WA: _shareToWhatsApp,
+                              share_FB: _shareToFB,
+                              share_Line: _shareToLine,
+                              share_IG: _shareToIG,
+                              share_X: _shareToX
+                            );
                           },
                         );
                       },
