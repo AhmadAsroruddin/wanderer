@@ -60,7 +60,7 @@ dependencies:
   dio: ^5.3.3
   webview_flutter: ^3.0.4
   rename: ^3.0.1
-  flutter_tesseract_ocr: ^0.4.23
+  photo_view: ^0.14.0
   
   
 dev_dependencies:

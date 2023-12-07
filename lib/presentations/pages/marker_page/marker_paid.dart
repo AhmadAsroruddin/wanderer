@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:photo_view/photo_view.dart';
+import 'package:photo_view/photo_view_gallery.dart';
 import 'package:wanderer/domain/entities/admin.dart';
 import 'package:wanderer/domain/entities/tipe.dart';
 import 'package:wanderer/presentations/bloc/admin_bloc.dart';
 import 'package:wanderer/presentations/bloc/type_bloc.dart';
 import 'package:wanderer/presentations/pages/order_page/order_page.dart';
+import 'package:wanderer/presentations/shared/alertDialog.dart';
 
 import '../../shared/theme.dart';
 import 'marker_detail_page.dart';
@@ -59,18 +62,30 @@ class _PaidMarkerPageState extends State<PaidMarkerPage> {
                             ),
                             child: Column(
                               children: <Widget>[
-                                Container(
-                                  //gambar
-                                  width: deviceWidth * 0.7,
-                                  height: deviceHeight * 0.15,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    border: Border.all(width: 0.03),
-                                    image: DecorationImage(
-                                      image: NetworkImage(
-                                        state.tipe[index].images[0],
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => PhotoViewPage(
+                                            state.tipe[index].images, index),
                                       ),
-                                      fit: BoxFit.fill,
+                                    );
+                                  },
+                                  child: Container(
+                                    //gambar
+                                    width: deviceWidth * 0.7,
+                                    height: deviceHeight * 0.15,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      border: Border.all(width: 0.03),
+                                    ),
+                                    child: Hero(
+                                      tag: 'imageHero',
+                                      child: Image.network(
+                                        state.tipe[index].images[0],
+                                        fit: BoxFit.fill,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -89,6 +104,22 @@ class _PaidMarkerPageState extends State<PaidMarkerPage> {
                                         fontSize: deviceWidth * 0.05,
                                         fontWeight: FontWeight.w300,
                                       ),
+                                    ),
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    DialogUtils.alertDialog(
+                                        context,
+                                        "Description",
+                                        state.tipe[index].description);
+                                  },
+                                  child: Container(
+                                    width: deviceWidth * 0.65,
+                                    child: Text(
+                                      state.tipe[index].description,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
                                 ),
@@ -288,6 +319,38 @@ class _PaidMarkerPageState extends State<PaidMarkerPage> {
           ),
         )
       ],
+    );
+  }
+}
+
+class PhotoViewPage extends StatelessWidget {
+  final List<dynamic> imageUrls;
+  final int initialIndex;
+
+  const PhotoViewPage(this.imageUrls, this.initialIndex, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        constraints: BoxConstraints.expand(
+          height: MediaQuery.of(context).size.height,
+        ),
+        child: PhotoViewGallery.builder(
+          itemCount: imageUrls.length,
+          builder: (context, index) {
+            return PhotoViewGalleryPageOptions(
+              imageProvider: NetworkImage(imageUrls[index]),
+              heroAttributes: PhotoViewHeroAttributes(tag: 'imageHero$index'),
+            );
+          },
+          scrollPhysics: const BouncingScrollPhysics(),
+          backgroundDecoration: const BoxDecoration(
+            color: Colors.black,
+          ),
+          pageController: PageController(initialPage: initialIndex),
+        ),
+      ),
     );
   }
 }

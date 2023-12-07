@@ -6,7 +6,6 @@ import 'package:wanderer/domain/entities/tipe.dart';
 import 'package:wanderer/presentations/bloc/auth_bloc.dart';
 import 'package:wanderer/presentations/bloc/type_bloc.dart';
 import 'package:wanderer/presentations/pages/admin_page/owner_verification.dart';
-import 'package:wanderer/presentations/pages/admin_page/step3_page.dart';
 import 'package:wanderer/presentations/shared/customButton.dart';
 
 import '../../../domain/entities/marker.dart';
