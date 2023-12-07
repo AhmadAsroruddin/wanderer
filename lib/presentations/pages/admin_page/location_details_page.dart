@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:wanderer/presentations/bloc/admin_bloc.dart';
+import 'package:wanderer/presentations/pages/admin_page/addPayout.dart';
 
-import 'package:wanderer/presentations/pages/admin_page/step2_page.dart';
 import 'package:wanderer/presentations/shared/customButton.dart';
 import 'package:wanderer/presentations/shared/theme.dart';
 
@@ -141,7 +141,7 @@ class LocationDetailsPage extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.of(context).pushNamed(Step2Page.routeName);
+                    Navigator.of(context).pushNamed(AddPayoutPage.routeName);
                   },
                   child: const CustomButton(name: "Next"),
                 )

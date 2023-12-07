@@ -5,6 +5,7 @@ import 'package:wanderer/presentations/bloc/router_bloc.dart';
 import 'package:wanderer/presentations/pages/account_check_page.dart';
 import 'package:wanderer/presentations/pages/account_page.dart';
 import 'package:wanderer/presentations/pages/admin_page/addLocation.dart';
+import 'package:wanderer/presentations/pages/admin_page/addPayout.dart';
 import 'package:wanderer/presentations/pages/admin_page/addPhoto_page.dart';
 import 'package:wanderer/presentations/pages/admin_page/addType_page.dart';
 import 'package:wanderer/presentations/pages/admin_page/chooseType_page.dart';
@@ -252,6 +253,10 @@ class MyRouterDelegate extends RouterDelegate
           return MaterialPageRoute(
               builder: (context) => const OwnerVerification(),
               settings: settings);
+        }
+        if (settings.name == AddPayoutPage.routeName) {
+          return MaterialPageRoute(
+              builder: (context) => const AddPayoutPage(), settings: settings);
         }
         return null;
       },

@@ -28,6 +28,13 @@ class AdminDataCubit extends Cubit<AdminDataState> {
     emit(AdminDataSuccess(data: result));
   }
 
+  Future<Admin> getAdminDataReturn(String markerId) async {
+    emit(AdminDataLoading());
+    final result = await getAdmin.execute(markerId);
+
+    return result;
+  }
+
   Future<void> getAllAdminCampervan(bool onSearch, String key) async {
     emit(AdminDataLoading());
     final result = await getAdminCampervan.execute(onSearch, key);

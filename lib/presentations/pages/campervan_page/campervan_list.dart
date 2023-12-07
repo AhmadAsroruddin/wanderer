@@ -37,7 +37,7 @@ class _CampervanListState extends State<CampervanList> {
       Duration.zero,
       () async {
         String userId = await context.read<AuthCubit>().getCurrentUser();
-        context
+        await context
             .read<FavoriteCubit>()
             .favoriteCheck(widget.markerId, userId)
             .then((value) {

@@ -11,15 +11,14 @@ class ModalShare extends StatelessWidget {
   final VoidCallback share_IG;
   final VoidCallback share_X;
 
-  const ModalShare({
-    super.key,
-    required this.title,
-    required this.share_FB,
-    required this.share_WA,
-    required this.share_Line,
-    required this.share_X,
-    required this.share_IG
-  });
+  const ModalShare(
+      {super.key,
+      required this.title,
+      required this.share_FB,
+      required this.share_WA,
+      required this.share_Line,
+      required this.share_X,
+      required this.share_IG});
 
   @override
   Widget build(BuildContext context) {
@@ -50,26 +49,27 @@ class ModalShare extends StatelessWidget {
                     ),
                     const SizedBox(height: 5),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        SizedBox(width: 10),
+                        SizedBox(width: deviceWidth * 0.01),
                         ShareComponent(
                           img: 'assets/modal/whatsapp_logo.jpg',
                           label: 'Whatsapp',
                           onPressed: share_WA,
                         ),
-                        SizedBox(width: 40),
+                        SizedBox(width: deviceWidth * 0.01),
                         ShareComponent(
                           img: 'assets/modal/line_logo.jpg',
                           label: 'Line',
                           onPressed: share_Line,
                         ),
-                        SizedBox(width: 40),
+                        SizedBox(width: deviceWidth * 0.010),
                         ShareComponent(
                           img: 'assets/modal/instagram_logo.jpg',
                           label: 'Instagram',
                           onPressed: share_IG,
                         ),
-                        SizedBox(width: 40),
+                        SizedBox(width: deviceWidth * 0.01),
                         ShareComponent(
                           img: 'assets/modal/facebook_logo.png',
                           label: 'Facebook',

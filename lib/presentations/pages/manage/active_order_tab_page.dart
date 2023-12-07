@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wanderer/data/models/report_model.dart';
+import 'package:wanderer/domain/entities/bankAccount.dart';
 import 'package:wanderer/presentations/bloc/order_bloc.dart';
+import 'package:wanderer/presentations/bloc/payout_bloc.dart';
 import 'package:wanderer/presentations/bloc/user_bloc.dart';
 import 'package:wanderer/presentations/shared/cardManage.dart';
 import 'package:wanderer/presentations/shared/customButton.dart';
 
+import '../../../domain/entities/admin.dart';
 import '../../../domain/entities/order.dart';
+import '../../bloc/admin_data_bloc.dart';
 import '../../shared/theme.dart';
 import '../../shared/utils.dart';
 
@@ -60,7 +64,36 @@ class _ActiveOrderTabPageState extends State<ActiveOrderTabPage> {
                     isNeedButton: widget.isNeedButton,
                     widgetButton: Column(
                       children: [
-                        const CustomButton(name: "Check-in"),
+                        GestureDetector(
+                            onTap: () async {
+                              await context.read<OrderCubit>().updateStatus(
+                                  state.list[index].id, widget.adminId, "done");
+
+                              final Admin admin = await context
+                                  .read<AdminDataCubit>()
+                                  .getAdminDataReturn(
+                                      state.list[index].orderedPlaceId);
+
+                              final BankAccount bankAccount = BankAccount(
+                                  name: admin.nameRek,
+                                  account: admin.noRek,
+                                  bank: admin.bankRek,
+                                  aliasName: admin.aliasNameRek,
+                                  email: admin.emailRek);
+
+                              final payoutId = await context
+                                  .read<PayoutCubit>()
+                                  .createPayoutBloc(
+                                      bankAccount,
+                                      orderData.price.toString(),
+                                      "Payout dari ${orderData.guestName}");
+                              print(payoutId);
+
+                              context
+                                  .read<PayoutCubit>()
+                                  .approvePayout(payoutId);
+                            },
+                            child: const CustomButton(name: "Check-in")),
                         SizedBox(
                           height: deviceHeight * 0.01,
                         ),

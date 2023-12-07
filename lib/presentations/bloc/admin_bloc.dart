@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wanderer/domain/entities/bankAccount.dart';
 import 'package:wanderer/domain/usecase/addToAdmin.dart';
 import 'package:wanderer/domain/usecase/getAdmin.dart';
 import 'package:wanderer/domain/usecase/setUserRoleToAdmin.dart';
@@ -29,7 +30,11 @@ class AdminCubit extends Cubit<Admin> {
               category: '',
               latitude: 0,
               longitude: 0,
-              markerId: ''),
+              markerId: '',
+              nameRek: "",
+              bankRek: "",
+              aliasNameRek: "",
+              emailRek: ""),
         );
 
   Future<String> addToAdmin(Admin admin, String markerId) async {
@@ -70,7 +75,11 @@ class AdminCubit extends Cubit<Admin> {
           category: currState.category,
           latitude: currState.latitude,
           longitude: currState.longitude,
-          markerId: currState.markerId),
+          markerId: currState.markerId,
+          nameRek: currState.nameRek,
+          bankRek: currState.bankRek,
+          aliasNameRek: currState.bankRek,
+          emailRek: currState.emailRek),
     );
   }
 
@@ -96,7 +105,11 @@ class AdminCubit extends Cubit<Admin> {
           category: currState.category,
           latitude: currState.latitude,
           longitude: currState.longitude,
-          markerId: currState.markerId),
+          markerId: currState.markerId,
+          nameRek: currState.nameRek,
+          bankRek: currState.bankRek,
+          aliasNameRek: currState.bankRek,
+          emailRek: currState.emailRek),
     );
   }
 
@@ -122,7 +135,11 @@ class AdminCubit extends Cubit<Admin> {
           category: currState.category,
           latitude: currState.latitude,
           longitude: currState.longitude,
-          markerId: currState.markerId),
+          markerId: currState.markerId,
+          nameRek: currState.nameRek,
+          bankRek: currState.bankRek,
+          aliasNameRek: currState.bankRek,
+          emailRek: currState.emailRek),
     );
   }
 
@@ -148,7 +165,11 @@ class AdminCubit extends Cubit<Admin> {
           category: currState.category,
           latitude: currState.latitude,
           longitude: currState.longitude,
-          markerId: currState.markerId),
+          markerId: currState.markerId,
+          nameRek: currState.nameRek,
+          bankRek: currState.bankRek,
+          aliasNameRek: currState.bankRek,
+          emailRek: currState.emailRek),
     );
   }
 
@@ -174,7 +195,11 @@ class AdminCubit extends Cubit<Admin> {
           category: currState.category,
           latitude: currState.latitude,
           longitude: currState.longitude,
-          markerId: currState.markerId),
+          markerId: currState.markerId,
+          nameRek: currState.nameRek,
+          bankRek: currState.bankRek,
+          aliasNameRek: currState.bankRek,
+          emailRek: currState.emailRek),
     );
   }
 
@@ -200,7 +225,11 @@ class AdminCubit extends Cubit<Admin> {
           category: currState.category,
           latitude: currState.latitude,
           longitude: currState.longitude,
-          markerId: currState.markerId),
+          markerId: currState.markerId,
+          nameRek: currState.nameRek,
+          bankRek: currState.bankRek,
+          aliasNameRek: currState.bankRek,
+          emailRek: currState.emailRek),
     );
   }
 
@@ -226,7 +255,11 @@ class AdminCubit extends Cubit<Admin> {
           category: currState.category,
           latitude: currState.latitude,
           longitude: currState.longitude,
-          markerId: markerId),
+          markerId: markerId,
+          nameRek: currState.nameRek,
+          bankRek: currState.bankRek,
+          aliasNameRek: currState.bankRek,
+          emailRek: currState.emailRek),
     );
   }
 
@@ -252,7 +285,11 @@ class AdminCubit extends Cubit<Admin> {
           category: currState.category,
           latitude: currState.latitude,
           longitude: currState.longitude,
-          markerId: currState.markerId),
+          markerId: currState.markerId,
+          nameRek: currState.nameRek,
+          bankRek: currState.bankRek,
+          aliasNameRek: currState.bankRek,
+          emailRek: currState.emailRek),
     );
   }
 
@@ -278,7 +315,11 @@ class AdminCubit extends Cubit<Admin> {
           category: currState.category,
           latitude: currState.latitude,
           longitude: currState.longitude,
-          markerId: currState.markerId),
+          markerId: currState.markerId,
+          nameRek: currState.nameRek,
+          bankRek: currState.bankRek,
+          aliasNameRek: currState.bankRek,
+          emailRek: currState.emailRek),
     );
   }
 
@@ -304,7 +345,11 @@ class AdminCubit extends Cubit<Admin> {
           category: currState.category,
           latitude: currState.latitude,
           longitude: currState.longitude,
-          markerId: currState.markerId),
+          markerId: currState.markerId,
+          nameRek: currState.nameRek,
+          bankRek: currState.bankRek,
+          aliasNameRek: currState.bankRek,
+          emailRek: currState.emailRek),
     );
   }
 
@@ -338,7 +383,11 @@ class AdminCubit extends Cubit<Admin> {
           category: currState.category,
           latitude: currState.latitude,
           longitude: currState.longitude,
-          markerId: currState.markerId),
+          markerId: currState.markerId,
+          nameRek: currState.nameRek,
+          bankRek: currState.bankRek,
+          aliasNameRek: currState.bankRek,
+          emailRek: currState.emailRek),
     );
   }
 
@@ -364,7 +413,11 @@ class AdminCubit extends Cubit<Admin> {
           category: currState.category,
           latitude: currState.latitude,
           longitude: currState.longitude,
-          markerId: currState.markerId),
+          markerId: currState.markerId,
+          nameRek: currState.nameRek,
+          bankRek: currState.bankRek,
+          aliasNameRek: currState.bankRek,
+          emailRek: currState.emailRek),
     );
   }
 
@@ -389,7 +442,11 @@ class AdminCubit extends Cubit<Admin> {
           category: currState.category,
           latitude: currState.latitude,
           longitude: currState.longitude,
-          markerId: currState.markerId),
+          markerId: currState.markerId,
+          nameRek: currState.nameRek,
+          bankRek: currState.bankRek,
+          aliasNameRek: currState.bankRek,
+          emailRek: currState.emailRek),
     );
   }
 
@@ -414,7 +471,11 @@ class AdminCubit extends Cubit<Admin> {
           category: category,
           latitude: currState.latitude,
           longitude: currState.longitude,
-          markerId: currState.markerId),
+          markerId: currState.markerId,
+          nameRek: currState.nameRek,
+          bankRek: currState.bankRek,
+          aliasNameRek: currState.bankRek,
+          emailRek: currState.emailRek),
     );
   }
 
@@ -439,7 +500,11 @@ class AdminCubit extends Cubit<Admin> {
           category: currState.category,
           latitude: lat,
           longitude: lon,
-          markerId: currState.markerId),
+          markerId: currState.markerId,
+          nameRek: currState.nameRek,
+          bankRek: currState.bankRek,
+          aliasNameRek: currState.bankRek,
+          emailRek: currState.emailRek),
     );
   }
 
@@ -464,7 +529,40 @@ class AdminCubit extends Cubit<Admin> {
           category: currState.category,
           latitude: currState.latitude,
           longitude: currState.longitude,
-          markerId: currState.markerId),
+          markerId: currState.markerId,
+          nameRek: currState.nameRek,
+          bankRek: currState.bankRek,
+          aliasNameRek: currState.bankRek,
+          emailRek: currState.emailRek),
+    );
+  }
+
+  void setBank(BankAccount bankAccount) {
+    final currState = state;
+    emit(
+      Admin(
+          id: currState.id,
+          userId: currState.userId,
+          name: currState.name,
+          noRek: bankAccount.account,
+          address: currState.address,
+          email: currState.email,
+          description: currState.description,
+          image: currState.image,
+          noTelp: currState.noTelp,
+          instagram: currState.instagram,
+          website: currState.website,
+          tiktok: currState.tiktok,
+          facilities: currState.facilities,
+          time: currState.time,
+          category: currState.category,
+          latitude: currState.latitude,
+          longitude: currState.longitude,
+          markerId: currState.markerId,
+          nameRek: bankAccount.name,
+          bankRek: bankAccount.bank,
+          aliasNameRek: bankAccount.aliasName,
+          emailRek: bankAccount.email),
     );
   }
 
@@ -481,23 +579,28 @@ class AdminCubit extends Cubit<Admin> {
   Admin getAllAdmin() {
     final currState = state;
     return Admin(
-        id: currState.id,
-        userId: currState.userId,
-        name: currState.name,
-        noRek: currState.noRek,
-        address: currState.address,
-        email: currState.email,
-        description: currState.description,
-        image: currState.image,
-        noTelp: currState.noTelp,
-        instagram: currState.instagram,
-        website: currState.website,
-        tiktok: currState.tiktok,
-        facilities: currState.facilities,
-        time: currState.time,
-        category: currState.category,
-        latitude: currState.latitude,
-        longitude: currState.longitude,
-        markerId: currState.markerId);
+      id: currState.id,
+      userId: currState.userId,
+      name: currState.name,
+      noRek: currState.noRek,
+      address: currState.address,
+      email: currState.email,
+      description: currState.description,
+      image: currState.image,
+      noTelp: currState.noTelp,
+      instagram: currState.instagram,
+      website: currState.website,
+      tiktok: currState.tiktok,
+      facilities: currState.facilities,
+      time: currState.time,
+      category: currState.category,
+      latitude: currState.latitude,
+      longitude: currState.longitude,
+      markerId: currState.markerId,
+      nameRek: currState.nameRek,
+      bankRek: currState.bankRek,
+      aliasNameRek: currState.bankRek,
+      emailRek: currState.emailRek,
+    );
   }
 }

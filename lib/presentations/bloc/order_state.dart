@@ -54,3 +54,12 @@ class OrderDataRequestObtained extends OrderState {
   @override
   List<Object> get props => [list];
 }
+
+class OrderDataDoneObtained extends OrderState {
+  final List<OrderData> list;
+
+  const OrderDataDoneObtained({required this.list});
+
+  @override
+  List<Object> get props => [list];
+}

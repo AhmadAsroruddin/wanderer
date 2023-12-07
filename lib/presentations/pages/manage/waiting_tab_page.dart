@@ -22,7 +22,6 @@ class _WaitingTabPageState extends State<WaitingTabPage> {
   @override
   void initState() {
     if (mounted) {
-      print("INI BISAHFIONAK;FJNADLKJFDSNFSDKLJFNKSDF");
       Future.delayed(Duration.zero, () async {
         await context
             .read<OrderCubit>()

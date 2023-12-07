@@ -17,27 +17,31 @@ class AdminDataSourceImpl implements AdminDataSource {
   @override
   Future<String> addToAdmin(Admin admin, String markerId) async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    DocumentReference doc =
-        await firebaseFirestore.collection('admin').add(AdminModel(
-              id: admin.id,
-              userId: admin.userId,
-              name: admin.name,
-              noRek: admin.noRek,
-              address: admin.address,
-              email: admin.email,
-              image: admin.image,
-              noTelp: admin.noTelp,
-              website: admin.website,
-              tiktok: admin.tiktok,
-              instagram: admin.instagram,
-              facilities: admin.facilities,
-              time: admin.time,
-              description: admin.description,
-              category: admin.category,
-              latitude: admin.latitude,
-              longitude: admin.longitude,
-              markerId: markerId,
-            ).toMap());
+    DocumentReference doc = await firebaseFirestore.collection('admin').add(
+        AdminModel(
+                id: admin.id,
+                userId: admin.userId,
+                name: admin.name,
+                noRek: admin.noRek,
+                address: admin.address,
+                email: admin.email,
+                image: admin.image,
+                noTelp: admin.noTelp,
+                website: admin.website,
+                tiktok: admin.tiktok,
+                instagram: admin.instagram,
+                facilities: admin.facilities,
+                time: admin.time,
+                description: admin.description,
+                category: admin.category,
+                latitude: admin.latitude,
+                longitude: admin.longitude,
+                markerId: markerId,
+                nameRek: admin.nameRek,
+                aliasNameRek: admin.aliasNameRek,
+                bankRek: admin.bankRek,
+                emailRek: admin.emailRek)
+            .toMap());
     String adminId = doc.id;
     await firebaseFirestore
         .collection('admin')

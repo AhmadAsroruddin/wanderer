@@ -41,6 +41,8 @@ class OrderCubit extends Cubit<OrderState> {
           emit(OrderDataPaidObtained(list: r));
         } else if (status == "request") {
           emit(OrderDataRequestObtained(list: r));
+        } else if (status == "done") {
+          emit(OrderDataDoneObtained(list: r));
         }
       },
     );

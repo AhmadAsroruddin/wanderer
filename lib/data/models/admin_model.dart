@@ -4,9 +4,9 @@ import 'package:wanderer/domain/entities/admin.dart';
 
 class AdminModel extends Equatable {
   const AdminModel(
-      {required this.id,
+      {required this.name,
+      required this.id,
       required this.userId,
-      required this.name,
       required this.noRek,
       required this.address,
       required this.email,
@@ -17,11 +17,15 @@ class AdminModel extends Equatable {
       required this.website,
       required this.facilities,
       required this.time,
+      required this.markerId,
       required this.description,
-      required this.category,
       required this.latitude,
       required this.longitude,
-      required this.markerId});
+      required this.category,
+      required this.nameRek,
+      required this.aliasNameRek,
+      required this.bankRek,
+      required this.emailRek});
 
   final String id;
   final String name;
@@ -41,6 +45,10 @@ class AdminModel extends Equatable {
   final double latitude;
   final double longitude;
   final String userId;
+  final String nameRek;
+  final String aliasNameRek;
+  final String emailRek;
+  final String bankRek;
 
   Map<String, dynamic> toMap() {
     return {
@@ -61,7 +69,11 @@ class AdminModel extends Equatable {
       'latitude': latitude,
       'longitude': longitude,
       'markerId': markerId,
-      'description': description
+      'description': description,
+      'nameRek': nameRek,
+      'aliasRek': aliasNameRek,
+      'emailRek': emailRek,
+      'bankRek': bankRek
     };
   }
 
@@ -84,7 +96,11 @@ class AdminModel extends Equatable {
         category: data['category'],
         latitude: data['latitude'],
         longitude: data['longitude'],
-        markerId: data['markerId']);
+        markerId: data['markerId'],
+        nameRek: data['nameRek'],
+        aliasNameRek: data['aliasNameRek'],
+        bankRek: data['bankRek'],
+        emailRek: data['emailRek']);
   }
 
   factory AdminModel.fromDocumentSnapshot(DocumentSnapshot documentSnapshot) {
@@ -108,7 +124,11 @@ class AdminModel extends Equatable {
         category: data['category'],
         latitude: data['latitude'],
         longitude: data['longitude'],
-        markerId: data['markerId']);
+        markerId: data['markerId'],
+        nameRek: data['nameRek'],
+        aliasNameRek: data['aliasRek'],
+        bankRek: data['bankRek'],
+        emailRek: data['emailRek']);
   }
   Admin toEntity() {
     return Admin(
@@ -129,7 +149,11 @@ class AdminModel extends Equatable {
         category: category,
         latitude: latitude,
         longitude: longitude,
-        markerId: markerId);
+        markerId: markerId,
+        nameRek: nameRek,
+        aliasNameRek: aliasNameRek,
+        bankRek: bankRek,
+        emailRek: emailRek);
   }
 
   @override
@@ -151,6 +175,10 @@ class AdminModel extends Equatable {
         category,
         latitude,
         longitude,
-        markerId
+        markerId,
+        nameRek,
+        bankRek,
+        aliasNameRek,
+        emailRek
       ];
 }

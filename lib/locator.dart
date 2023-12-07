@@ -10,6 +10,7 @@ import 'package:wanderer/data/datasource/favorite_datasource.dart';
 import 'package:wanderer/data/datasource/markers_datasource.dart';
 import 'package:wanderer/data/datasource/order_datasource.dart';
 import 'package:wanderer/data/datasource/owner_datasource.dart';
+import 'package:wanderer/data/datasource/payout_datasource.dart';
 import 'package:wanderer/data/datasource/user_datasource.dart';
 import 'package:wanderer/data/service/admin_repos_impl.dart';
 import 'package:wanderer/data/service/article_repos_impl.dart';
@@ -34,6 +35,7 @@ import 'package:wanderer/domain/repositories/marker_repository.dart';
 import 'package:wanderer/domain/repositories/order_repository.dart';
 import 'package:wanderer/domain/repositories/owner_reposiroty.dart';
 import 'package:wanderer/domain/repositories/payment_repository.dart';
+import 'package:wanderer/domain/repositories/payout_repository.dart';
 import 'package:wanderer/domain/repositories/user_repository.dart';
 import 'package:wanderer/domain/usecase/addMarker.dart';
 import 'package:wanderer/domain/usecase/addMarkerAdmin.dart';
@@ -41,7 +43,10 @@ import 'package:wanderer/domain/usecase/addOwner.dart';
 import 'package:wanderer/domain/usecase/addToAdmin.dart';
 import 'package:wanderer/domain/usecase/addToFavorite.dart';
 import 'package:wanderer/domain/usecase/addTypeToAdmin.dart';
+import 'package:wanderer/domain/usecase/approve.dart';
 import 'package:wanderer/domain/usecase/createAccount.dart';
+import 'package:wanderer/domain/usecase/createBeneficaries.dart';
+import 'package:wanderer/domain/usecase/createPayout.dart';
 import 'package:wanderer/domain/usecase/getAdmin.dart';
 import 'package:wanderer/domain/usecase/getAdminCampervan.dart';
 import 'package:wanderer/domain/usecase/getAllComments.dart';
@@ -83,10 +88,12 @@ import 'package:wanderer/presentations/bloc/location_data_cubit.dart';
 import 'package:wanderer/presentations/bloc/markers_bloc.dart';
 import 'package:wanderer/presentations/bloc/order_bloc.dart';
 import 'package:wanderer/presentations/bloc/payment_bloc.dart';
+import 'package:wanderer/presentations/bloc/payout_bloc.dart';
 import 'package:wanderer/presentations/bloc/router_bloc.dart';
 import 'package:wanderer/presentations/bloc/user_bloc.dart';
 
 import 'data/datasource/payment_datasource.dart';
+import 'data/service/payout_repos_impl.dart';
 import 'presentations/bloc/type_bloc.dart';
 
 final locator = GetIt.instance;
@@ -136,6 +143,10 @@ void init() {
   locator.registerLazySingleton(() => AddReport(userRepos: locator()));
   locator.registerLazySingleton(() => UploadOneImages(imageRepos: locator()));
   locator.registerLazySingleton(() => AddOwner(ownerRepository: locator()));
+  locator
+      .registerLazySingleton(() => CreateBeneficaries(payoutRepos: locator()));
+  locator.registerLazySingleton(() => CreatePayout(payoutRepos: locator()));
+  locator.registerLazySingleton(() => Approve(payoutRepos: locator()));
 
   //REPOSITORY
   locator.registerLazySingleton<AuthRepos>(() => AuthReposImpl(
@@ -162,6 +173,8 @@ void init() {
       () => ArticleReposImpl(articleDataSource: locator()));
   locator.registerLazySingleton<OwnerRepository>(
       () => OwnerReposImpl(ownerDataSource: locator()));
+  locator.registerLazySingleton<PayoutRepos>(
+      () => PayoutReposImpl(payoutDatasource: locator()));
 
   //BLOC
   locator.registerFactory(() => AuthCubit(
@@ -186,6 +199,7 @@ void init() {
   locator.registerFactory(() => OrderCubit(locator(), locator(), locator()));
   locator.registerFactory(() => PaymentCubit(locator(), locator()));
   locator.registerFactory(() => ArticleCubit(locator()));
+  locator.registerFactory(() => PayoutCubit(locator(), locator(), locator()));
 
   //DATA
 
@@ -204,6 +218,8 @@ void init() {
   locator
       .registerLazySingleton<ArticleDataSource>(() => ArticleDataSourceImpl());
   locator.registerLazySingleton<OwnerDataSource>(() => OwnerDataSourceImpl());
+  locator.registerLazySingleton<PayoutDatasource>(
+      () => PayoutDatasourceImpl(dio: Dio()));
 
   //ROUTER
 
