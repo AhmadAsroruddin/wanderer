@@ -61,7 +61,8 @@ dependencies:
   webview_flutter: ^3.0.4
   rename: ^3.0.1
   photo_view: ^0.14.0
-  
+  firebase_messaging: ^14.7.9
+  flutter_local_notifications: ^9.9.1
   
 dev_dependencies:
   flutter_test:

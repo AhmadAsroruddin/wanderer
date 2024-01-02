@@ -20,6 +20,7 @@ class CampervanPage extends StatelessWidget {
       child: Scaffold(
         body: BlocBuilder<AdminDataCubit, AdminDataState>(
           builder: (context, state) {
+            print(state);
             if (state is AdminDataCampervan) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.center,

@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:wanderer/presentations/bloc/favorite_bloc.dart';
 import 'package:wanderer/presentations/bloc/markers_bloc.dart';
 import 'package:wanderer/presentations/pages/account_check_page.dart';
@@ -129,26 +130,38 @@ class _MarkerPageState extends State<MarkerPage>
                             Positioned(
                               bottom: 0,
                               right: 10,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(width: 0.5),
-                                  shape: BoxShape.circle,
-                                  // boxShadow: [
-                                  //   BoxShadow(
-                                  //     color: Colors.black.withOpacity(
-                                  //         0.5), // Warna bayangan dan opasitas
-                                  //     spreadRadius: 2.0, // Menyebar bayangan
-                                  //     blurRadius: 5.0, // Ketajaman bayangan
-                                  //     offset:
-                                  //         Offset(0, 2), // Posisi bayangan (x, y)
-                                  //   ),
-                                  // ],
-                                ),
-                                child: CircleAvatar(
-                                  backgroundColor: whiteColor,
-                                  radius: 30,
-                                  child:
-                                      Image.asset("assets/img/direction.png"),
+                              child: GestureDetector(
+                                onTap: () async {
+                                  final url = Uri.parse(
+                                      'https://www.google.com/maps/search/?api=1&query=${state.marker.latitude},${state.marker.longitude}');
+
+                                  if (await canLaunchUrl(url)) {
+                                    await launchUrl(url);
+                                  } else {
+                                    throw 'can\'t launch Google Maps';
+                                  }
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(width: 0.5),
+                                    shape: BoxShape.circle,
+                                    // boxShadow: [
+                                    //   BoxShadow(
+                                    //     color: Colors.black.withOpacity(
+                                    //         0.5), // Warna bayangan dan opasitas
+                                    //     spreadRadius: 2.0, // Menyebar bayangan
+                                    //     blurRadius: 5.0, // Ketajaman bayangan
+                                    //     offset:
+                                    //         Offset(0, 2), // Posisi bayangan (x, y)
+                                    //   ),
+                                    // ],
+                                  ),
+                                  child: CircleAvatar(
+                                    backgroundColor: whiteColor,
+                                    radius: 30,
+                                    child:
+                                        Image.asset("assets/img/direction.png"),
+                                  ),
                                 ),
                               ),
                             ),

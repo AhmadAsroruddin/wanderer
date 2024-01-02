@@ -7,7 +7,8 @@ class Users extends Equatable {
       required this.imageUrl,
       required this.telponNumber,
       required this.markers,
-      required this.role});
+      required this.role,
+      required this.token});
 
   final String username;
   final String email;
@@ -15,8 +16,9 @@ class Users extends Equatable {
   final String telponNumber;
   final List<dynamic> markers;
   final String role;
+  final String token;
 
   @override
   List<Object> get props =>
-      [username, email, imageUrl, telponNumber, role, markers];
+      [username, email, imageUrl, telponNumber, role, markers, token];
 }

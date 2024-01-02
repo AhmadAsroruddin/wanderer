@@ -7,4 +7,5 @@ abstract class UserRepository {
   Future<Either<String, Users>> getUserData(String uid);
   Future<void> updateUser(UserModel userData);
   Future<void> report(ReportModel reportModel);
+  Future<void> addToken();
 }

@@ -9,7 +9,8 @@ class UserModel extends Equatable {
       required this.imageUrl,
       required this.telponNumber,
       required this.markers,
-      required this.role});
+      required this.role,
+      required this.token});
 
   final String username;
   final String email;
@@ -17,6 +18,7 @@ class UserModel extends Equatable {
   final String telponNumber;
   final List<dynamic> markers;
   final String role;
+  final String token;
 
   Map<String, dynamic> toMap() {
     return {
@@ -25,19 +27,20 @@ class UserModel extends Equatable {
       'imageUrl': imageUrl,
       'telponNumber': telponNumber,
       'markers': markers,
-      'role': role
+      'role': role,
+      'token': token
     };
   }
 
   static Users fromMap(Map<String, dynamic> map) {
     return Users(
-      username: map['username'],
-      email: map['email'],
-      imageUrl: map['imageUrl'],
-      telponNumber: map['telponNumber'],
-      markers: map['markers'],
-      role: map['role'],
-    );
+        username: map['username'],
+        email: map['email'],
+        imageUrl: map['imageUrl'],
+        telponNumber: map['telponNumber'],
+        markers: map['markers'],
+        role: map['role'],
+        token: map['token']);
   }
 
   factory UserModel.fromDocumentSnapShot(DocumentSnapshot doc) {
@@ -49,7 +52,8 @@ class UserModel extends Equatable {
         imageUrl: map['imageUrl'],
         telponNumber: map['telponNumber'],
         markers: map['markers'],
-        role: map['role']);
+        role: map['role'],
+        token: map['token']);
   }
 
   factory UserModel.fromEntity(Users users) {
@@ -59,7 +63,8 @@ class UserModel extends Equatable {
         imageUrl: users.imageUrl,
         telponNumber: users.telponNumber,
         markers: users.markers,
-        role: users.role);
+        role: users.role,
+        token: users.token);
   }
   Users toEntity() {
     return Users(
@@ -68,10 +73,11 @@ class UserModel extends Equatable {
         imageUrl: imageUrl,
         telponNumber: telponNumber,
         markers: markers,
-        role: role);
+        role: role,
+        token: token);
   }
 
   @override
   List<Object> get props =>
-      [username, email, imageUrl, telponNumber, role, markers];
+      [username, email, imageUrl, telponNumber, role, markers, token];
 }

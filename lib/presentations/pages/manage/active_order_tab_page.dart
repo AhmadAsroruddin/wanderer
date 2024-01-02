@@ -67,7 +67,9 @@ class _ActiveOrderTabPageState extends State<ActiveOrderTabPage> {
                         GestureDetector(
                             onTap: () async {
                               await context.read<OrderCubit>().updateStatus(
-                                  state.list[index].id, widget.adminId, "done");
+                                  state.list[index].id,
+                                  state.list[index].orderedPlaceId,
+                                  "done");
 
                               final Admin admin = await context
                                   .read<AdminDataCubit>()

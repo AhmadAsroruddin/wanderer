@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:wanderer/data/datasource/user_datasource.dart';
 import 'package:wanderer/data/models/user_model.dart';
 
 abstract class AuthDataSource {
@@ -29,14 +30,17 @@ class AuthDataSourceImpl implements AuthDataSource {
                     "https://cdn.pixabay.com/photo/2023/05/21/07/47/horse-8008038_1280.jpg",
                 telponNumber: telponNumber,
                 markers: const [],
-                role: "")
+                role: "",
+                token: "")
             .toMap());
   }
 
   @override
   Future<void> login(String email, String password) async {
+    final userRepos = UserDataSourceImpl();
     await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: password);
+    userRepos.addToken();
   }
 
   @override
@@ -48,6 +52,7 @@ class AuthDataSourceImpl implements AuthDataSource {
   Future<void> signInWithGoogle() async {
     final GoogleSignIn googleSignIn = GoogleSignIn();
     final FirebaseAuth auth = FirebaseAuth.instance;
+    final UserDataSourceImpl userDataSource = UserDataSourceImpl();
 
     final GoogleSignInAccount? googleSignInAccount =
         await googleSignIn.signIn();
@@ -75,15 +80,17 @@ class AuthDataSourceImpl implements AuthDataSource {
               .collection("users")
               .doc(user.uid)
               .set(UserModel(
-                username: user.displayName!,
-                email: user.email!,
-                imageUrl:
-                    "https://cdn.pixabay.com/photo/2023/05/21/07/47/horse-8008038_1280.jpg",
-                telponNumber: user.phoneNumber ?? "",
-                markers: const [],
-                role: "",
-              ).toMap());
+                      username: user.displayName!,
+                      email: user.email!,
+                      imageUrl:
+                          "https://cdn.pixabay.com/photo/2023/05/21/07/47/horse-8008038_1280.jpg",
+                      telponNumber: user.phoneNumber ?? "",
+                      markers: const [],
+                      role: "",
+                      token: "")
+                  .toMap());
         }
+        await userDataSource.addToken();
       }
     }
   }

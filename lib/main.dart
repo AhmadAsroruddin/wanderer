@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:wanderer/data/Api/firebaseApi.dart';
 import 'package:wanderer/data/datasource/auth_datasource.dart';
 import 'package:wanderer/data/service/auth_repos_impl.dart';
 import 'package:wanderer/domain/usecase/firstTimeDone.dart';
@@ -37,6 +40,8 @@ void main() async {
     name: 'wanderer-3e072',
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await FirebaseApi().initNotifications();
+
   runApp(const MyApp());
 }
 
@@ -49,10 +54,18 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   late MyRouterDelegate routerDelegate;
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
 
   @override
   void initState() {
     super.initState();
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print("onMessage: $message");
+      String? title = message.notification?.title;
+      String? body = message.notification?.body;
+      showNotification(title, body);
+    });
     routerDelegate = MyRouterDelegate(
       RouterCubit(
         authUseCase: IsFirstTime(
@@ -67,6 +80,30 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
     );
+  }
+
+  Future<void> configureLocalNotifications() async {
+    const AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings('app_icon');
+
+    final InitializationSettings initializationSettings =
+        InitializationSettings(
+      android: initializationSettingsAndroid,
+    );
+
+    await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+  }
+
+  Future<void> showNotification(String? title, String? body) async {
+    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+        AndroidNotificationDetails('wanderer', 'wanderer',
+            importance: Importance.max, priority: Priority.high);
+
+    const NotificationDetails platformChannelSpecifics =
+        NotificationDetails(android: androidPlatformChannelSpecifics);
+
+    await flutterLocalNotificationsPlugin
+        .show(0, title, body, platformChannelSpecifics, payload: 'data');
   }
 
   // This widget is the root of your application.

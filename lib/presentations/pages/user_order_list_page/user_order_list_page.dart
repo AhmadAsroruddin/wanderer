@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wanderer/presentations/bloc/auth_bloc.dart';
 import 'package:wanderer/presentations/pages/manage/active_order_tab_page.dart';
+import 'package:wanderer/presentations/pages/manage/done_order_tab.dart';
 import 'package:wanderer/presentations/shared/theme.dart';
 
 import '../manage/waiting_payment_page.dart';
@@ -101,7 +102,8 @@ class _UserOrderListPageState extends State<UserOrderListPage>
                       isNeedButton: true,
                       isUser: true,
                     ),
-                    const Text("data 4")
+                    DoneOrderPage(
+                        adminId: userId, isUser: true, isNeedButton: false)
                   ],
                 ),
               ),

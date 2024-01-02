@@ -81,7 +81,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   imageUrl: link.isNotEmpty ? link : users.imageUrl,
                   telponNumber: number.text,
                   markers: users.markers,
-                  role: users.role));
+                  role: users.role,
+                  token: users.token));
               Navigator.of(context).pushNamed(TabScreen.routeName);
             },
             icon: const Icon(Icons.save),
@@ -207,7 +208,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         ),
                       )
                     : const Center(
-                        child: Text("asd"),
+                        child: Text("No Photo Yet"),
                       ),
               ],
             ),

@@ -38,4 +38,13 @@ class UserReposImpl extends UserRepository {
       print(e);
     }
   }
+
+  @override
+  Future<void> addToken() async {
+    try {
+      await userDataSource.addToken();
+    } catch (e) {
+      print(e);
+    }
+  }
 }

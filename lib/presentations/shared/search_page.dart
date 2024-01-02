@@ -12,104 +12,107 @@ class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: BlocBuilder<MarkersCubit, MarkersState>(
-          builder: (context, state) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Center(
-                  child: SizedBox(
-                    width: deviceWidth * 1,
-                    child: SearchBarHome(
-                      isSearchPage: true,
+      body: Padding(
+        padding: EdgeInsets.only(top: deviceHeight * 0.02),
+        child: SafeArea(
+          child: BlocBuilder<MarkersCubit, MarkersState>(
+            builder: (context, state) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Center(
+                    child: SizedBox(
+                      width: deviceWidth * 1,
+                      child: SearchBarHome(
+                        isSearchPage: true,
+                      ),
                     ),
                   ),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: deviceWidth * 0.04,
-                    vertical: deviceHeight * 0.01,
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: deviceWidth * 0.04,
+                      vertical: deviceHeight * 0.01,
+                    ),
+                    child: state is SearchMarkers
+                        ? Text("${state.marker.length} result found")
+                        : const Text("0 result found"),
                   ),
-                  child: state is SearchMarkers
-                      ? Text("${state.marker.length} result found")
-                      : const Text("0 result found"),
-                ),
-                if (state is SearchMarkers)
-                  Expanded(
-                    child: state.marker.isEmpty
-                        ? const Center(
-                            child: Text("No Result Found"),
-                          )
-                        : ListView.builder(
-                            itemCount: state.marker.length,
-                            itemBuilder: (context, index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  context
-                                      .read<MarkersCubit>()
-                                      .getMarker(true, state.marker[index]);
-                                  Navigator.of(context)
-                                      .pushNamed(MarkerPage.routeName);
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: deviceWidth * 0.05,
-                                    vertical: deviceWidth * 0.05,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: whiteColor,
-                                  ),
-                                  child: Row(
-                                    children: <Widget>[
-                                      Container(
-                                        width: deviceWidth * 0.3,
-                                        height: deviceHeight * 0.12,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                          image: DecorationImage(
-                                              image: NetworkImage(
-                                                state.marker[index].image[0],
-                                              ),
-                                              fit: BoxFit.fill),
+                  if (state is SearchMarkers)
+                    Expanded(
+                      child: state.marker.isEmpty
+                          ? const Center(
+                              child: Text("No Result Found"),
+                            )
+                          : ListView.builder(
+                              itemCount: state.marker.length,
+                              itemBuilder: (context, index) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    context
+                                        .read<MarkersCubit>()
+                                        .getMarker(true, state.marker[index]);
+                                    Navigator.of(context)
+                                        .pushNamed(MarkerPage.routeName);
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: deviceWidth * 0.05,
+                                      vertical: deviceWidth * 0.05,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: whiteColor,
+                                    ),
+                                    child: Row(
+                                      children: <Widget>[
+                                        Container(
+                                          width: deviceWidth * 0.3,
+                                          height: deviceHeight * 0.12,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                            image: DecorationImage(
+                                                image: NetworkImage(
+                                                  state.marker[index].image[0],
+                                                ),
+                                                fit: BoxFit.fill),
+                                          ),
                                         ),
-                                      ),
-                                      SizedBox(
-                                        width: deviceWidth * 0.02,
-                                      ),
-                                      Column(
-                                        children: [
-                                          SizedBox(
-                                            width: deviceWidth * 0.55,
-                                            child: Text(
-                                              state.marker[index].name,
-                                              style: blackTextStyle.copyWith(
-                                                fontWeight: bold,
-                                                fontSize: deviceWidth * 0.035,
+                                        SizedBox(
+                                          width: deviceWidth * 0.02,
+                                        ),
+                                        Column(
+                                          children: [
+                                            SizedBox(
+                                              width: deviceWidth * 0.55,
+                                              child: Text(
+                                                state.marker[index].name,
+                                                style: blackTextStyle.copyWith(
+                                                  fontWeight: bold,
+                                                  fontSize: deviceWidth * 0.035,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          IconList(
-                                            icon: "marker",
-                                            data: state.marker[index].address,
-                                          ),
-                                          const IconList(
-                                            icon: "jam",
-                                            data: "12.00 - 24.00",
-                                          ),
-                                        ],
-                                      )
-                                    ],
+                                            IconList(
+                                              icon: "marker",
+                                              data: state.marker[index].address,
+                                            ),
+                                            const IconList(
+                                              icon: "jam",
+                                              data: "12.00 - 24.00",
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              );
-                            },
-                          ),
-                  )
-              ],
-            );
-          },
+                                );
+                              },
+                            ),
+                    )
+                ],
+              );
+            },
+          ),
         ),
       ),
     );
