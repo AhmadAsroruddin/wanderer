@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:wanderer/data/models/report_model.dart';
 import 'package:wanderer/data/models/user_model.dart';
@@ -48,6 +49,7 @@ class UserDataSourceImpl extends UserDataSource {
   Future<void> addToken() async {
     String? token = await firebaseMessaging.getToken();
     print("FCM TOKEN : $token");
+
     firestore
         .collection("users")
         .doc(firebaseAuth.currentUser!.uid)

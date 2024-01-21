@@ -44,6 +44,7 @@ class _DoneOrderPageState extends State<DoneOrderPage> {
               vertical: deviceHeight * 0.02,
               horizontal: deviceWidth * 0.03,
             ),
+            margin: EdgeInsets.only(bottom: deviceHeight * 0.06),
             decoration: BoxDecoration(color: lightBackgroundColor),
             child: ListView.builder(
               itemCount: state.list.length,

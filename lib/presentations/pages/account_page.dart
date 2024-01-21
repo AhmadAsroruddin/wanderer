@@ -159,34 +159,34 @@ class _AccountPageState extends State<AccountPage> {
                           const Divider(
                             thickness: 2,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: Row(
-                              children: <Widget>[
-                                SizedBox(
-                                  width: deviceWidth * 0.1,
-                                  height: deviceHeight * 0.04,
-                                  child: Image.asset(
-                                    "assets/img/logout.png",
+                          GestureDetector(
+                            onTap: () async {
+                              await context.read<AuthCubit>().logout();
+                              Navigator.of(context)
+                                  .pushNamed(TabScreen.routeName);
+                            },
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                              child: Row(
+                                children: <Widget>[
+                                  SizedBox(
+                                    width: deviceWidth * 0.1,
+                                    height: deviceHeight * 0.04,
+                                    child: Image.asset(
+                                      "assets/img/logout.png",
+                                    ),
                                   ),
-                                ),
-                                SizedBox(
-                                  width: deviceWidth * 0.1,
-                                ),
-                                GestureDetector(
-                                  onTap: () async {
-                                    print("fired");
-                                    await context.read<AuthCubit>().logout();
-                                    Navigator.of(context)
-                                        .pushNamed(TabScreen.routeName);
-                                  },
-                                  child: Text(
+                                  SizedBox(
+                                    width: deviceWidth * 0.1,
+                                  ),
+                                  Text(
                                     "Keluar",
                                     style: GoogleFonts.roboto()
                                         .copyWith(fontSize: 18),
-                                  ),
-                                )
-                              ],
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                           SizedBox(

@@ -15,6 +15,7 @@ import 'package:wanderer/presentations/pages/admin_page/location_details_page.da
 import 'package:wanderer/presentations/pages/admin_page/owner_verification.dart';
 import 'package:wanderer/presentations/pages/admin_page/step1_page.dart';
 import 'package:wanderer/presentations/pages/admin_page/step2_page.dart';
+import 'package:wanderer/presentations/pages/auth/email_verification.dart';
 
 import 'package:wanderer/presentations/pages/auth/login_page.dart';
 import 'package:wanderer/presentations/pages/auth/register_page.dart';
@@ -257,6 +258,12 @@ class MyRouterDelegate extends RouterDelegate
         if (settings.name == AddPayoutPage.routeName) {
           return MaterialPageRoute(
               builder: (context) => const AddPayoutPage(), settings: settings);
+        }
+        if (settings.name == EmailVerificationPage.routeName) {
+          return MaterialPageRoute(
+            builder: (context) => const EmailVerificationPage(),
+            settings: settings,
+          );
         }
         return null;
       },

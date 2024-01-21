@@ -3,12 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:wanderer/domain/entities/order.dart';
 import 'package:wanderer/domain/entities/tipe.dart';
+import 'package:wanderer/domain/entities/user.dart';
 import 'package:wanderer/presentations/bloc/order_bloc.dart';
 import 'package:wanderer/presentations/shared/customTextField.dart';
 import 'package:wanderer/presentations/shared/dialogUtilsWithCustomRoute.dart';
 import 'package:wanderer/presentations/shared/theme.dart';
 
+import '../../bloc/admin_data_bloc.dart';
 import '../../bloc/auth_bloc.dart';
+import '../../bloc/notification_bloc.dart';
 import '../user_order_list_page/user_order_list_page.dart';
 
 class OrderPage extends StatefulWidget {
@@ -387,6 +390,17 @@ class _OrderPageState extends State<OrderPage> {
                                     amountType: amount,
                                     orderId: ""),
                               );
+
+                          Navigator.of(context)
+                              .pushNamed(UserOrderListPage.routeName);
+                          Users userAdmin = await context
+                              .read<AdminDataCubit>()
+                              .getAdminUser(tipe.adminId);
+
+                          await context
+                              .read<NotificationCubit>()
+                              .sendNotification(userAdmin.token,
+                                  "PESANAN MASUK", "TERDAPAT PESANAN");
                         },
                         child: state is OrderLoading
                             ? const CircularProgressIndicator.adaptive()

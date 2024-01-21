@@ -3,6 +3,7 @@ import 'package:dartz/dartz.dart';
 import 'package:wanderer/data/datasource/admin_datasource.dart';
 import 'package:wanderer/domain/entities/admin.dart';
 import 'package:wanderer/domain/entities/tipe.dart';
+import 'package:wanderer/domain/entities/user.dart';
 import 'package:wanderer/domain/repositories/admin_repository.dart';
 
 class AdminReposImpl implements AdminRepos {
@@ -57,6 +58,18 @@ class AdminReposImpl implements AdminRepos {
       return Right(result);
     } catch (e) {
       return Left(e.toString());
+    }
+  }
+
+  @override
+  Future<Users> adminUser(String adminId) async {
+    try {
+      final result = await adminDataSource.getAdminUser(adminId);
+      return result;
+    } catch (e) {
+      print("USER ADMIN ERROR : $e");
+      Map<String, dynamic> temp = {'asd': 'asd'};
+      return temp as Users;
     }
   }
 }

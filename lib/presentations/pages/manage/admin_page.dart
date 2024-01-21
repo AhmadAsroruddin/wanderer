@@ -51,7 +51,7 @@ class _AdminPageState extends State<AdminPage>
                   Container(
                     //PROFILE DATA
                     width: deviceWidth,
-                    height: deviceHeight * 0.37,
+                    height: deviceHeight * 0.36,
                     decoration: const BoxDecoration(
                       border: Border(
                         bottom: BorderSide(width: 0.5),

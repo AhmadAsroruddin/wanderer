@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:wanderer/data/models/admin_model.dart';
 import 'package:wanderer/data/models/tipe_model.dart';
+import 'package:wanderer/data/models/user_model.dart';
 import 'package:wanderer/domain/entities/admin.dart';
 import 'package:wanderer/domain/entities/tipe.dart';
+import 'package:wanderer/domain/entities/user.dart';
 
 abstract class AdminDataSource {
   Future<String> addToAdmin(Admin admin, String adminId);
@@ -11,6 +13,7 @@ abstract class AdminDataSource {
   Future<List<Tipe>> getTypes(String adminId);
   Future<void> updateAdminId(String adminId, String userId);
   Future<List<Admin>> getCampervanRental(bool onSearch, String key);
+  Future<Users> getAdminUser(String adminId);
 }
 
 class AdminDataSourceImpl implements AdminDataSource {
@@ -127,5 +130,20 @@ class AdminDataSourceImpl implements AdminDataSource {
         .map<Admin>((e) => AdminModel.fromDocumentSnapshot(e).toEntity())
         .toList();
     return admin;
+  }
+
+  @override
+  Future<Users> getAdminUser(String adminId) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    final dataQuery = await firestore
+        .collection("users")
+        .where('role', isEqualTo: adminId)
+        .get();
+    DocumentSnapshot firstDocument = dataQuery.docs.first;
+
+    Users userData =
+        UserModel.fromMap(firstDocument.data() as Map<String, dynamic>);
+
+    return userData;
   }
 }

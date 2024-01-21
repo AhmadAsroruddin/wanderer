@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get_it/get_it.dart';
 import 'package:wanderer/data/datasource/admin_datasource.dart';
 import 'package:wanderer/data/datasource/article_datasource.dart';
@@ -20,6 +21,7 @@ import 'package:wanderer/data/service/favorite_repos_impl.dart';
 import 'package:wanderer/data/service/image_repos_implementation.dart';
 import 'package:wanderer/data/service/location_data_repos_implementation.dart';
 import 'package:wanderer/data/service/markers_repos_implementation.dart';
+import 'package:wanderer/data/service/notification_repos_impl.dart';
 import 'package:wanderer/data/service/order_repos_impl.dart';
 import 'package:wanderer/data/service/owner_repos_impl.dart';
 import 'package:wanderer/data/service/payment_repos_impl.dart';
@@ -32,6 +34,7 @@ import 'package:wanderer/domain/repositories/favorite_repository.dart';
 import 'package:wanderer/domain/repositories/image_repository.dart';
 import 'package:wanderer/domain/repositories/location_data_repository.dart';
 import 'package:wanderer/domain/repositories/marker_repository.dart';
+import 'package:wanderer/domain/repositories/notication_repository.dart';
 import 'package:wanderer/domain/repositories/order_repository.dart';
 import 'package:wanderer/domain/repositories/owner_reposiroty.dart';
 import 'package:wanderer/domain/repositories/payment_repository.dart';
@@ -49,6 +52,7 @@ import 'package:wanderer/domain/usecase/createBeneficaries.dart';
 import 'package:wanderer/domain/usecase/createPayout.dart';
 import 'package:wanderer/domain/usecase/getAdmin.dart';
 import 'package:wanderer/domain/usecase/getAdminCampervan.dart';
+import 'package:wanderer/domain/usecase/getAdminUser.dart';
 import 'package:wanderer/domain/usecase/getAllComments.dart';
 import 'package:wanderer/domain/usecase/getAllFavorites.dart';
 import 'package:wanderer/domain/usecase/getAllMarkers.dart';
@@ -70,6 +74,7 @@ import 'package:wanderer/domain/usecase/report.dart';
 import 'package:wanderer/domain/usecase/requestOrder.dart';
 import 'package:wanderer/domain/usecase/resetPassword.dart';
 import 'package:wanderer/domain/usecase/searcMarker.dart';
+import 'package:wanderer/domain/usecase/sendNotification.dart';
 import 'package:wanderer/domain/usecase/setUserRoleToAdmin.dart';
 import 'package:wanderer/domain/usecase/signInWithGoogle.dart';
 import 'package:wanderer/domain/usecase/updateStatusOrder.dart';
@@ -86,6 +91,7 @@ import 'package:wanderer/presentations/bloc/favorite_bloc.dart';
 import 'package:wanderer/presentations/bloc/image_bloc.dart';
 import 'package:wanderer/presentations/bloc/location_data_cubit.dart';
 import 'package:wanderer/presentations/bloc/markers_bloc.dart';
+import 'package:wanderer/presentations/bloc/notification_bloc.dart';
 import 'package:wanderer/presentations/bloc/order_bloc.dart';
 import 'package:wanderer/presentations/bloc/payment_bloc.dart';
 import 'package:wanderer/presentations/bloc/payout_bloc.dart';
@@ -147,7 +153,9 @@ void init() {
       .registerLazySingleton(() => CreateBeneficaries(payoutRepos: locator()));
   locator.registerLazySingleton(() => CreatePayout(payoutRepos: locator()));
   locator.registerLazySingleton(() => Approve(payoutRepos: locator()));
-
+  locator.registerLazySingleton(
+      () => SendNotification(notificationRepos: locator()));
+  locator.registerLazySingleton(() => GetUserAdmin(adminRepos: locator()));
   //REPOSITORY
   locator.registerLazySingleton<AuthRepos>(() => AuthReposImpl(
       dataSource: locator(), firebaseFirestore: FirebaseFirestore.instance));
@@ -175,6 +183,8 @@ void init() {
       () => OwnerReposImpl(ownerDataSource: locator()));
   locator.registerLazySingleton<PayoutRepos>(
       () => PayoutReposImpl(payoutDatasource: locator()));
+  locator
+      .registerLazySingleton<NotificationRepos>(() => NotificationReposImpl());
 
   //BLOC
   locator.registerFactory(() => AuthCubit(
@@ -192,14 +202,15 @@ void init() {
   locator.registerFactory(() => ImageCubit(locator(), locator()));
   locator.registerFactory(() => AdminCubit(locator(), locator(), locator()));
   locator.registerFactory(() => TypeCubit(locator()));
-  locator.registerFactory(
-      () => AdminDataCubit(locator(), locator(), locator(), locator()));
+  locator.registerFactory(() =>
+      AdminDataCubit(locator(), locator(), locator(), locator(), locator()));
   locator.registerFactory(() => TypeCubitData(locator()));
   locator.registerFactory(() => UserCubit(locator(), locator(), locator()));
   locator.registerFactory(() => OrderCubit(locator(), locator(), locator()));
   locator.registerFactory(() => PaymentCubit(locator(), locator()));
   locator.registerFactory(() => ArticleCubit(locator()));
   locator.registerFactory(() => PayoutCubit(locator(), locator(), locator()));
+  locator.registerFactory(() => NotificationCubit(locator()));
 
   //DATA
 
@@ -225,4 +236,5 @@ void init() {
 
   locator.registerLazySingleton(() => FirebaseFirestore.instance);
   locator.registerLazySingleton(() => FirebaseAuth.instance);
+  locator.registerLazySingleton(() => FirebaseMessaging.instance);
 }

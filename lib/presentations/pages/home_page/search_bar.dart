@@ -1,7 +1,7 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wanderer/presentations/bloc/markers_bloc.dart';
+import 'package:wanderer/presentations/bloc/notification_bloc.dart';
 import 'package:wanderer/presentations/shared/search_page.dart';
 
 import '../../bloc/admin_data_bloc.dart';
@@ -110,39 +110,10 @@ class SearchBarHome extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () async {
-              const serverKey =
-                  'AAAAuBMSC20:APA91bGBAKSZfz2SMn_eEZviI5iijB9y7N_7XQgL9G_DWDKpG3-1rfxF27slfVv5v9mzN_d6X6unrPOPPq070ZBCskRV4fnCGek9-nkNH7OvmI11SF9abjWexJ09dY_bnEDW904p3jKF'; // Replace with your Firebase Cloud Messaging server key
-
-              final headers = {
-                'Content-Type': 'application/json',
-                'Authorization': 'key=$serverKey',
-              };
-
-              final bodyMap = {
-                'to':
-                    "fnbSrv7nTOqON76JrSbPsX:APA91bEYnaRUcJyTCyZ5z5U6yqROsArsGit0VsnDtGa9zQ60cfILnAcciXlVeUsMljLRQe3j2GmyzoCYqsrj8x2GBg2BrjWjC2k7t5EZRat5QTsb9ADXh8XtB-VkYCLF5Z0c0869-gJG",
-                'notification': {
-                  'title': "title",
-                  'body': "body",
-                },
-              };
-
-              const url = 'https://fcm.googleapis.com/fcm/send';
-
-              try {
-                final response = await Dio().post(url,
-                    options: Options(headers: headers), data: bodyMap);
-
-                if (response.statusCode == 200) {
-                  print(
-                      'Notifikasi berhasil dikirim ke perangkat dengan token: ');
-                } else {
-                  print(
-                      'Gagal mengirim notifikasi. Status code: ${response.statusCode}');
-                }
-              } catch (e) {
-                print('Terjadi kesalahan saat mengirim notifikasi: $e');
-              }
+              context.read<NotificationCubit>().sendNotification(
+                  "fnbSrv7nTOqON76JrSbPsX:APA91bEYnaRUcJyTCyZ5z5U6yqROsArsGit0VsnDtGa9zQ60cfILnAcciXlVeUsMljLRQe3j2GmyzoCYqsrj8x2GBg2BrjWjC2k7t5EZRat5QTsb9ADXh8XtB-VkYCLF5Z0c0869-gJG",
+                  "HALO ANDA DAPAT PESANAN",
+                  "PESANAN BERUPA AK47 DAN BOM UNTUK MEMBUMI HANGUSKAN YANG ADA DI DUNIA INI");
             },
             child: Image.asset(
               isCamper ? "assets/img/marker.png" : "assets/img/filter.png",

@@ -103,7 +103,10 @@ class _UserOrderListPageState extends State<UserOrderListPage>
                       isUser: true,
                     ),
                     DoneOrderPage(
-                        adminId: userId, isUser: true, isNeedButton: false)
+                      adminId: userId,
+                      isUser: true,
+                      isNeedButton: false,
+                    )
                   ],
                 ),
               ),

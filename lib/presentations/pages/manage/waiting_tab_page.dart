@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wanderer/presentations/bloc/order_bloc.dart';
+import 'package:wanderer/presentations/bloc/user_bloc.dart';
 import 'package:wanderer/presentations/shared/cardManage.dart';
 import 'package:wanderer/presentations/shared/theme.dart';
+
+import '../../../domain/entities/user.dart';
+import '../../bloc/notification_bloc.dart';
 
 class WaitingTabPage extends StatefulWidget {
   const WaitingTabPage(
@@ -22,18 +26,15 @@ class _WaitingTabPageState extends State<WaitingTabPage> {
   @override
   void initState() {
     if (mounted) {
-      Future.delayed(Duration.zero, () async {
-        await context
-            .read<OrderCubit>()
-            .getOrderDataByStatus(widget.adminId, "request", widget.isUser);
-        setState(() {});
-      });
+      Future.delayed(Duration.zero, () async {});
     }
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<OrderCubit>(context)
+        .getOrderDataByStatus(widget.adminId, "request", widget.isUser);
     return BlocConsumer<OrderCubit, OrderState>(
       builder: (context, state) {
         if (state is OrderDataRequestObtained) {
@@ -60,6 +61,15 @@ class _WaitingTabPageState extends State<WaitingTabPage> {
                                 state.list[index].id,
                                 widget.adminId,
                                 "refused");
+                            Users userData = await context
+                                .read<UserCubit>()
+                                .getUserReturn(state.list[index].accountId);
+                            await context
+                                .read<NotificationCubit>()
+                                .sendNotification(
+                                    userData.token,
+                                    "PESANAN DITOLAK",
+                                    "Pesanan anda telah ditolak oleh ${widget.adminId}");
                             setState(() {});
                           },
                           child: const Text("Tolak"),
@@ -73,6 +83,15 @@ class _WaitingTabPageState extends State<WaitingTabPage> {
                                 state.list[index].id,
                                 widget.adminId,
                                 "waiting");
+                            Users userData = await context
+                                .read<UserCubit>()
+                                .getUserReturn(state.list[index].accountId);
+                            await context
+                                .read<NotificationCubit>()
+                                .sendNotification(
+                                    userData.token,
+                                    "PESANAN DITERIMA",
+                                    "Pesanan anda telah diterima oleh ${widget.adminId}");
                             setState(() {});
                           },
                           child: const Text("Terima"),

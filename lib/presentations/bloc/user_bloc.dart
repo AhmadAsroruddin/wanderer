@@ -26,6 +26,32 @@ class UserCubit extends Cubit<UserState> {
     );
   }
 
+  Future<Users> getUserReturn(String uid) async {
+    final result = await _getUserData.execute(uid);
+    Users userData = const Users(
+        username: "",
+        email: "",
+        imageUrl: "",
+        telponNumber: "",
+        markers: [],
+        role: "",
+        token: "");
+    result.fold(
+      (l) {},
+      (r) {
+        userData = Users(
+            username: r.username,
+            email: r.email,
+            imageUrl: r.imageUrl,
+            telponNumber: r.telponNumber,
+            markers: r.markers,
+            role: r.role,
+            token: r.token);
+      },
+    );
+    return userData;
+  }
+
   Future<void> updateUserData(UserModel userModel) async {
     _updateUser.execute(userModel);
   }

@@ -5,9 +5,11 @@ import 'package:wanderer/domain/entities/owner.dart';
 import 'package:wanderer/domain/usecase/addOwner.dart';
 import 'package:wanderer/domain/usecase/getAdmin.dart';
 import 'package:wanderer/domain/usecase/getAdminCampervan.dart';
+import 'package:wanderer/domain/usecase/getAdminUser.dart';
 import 'package:wanderer/domain/usecase/getAllTypes.dart';
 
 import '../../domain/entities/tipe.dart';
+import '../../domain/entities/user.dart';
 
 part 'admin_data_state.dart';
 
@@ -16,9 +18,10 @@ class AdminDataCubit extends Cubit<AdminDataState> {
   GetAllTypes getAllTypes;
   GetAdminCampervan getAdminCampervan;
   AddOwner addOwnerUseCase;
+  GetUserAdmin getUserAdminUsecase;
 
   AdminDataCubit(this.getAdmin, this.getAllTypes, this.getAdminCampervan,
-      this.addOwnerUseCase)
+      this.addOwnerUseCase, this.getUserAdminUsecase)
       : super(AdminDataInitial());
 
   Future<void> getAdminData(String markerId) async {
@@ -52,5 +55,10 @@ class AdminDataCubit extends Cubit<AdminDataState> {
       (l) => emit(AdminDataFailed(error: l)),
       (r) => emit(OwnerSuccess(message: r)),
     );
+  }
+
+  Future<Users> getAdminUser(String adminId) async {
+    final result = getUserAdminUsecase.execute(adminId);
+    return result;
   }
 }

@@ -17,6 +17,7 @@ import 'package:wanderer/presentations/bloc/favorite_bloc.dart';
 import 'package:wanderer/presentations/bloc/image_bloc.dart';
 import 'package:wanderer/presentations/bloc/location_data_cubit.dart';
 import 'package:wanderer/presentations/bloc/markers_bloc.dart';
+import 'package:wanderer/presentations/bloc/notification_bloc.dart';
 import 'package:wanderer/presentations/bloc/order_bloc.dart';
 import 'package:wanderer/presentations/bloc/payment_bloc.dart';
 import 'package:wanderer/presentations/bloc/payout_bloc.dart';
@@ -84,7 +85,7 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> configureLocalNotifications() async {
     const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('app_icon');
+        AndroidInitializationSettings('@mipmap/ic_launcher');
 
     final InitializationSettings initializationSettings =
         InitializationSettings(
@@ -128,6 +129,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (_) => di.locator<PaymentCubit>()),
         BlocProvider(create: (_) => di.locator<ArticleCubit>()),
         BlocProvider(create: (_) => di.locator<PayoutCubit>()),
+        BlocProvider(create: (_) => di.locator<NotificationCubit>())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

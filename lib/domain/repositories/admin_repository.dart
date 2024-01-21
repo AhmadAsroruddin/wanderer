@@ -2,6 +2,8 @@ import 'package:dartz/dartz.dart';
 import 'package:wanderer/domain/entities/admin.dart';
 import 'package:wanderer/domain/entities/tipe.dart';
 
+import '../entities/user.dart';
+
 abstract class AdminRepos {
   Future<String> addToAdmin(Admin admin, String adminId);
   Future<Either<String, String>> addTypeToAdmin(Tipe tipe, String adminId);
@@ -10,4 +12,5 @@ abstract class AdminRepos {
   Future<void> setUserRole(String userId, String adminId);
   Future<Either<String, List<Admin>>> getCampervanRental(
       bool onSearch, String key);
+  Future<Users> adminUser(String adminId);
 }

@@ -6,6 +6,9 @@ import 'package:wanderer/presentations/bloc/payment_bloc.dart';
 import 'package:wanderer/presentations/shared/snapWebView.dart';
 
 import '../../../domain/entities/order.dart';
+import '../../../domain/entities/user.dart';
+import '../../bloc/notification_bloc.dart';
+import '../../bloc/user_bloc.dart';
 import '../../shared/cardManage.dart';
 import '../../shared/theme.dart';
 
@@ -28,22 +31,10 @@ class _WaitingPaymentPageState extends State<WaitingPaymentPage> {
   String transactionId = "";
 
   @override
-  void initState() {
-    if (mounted) {
-      Future.delayed(
-        Duration.zero,
-        () async {
-          await context
-              .read<OrderCubit>()
-              .getOrderDataByStatus(widget.adminId, "waiting", widget.isUser);
-        },
-      );
-    }
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    BlocProvider.of<OrderCubit>(context)
+        .getOrderDataByStatus(widget.adminId, "waiting", widget.isUser);
+
     return BlocConsumer<OrderCubit, OrderState>(
       listener: (context, state) async {
         if (state is OrderDataWaitingPaymentObtained) {
@@ -55,9 +46,14 @@ class _WaitingPaymentPageState extends State<WaitingPaymentPage> {
               context
                   .read<OrderCubit>()
                   .updateStatus(element.id, element.orderedPlaceId, "paid");
-              if (this.mounted) {
-                setState(() {});
-              }
+              Users userData = await context
+                  .read<UserCubit>()
+                  .getUserReturn(element.accountId);
+              await context.read<NotificationCubit>().sendNotification(
+                  userData.token,
+                  "PESANAN DITERIMA",
+                  "Pesanan anda telah diterima oleh ${widget.adminId}");
+              setState(() {});
             }
           }
         }

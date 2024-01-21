@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:wanderer/presentations/bloc/auth_bloc.dart';
+import 'package:wanderer/presentations/pages/auth/email_verification.dart';
 import 'package:wanderer/presentations/shared/alertDialog.dart';
 import 'package:wanderer/presentations/shared/google_continue.dart';
 import 'package:wanderer/presentations/shared/theme.dart';
@@ -136,6 +137,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           emailAddress.text,
                           password.text,
                           phoneNumber.text);
+                      Navigator.of(context)
+                          .pushNamed(EmailVerificationPage.routeName);
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
