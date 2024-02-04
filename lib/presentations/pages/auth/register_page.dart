@@ -1,12 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:wanderer/presentations/bloc/auth_bloc.dart';
-import 'package:wanderer/presentations/pages/auth/email_verification.dart';
 import 'package:wanderer/presentations/shared/alertDialog.dart';
 import 'package:wanderer/presentations/shared/google_continue.dart';
 import 'package:wanderer/presentations/shared/theme.dart';
+
+import 'email_verification.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -43,6 +45,8 @@ class _RegisterPageState extends State<RegisterPage> {
         if (state is AuthData) {
           DialogUtils.alertDialog(
               context, "Success", "Account Created Successfully");
+          FirebaseAuth.instance.currentUser?.sendEmailVerification();
+          Navigator.of(context).pushNamed(EmailVerificationPage.routeName);
         } else if (state is AuthError) {
           DialogUtils.alertDialog(context, "Error", state.error);
         }
@@ -137,8 +141,6 @@ class _RegisterPageState extends State<RegisterPage> {
                           emailAddress.text,
                           password.text,
                           phoneNumber.text);
-                      Navigator.of(context)
-                          .pushNamed(EmailVerificationPage.routeName);
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(

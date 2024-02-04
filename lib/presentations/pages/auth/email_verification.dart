@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:wanderer/presentations/pages/auth/login_page.dart';
 import 'package:wanderer/presentations/shared/theme.dart';
 
 class EmailVerificationPage extends StatefulWidget {
@@ -20,8 +21,29 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
   @override
   void initState() {
     FirebaseAuth.instance.currentUser?.sendEmailVerification();
-    print("object");
+    timer = Timer.periodic(
+        const Duration(seconds: 3), (_) => checkEmailVerification());
     super.initState();
+  }
+
+  void checkEmailVerification() async {
+    await FirebaseAuth.instance.currentUser?.reload();
+    print(isEmailVerified);
+    setState(() {
+      isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
+    });
+
+    if (isEmailVerified) {
+      Navigator.of(context).pushNamed(LoginPage.routeName);
+    }
+
+    timer?.cancel();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    timer?.cancel();
   }
 
   @override
