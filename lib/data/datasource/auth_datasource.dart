@@ -38,6 +38,7 @@ class AuthDataSourceImpl implements AuthDataSource {
   @override
   Future<void> login(String email, String password) async {
     final userRepos = UserDataSourceImpl();
+
     await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: password);
     userRepos.addToken();

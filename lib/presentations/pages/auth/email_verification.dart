@@ -18,14 +18,6 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
   bool isEmailVerified = false;
   Timer? timer;
 
-  @override
-  void initState() {
-    FirebaseAuth.instance.currentUser?.sendEmailVerification();
-    timer = Timer.periodic(
-        const Duration(seconds: 3), (_) => checkEmailVerification());
-    super.initState();
-  }
-
   void checkEmailVerification() async {
     await FirebaseAuth.instance.currentUser?.reload();
     print(isEmailVerified);
@@ -40,14 +32,15 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
     timer?.cancel();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    timer?.cancel();
-  }
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  //   timer?.cancel();
+  // }
 
   @override
   Widget build(BuildContext context) {
+    Timer.periodic(const Duration(seconds: 3), (_) => checkEmailVerification());
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -80,9 +73,7 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
               ),
               Container(
                 margin: EdgeInsets.symmetric(vertical: deviceHeight * 0.08),
-                child: CircularProgressIndicator(
-                  color: baseColor,
-                ),
+                child: const CircularProgressIndicator(),
               ),
               const Text(
                   "Did not receive the email? Check your spam filter or"),

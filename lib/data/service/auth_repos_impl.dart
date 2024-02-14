@@ -27,6 +27,10 @@ class AuthReposImpl implements AuthRepos {
   Future<Either<String, dynamic>> login(String email, String password) async {
     try {
       await dataSource.login(email, password);
+      User? currentUser = FirebaseAuth.instance.currentUser;
+      if (!currentUser!.emailVerified) {
+        throw "Please Verified your email";
+      }
       return const Right("Login berhasil");
     } catch (e) {
       return Left("$e");
