@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wanderer/domain/entities/transactionStatus.dart';
+
 import 'package:wanderer/presentations/bloc/order_bloc.dart';
 import 'package:wanderer/presentations/bloc/payment_bloc.dart';
 import 'package:wanderer/presentations/shared/snapWebView.dart';
@@ -43,16 +44,20 @@ class _WaitingPaymentPageState extends State<WaitingPaymentPage> {
                 await context.read<PaymentCubit>().getResponse(element.orderId);
 
             if (tStatus.transactionStatus == "settlement") {
-              context
+              await context
                   .read<OrderCubit>()
                   .updateStatus(element.id, element.orderedPlaceId, "paid");
+
+              // DateTime dateTime = formatDate(dateString, [D, ', ', d, ' ', M, ' ', yyyy]);
+
               Users userData = await context
                   .read<UserCubit>()
                   .getUserReturn(element.accountId);
+
               await context.read<NotificationCubit>().sendNotification(
                   userData.token,
-                  "PESANAN DITERIMA",
-                  "Pesanan anda telah diterima oleh ${widget.adminId}");
+                  "PESANAN TELAH DIBAYAR",
+                  "Pesanan telah dibayar oleh ${userData.username}");
               setState(() {});
             }
           }

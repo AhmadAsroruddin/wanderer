@@ -5,6 +5,7 @@ import 'package:wanderer/domain/entities/marker.dart';
 import 'package:wanderer/presentations/bloc/favorite_bloc.dart';
 import 'package:wanderer/presentations/bloc/markers_bloc.dart';
 import 'package:wanderer/presentations/pages/campervan_page/campervan_list.dart';
+import 'package:wanderer/presentations/pages/marker_page/marker_paget.dart';
 
 class FavoritePage extends StatefulWidget {
   const FavoritePage({super.key});
@@ -55,12 +56,28 @@ class _FavoritePageState extends State<FavoritePage> {
                         return Text('Error: ${snapshot.error}');
                       } else if (snapshot.hasData) {
                         // Akses data Admin saat sudah tersedia
-                        return CampervanList(
-                          name: snapshot.data!.name,
-                          image: snapshot.data!.image[0],
-                          address: snapshot.data!.address,
-                          markerId: snapshot.data!.id,
-                          isNeedButtonLove: false,
+                        return GestureDetector(
+                          onTap: () async {
+                            Markers marker = await context
+                                .read<MarkersCubit>()
+                                .getMarkerForFavorite(
+                                    state.favorite[index].markerId);
+
+                            context
+                                .read<MarkersCubit>()
+                                .getMarker(true, marker);
+                            Navigator.of(context)
+                                .pushNamed(MarkerPage.routeName);
+                            Navigator.of(context)
+                                .pushNamed(MarkerPage.routeName);
+                          },
+                          child: CampervanList(
+                            name: snapshot.data!.name,
+                            image: snapshot.data!.image[0],
+                            address: snapshot.data!.address,
+                            markerId: snapshot.data!.id,
+                            isNeedButtonLove: false,
+                          ),
                         );
                       } else {
                         // Tampilkan sesuatu jika tidak ada data

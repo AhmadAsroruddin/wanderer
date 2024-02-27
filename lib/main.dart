@@ -4,6 +4,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:wanderer/data/Api/firebaseApi.dart';
 import 'package:wanderer/data/datasource/auth_datasource.dart';
 import 'package:wanderer/data/service/auth_repos_impl.dart';
@@ -42,7 +43,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await FirebaseApi().initNotifications();
-
+  initializeDateFormatting("id_ID");
   runApp(const MyApp());
 }
 
@@ -87,7 +88,7 @@ class _MyAppState extends State<MyApp> {
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/ic_launcher');
 
-    final InitializationSettings initializationSettings =
+    const InitializationSettings initializationSettings =
         InitializationSettings(
       android: initializationSettingsAndroid,
     );
@@ -129,7 +130,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (_) => di.locator<PaymentCubit>()),
         BlocProvider(create: (_) => di.locator<ArticleCubit>()),
         BlocProvider(create: (_) => di.locator<PayoutCubit>()),
-        BlocProvider(create: (_) => di.locator<NotificationCubit>())
+        BlocProvider(create: (_) => di.locator<NotificationCubit>()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

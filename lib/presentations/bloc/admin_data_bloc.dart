@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wanderer/data/models/admin_model.dart';
 import 'package:wanderer/domain/entities/admin.dart';
 import 'package:wanderer/domain/entities/owner.dart';
 import 'package:wanderer/domain/usecase/addOwner.dart';
@@ -7,6 +8,7 @@ import 'package:wanderer/domain/usecase/getAdmin.dart';
 import 'package:wanderer/domain/usecase/getAdminCampervan.dart';
 import 'package:wanderer/domain/usecase/getAdminUser.dart';
 import 'package:wanderer/domain/usecase/getAllTypes.dart';
+import 'package:wanderer/domain/usecase/updateAdmin.dart';
 
 import '../../domain/entities/tipe.dart';
 import '../../domain/entities/user.dart';
@@ -19,9 +21,10 @@ class AdminDataCubit extends Cubit<AdminDataState> {
   GetAdminCampervan getAdminCampervan;
   AddOwner addOwnerUseCase;
   GetUserAdmin getUserAdminUsecase;
+  AdminUpdate adminUpdate;
 
   AdminDataCubit(this.getAdmin, this.getAllTypes, this.getAdminCampervan,
-      this.addOwnerUseCase, this.getUserAdminUsecase)
+      this.addOwnerUseCase, this.getUserAdminUsecase, this.adminUpdate)
       : super(AdminDataInitial());
 
   Future<void> getAdminData(String markerId) async {
@@ -60,5 +63,9 @@ class AdminDataCubit extends Cubit<AdminDataState> {
   Future<Users> getAdminUser(String adminId) async {
     final result = getUserAdminUsecase.execute(adminId);
     return result;
+  }
+
+  Future<void> updateData(AdminModel admin) async {
+    await adminUpdate.execute(admin);
   }
 }

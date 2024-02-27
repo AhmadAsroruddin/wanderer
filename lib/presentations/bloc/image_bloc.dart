@@ -28,7 +28,7 @@ class ImageCubit extends Cubit<ImageState> {
     List<String> links = [];
 
     result.fold((l) => l, (r) => links = r);
-
+    emit(ImageSuccess(links: links));
     return links;
   }
 

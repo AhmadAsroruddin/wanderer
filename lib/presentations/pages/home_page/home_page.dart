@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wanderer/presentations/bloc/markers_bloc.dart';
 import 'package:wanderer/presentations/pages/home_page/search_bar.dart';
 import 'package:wanderer/presentations/pages/add_marker/marker_category.dart';
+import 'package:wanderer/presentations/shared/alertDialog.dart';
 import 'package:wanderer/presentations/shared/map.dart';
 import 'package:wanderer/presentations/shared/theme.dart';
 
@@ -55,10 +57,16 @@ class _HomePageState extends State<HomePage> {
                       children: <Widget>[
                         FloatingActionButton(
                           onPressed: () async {
-                            Navigator.of(context)
-                                .pushNamed(MarkerCategoryPage.routeName);
+                            if (FirebaseAuth.instance.currentUser != null) {
+                              Navigator.of(context)
+                                  .pushNamed(MarkerCategoryPage.routeName);
+                            } else {
+                              DialogUtils.alertDialog(
+                                  context, "Errorr", "Please Login First");
+                            }
                           },
                           heroTag: "zoom-in",
+                          backgroundColor: Colors.transparent,
                           child: Image.asset(
                             "assets/img/add.png",
                           ),

@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:wanderer/presentations/pages/auth/login_page.dart';
 import 'package:wanderer/presentations/shared/theme.dart';
@@ -18,29 +17,8 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
   bool isEmailVerified = false;
   Timer? timer;
 
-  void checkEmailVerification() async {
-    await FirebaseAuth.instance.currentUser?.reload();
-    print(isEmailVerified);
-    setState(() {
-      isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
-    });
-
-    if (isEmailVerified) {
-      Navigator.of(context).pushNamed(LoginPage.routeName);
-    }
-
-    timer?.cancel();
-  }
-
-  // @override
-  // void dispose() {
-  //   super.dispose();
-  //   timer?.cancel();
-  // }
-
   @override
   Widget build(BuildContext context) {
-    Timer.periodic(const Duration(seconds: 3), (_) => checkEmailVerification());
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -73,7 +51,11 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
               ),
               Container(
                 margin: EdgeInsets.symmetric(vertical: deviceHeight * 0.08),
-                child: const CircularProgressIndicator(),
+                child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(LoginPage.routeName);
+                    },
+                    child: const Text("Go To Login")),
               ),
               const Text(
                   "Did not receive the email? Check your spam filter or"),

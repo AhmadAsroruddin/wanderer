@@ -19,12 +19,11 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
 
-    TextEditingController email = TextEditingController();
-    TextEditingController password = TextEditingController();
+    final TextEditingController email = TextEditingController();
+    final TextEditingController password = TextEditingController();
 
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
-        print(state);
         if (state is AuthLogin) {
           Navigator.of(context).pushReplacementNamed(TabScreen.routeName);
         } else if (state is AuthError) {
@@ -50,22 +49,49 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                   CustomTextField(
-                    controller: email,
-                    screenSize: screenSize,
-                    hintText: "Enter your email address",
-                    icon: const Icon(Icons.email),
                     label: "Email Address",
+                    child: TextField(
+                      controller: email,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        hintText: "Enter your email address",
+                        hintStyle: SafeGoogleFont(
+                          'Inter',
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          height: 1.2125,
+                          color: const Color(0xff636363),
+                        ),
+                        prefixIcon: const Icon(Icons.email),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                    ),
                   ),
                   SizedBox(
                     height: screenSize.height * 0.012,
                   ),
                   CustomTextField(
-                    controller: password,
-                    screenSize: screenSize,
-                    hintText: "Enter your password",
-                    icon: const Icon(Icons.lock),
                     label: "Password",
-                    obscureText: true,
+                    child: TextFormField(
+                      controller: password,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        hintText: "Enter Your Password",
+                        hintStyle: SafeGoogleFont(
+                          'Inter',
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          height: 1.2125,
+                          color: const Color(0xff636363),
+                        ),
+                        prefixIcon: const Icon(Icons.lock),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                    ),
                   ),
                   SizedBox(
                     height: screenSize.height * 0.006,

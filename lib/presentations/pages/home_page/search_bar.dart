@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:wanderer/presentations/bloc/markers_bloc.dart';
-import 'package:wanderer/presentations/bloc/notification_bloc.dart';
 import 'package:wanderer/presentations/shared/search_page.dart';
 
 import '../../bloc/admin_data_bloc.dart';
@@ -9,7 +9,7 @@ import '../../bloc/article_bloc.dart';
 import '../../shared/theme.dart';
 
 // ignore: must_be_immutable
-class SearchBarHome extends StatelessWidget {
+class SearchBarHome extends StatefulWidget {
   SearchBarHome({
     this.isCamper = false,
     this.isHomePage = false,
@@ -23,19 +23,30 @@ class SearchBarHome extends StatelessWidget {
   bool isSearchPage;
   bool isArticle;
 
+  @override
+  State<SearchBarHome> createState() => _SearchBarHomeState();
+}
+
+class _SearchBarHomeState extends State<SearchBarHome> {
   TextEditingController value = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(10),
+      padding: EdgeInsets.all(deviceWidth * 0.02),
       margin: EdgeInsets.symmetric(
-        horizontal: isCamper ? deviceWidth * 0.00 : deviceWidth * 0.04,
+        horizontal: widget.isCamper ? deviceWidth * 0.00 : deviceWidth * 0.04,
       ),
       width: deviceWidth * 0.97,
-      height: deviceHeight * 0.055,
+      height: deviceHeight * 0.06,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          border: isCamper ? Border.all(width: 0.5) : null,
+          border: widget.isCamper ? Border.all(width: 0.5) : null,
           color: Colors.white, // Ubah ke warna yang Anda inginkan
           boxShadow: const [
             BoxShadow(
@@ -46,7 +57,7 @@ class SearchBarHome extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          isSearchPage == true
+          widget.isSearchPage == true
               ? Container()
               : Image.asset(
                   "assets/img/list.png",
@@ -56,52 +67,55 @@ class SearchBarHome extends StatelessWidget {
             width: deviceWidth * 0.01,
           ),
           Expanded(
-            child: TextFormField(
-              controller: value,
-              onTap: () {
-                if (isHomePage == true) {
-                  Navigator.of(context).pushNamed(SearchPage.routeName);
-                }
-              },
-              decoration: InputDecoration(
-                prefixIcon: GestureDetector(
-                  onTap: () {
-                    if (isHomePage == true) {
-                      context.read<MarkersCubit>().searchMarker(value.text);
-                    } else if (isCamper == true) {
-                      context
-                          .read<AdminDataCubit>()
-                          .getAllAdminCampervan(true, value.text);
-                    } else if (isSearchPage == true) {
-                      context.read<MarkersCubit>().searchMarker(value.text);
-                    } else if (isArticle == true) {
-                      print("object");
-                      context.read<ArticleCubit>().getArticle(true, value.text);
-                    }
-                  },
-                  child: Image.asset(
-                    "assets/img/loopSearch.png",
-                    scale: 2,
+            child: Center(
+              child: TextFormField(
+                controller: value,
+                onTap: () {
+                  if (widget.isHomePage == true) {
+                    Navigator.of(context).pushNamed(SearchPage.routeName);
+                  }
+                },
+                decoration: InputDecoration(
+                  prefixIcon: GestureDetector(
+                    onTap: () {
+                      if (widget.isHomePage == true) {
+                        context.read<MarkersCubit>().searchMarker(value.text);
+                      } else if (widget.isCamper == true) {
+                        context
+                            .read<AdminDataCubit>()
+                            .getAllAdminCampervan(true, value.text);
+                      } else if (widget.isSearchPage == true) {
+                        context.read<MarkersCubit>().searchMarker(value.text);
+                      } else if (widget.isArticle == true) {
+                        context
+                            .read<ArticleCubit>()
+                            .getArticle(true, value.text);
+                      }
+                    },
+                    child: Image.asset(
+                      "assets/img/loopSearch.png",
+                      scale: 2,
+                    ),
                   ),
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5),
-                  borderSide: BorderSide(
-                    color: greyColor,
-                    width: 2,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
                   ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                    borderSide: BorderSide(
+                      color: greyColor,
+                      width: 2,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                    borderSide: BorderSide(color: greyColor),
+                  ),
+                  errorBorder: InputBorder.none,
+                  focusedErrorBorder: InputBorder.none,
+                  prefixIconConstraints:
+                      const BoxConstraints(minWidth: 40, minHeight: 40),
                 ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5),
-                  borderSide: BorderSide(color: greyColor),
-                ),
-                errorBorder: InputBorder.none,
-                focusedErrorBorder: InputBorder.none,
-                prefixIconConstraints:
-                    const BoxConstraints(minWidth: 40, minHeight: 40),
               ),
             ),
           ),
@@ -109,60 +123,16 @@ class SearchBarHome extends StatelessWidget {
             width: deviceWidth * 0.03,
           ),
           GestureDetector(
-            onTap: () async {
-              context.read<NotificationCubit>().sendNotification(
-                  "fnbSrv7nTOqON76JrSbPsX:APA91bEYnaRUcJyTCyZ5z5U6yqROsArsGit0VsnDtGa9zQ60cfILnAcciXlVeUsMljLRQe3j2GmyzoCYqsrj8x2GBg2BrjWjC2k7t5EZRat5QTsb9ADXh8XtB-VkYCLF5Z0c0869-gJG",
-                  "HALO ANDA DAPAT PESANAN",
-                  "PESANAN BERUPA AK47 DAN BOM UNTUK MEMBUMI HANGUSKAN YANG ADA DI DUNIA INI");
-            },
+            onTap: () async {},
             child: Image.asset(
-              isCamper ? "assets/img/marker.png" : "assets/img/filter.png",
+              widget.isCamper
+                  ? "assets/img/marker.png"
+                  : "assets/img/filter.png",
               scale: 1,
             ),
           ),
         ],
       ),
-    );
-  }
-
-  void _showHalfWidthPopup(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Popup Setengah Lebar'),
-          content: SizedBox(
-            width: deviceWidth,
-            height: deviceHeight,
-            // Setengah lebar layar
-            child: const Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ListTile(
-                  leading: Icon(Icons.home),
-                  title: Text('Menu 1'),
-                ),
-                ListTile(
-                  leading: Icon(Icons.search),
-                  title: Text('Menu 2'),
-                ),
-                ListTile(
-                  leading: Icon(Icons.settings),
-                  title: Text('Menu 3'),
-                ),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Tutup'),
-            ),
-          ],
-        );
-      },
     );
   }
 }

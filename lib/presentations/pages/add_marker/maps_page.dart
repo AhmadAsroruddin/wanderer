@@ -154,6 +154,8 @@ class _MapFullPageState extends State<MapFullPage> {
 
     setState(() {
       placemark = place;
+      alamat = address;
+      selectedLatLng = LatLng(locationData.latitude!, locationData.longitude!);
     });
 
     defineMarker(latLng, street!, address);

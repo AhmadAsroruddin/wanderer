@@ -65,3 +65,12 @@ class SearchMarkers extends MarkersState {
   @override
   List<Object> get props => [marker];
 }
+
+class GetUserMarkerSuccess extends MarkersState {
+  final List<MarkerModel> markers;
+
+  const GetUserMarkerSuccess({required this.markers});
+
+  @override
+  List<Object> get props => [markers];
+}

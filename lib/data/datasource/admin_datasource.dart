@@ -14,6 +14,8 @@ abstract class AdminDataSource {
   Future<void> updateAdminId(String adminId, String userId);
   Future<List<Admin>> getCampervanRental(bool onSearch, String key);
   Future<Users> getAdminUser(String adminId);
+  Future<void> updateAdmin(AdminModel admin);
+  Future<void> updateTipe(TipeModel tipe);
 }
 
 class AdminDataSourceImpl implements AdminDataSource {
@@ -56,11 +58,12 @@ class AdminDataSourceImpl implements AdminDataSource {
   @override
   Future<void> addTypeToAdmin(Tipe tipe, String adminId) async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    await firebaseFirestore
+    DocumentReference doc = await firebaseFirestore
         .collection('admin')
         .doc(adminId)
         .collection('type')
         .add(TipeModel(
+                id: tipe.id,
                 name: tipe.name,
                 price: tipe.price,
                 facility: tipe.facility,
@@ -69,6 +72,13 @@ class AdminDataSourceImpl implements AdminDataSource {
                 description: tipe.description,
                 adminId: adminId)
             .toMap());
+    String id = doc.id;
+    await firebaseFirestore
+        .collection('admin')
+        .doc(adminId)
+        .collection("type")
+        .doc(id)
+        .update({'id': id});
   }
 
   @override
@@ -145,5 +155,24 @@ class AdminDataSourceImpl implements AdminDataSource {
         UserModel.fromMap(firstDocument.data() as Map<String, dynamic>);
 
     return userData;
+  }
+
+  @override
+  Future<void> updateAdmin(AdminModel admin) async {
+    await FirebaseFirestore.instance
+        .collection('admin')
+        .doc(admin.id)
+        .update(admin.toMap());
+  }
+
+  @override
+  Future<void> updateTipe(TipeModel tipe) async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    await firebaseFirestore
+        .collection('admin')
+        .doc(tipe.adminId)
+        .collection('type')
+        .doc(tipe.id)
+        .update(tipe.toMap());
   }
 }

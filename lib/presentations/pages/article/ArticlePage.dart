@@ -19,39 +19,45 @@ class _ArticlePageState extends State<ArticlePage> {
     return SafeArea(
       child: BlocBuilder<ArticleCubit, ArticleState>(
         builder: (context, state) {
-          return Scaffold(
-            body: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: deviceHeight * 0.02,
-                      ),
-                      Center(
-                        child: SearchBarHome(
-                          isArticle: true,
+          return RefreshIndicator(
+            onRefresh: () async {
+              await Future.delayed(const Duration(seconds: 2));
+              setState(() {});
+            },
+            child: Scaffold(
+              body: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: deviceHeight * 0.02,
                         ),
-                      )
-                    ],
-                  ),
-                ),
-                if (state is ArticleSuccess)
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: state.data.length,
-                      itemBuilder: (context, index) {
-                        return ArticleComponent(
-                          title: state.data[index].title.toString(),
-                          articleUrl: state.data[index].url,
-                          imgUrl: state.data[index].photoUrl,
-                        );
-                      },
+                        Center(
+                          child: SearchBarHome(
+                            isArticle: true,
+                          ),
+                        )
+                      ],
                     ),
-                  )
-              ],
+                  ),
+                  if (state is ArticleSuccess)
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: state.data.length,
+                        itemBuilder: (context, index) {
+                          return ArticleComponent(
+                            title: state.data[index].title.toString(),
+                            articleUrl: state.data[index].url,
+                            imgUrl: state.data[index].photoUrl,
+                          );
+                        },
+                      ),
+                    )
+                ],
+              ),
             ),
           );
         },

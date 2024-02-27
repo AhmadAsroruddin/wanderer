@@ -10,8 +10,10 @@ import 'package:wanderer/presentations/pages/favorite_page.dart';
 import 'package:wanderer/presentations/pages/manage/admin_page.dart';
 import 'package:wanderer/presentations/pages/tab_screen.dart';
 import 'package:wanderer/presentations/pages/user_order_list_page/user_order_list_page.dart';
+import 'package:wanderer/presentations/pages/your_marker_page.dart';
 
 import '../bloc/auth_bloc.dart';
+import '../shared/CardAccount.dart';
 import '../shared/theme.dart';
 
 class AccountPage extends StatefulWidget {
@@ -122,6 +124,22 @@ class _AccountPageState extends State<AccountPage> {
                                     name: "My Favorite",
                                     image: "love",
                                   ),
+                                ),
+                                const Divider(
+                                  thickness: 2,
+                                ),
+                                GestureDetector(
+                                  onTap: () async {
+                                    Navigator.of(context).pushNamed(
+                                        YourMarkerPage.routeName,
+                                        arguments: state.user);
+                                  },
+                                  child: AccountItem(
+                                    deviceWidth: deviceWidth,
+                                    deviceHeight: deviceHeight,
+                                    name: "Your Marker",
+                                    image: "marker",
+                                  ),
                                 )
                               ],
                             ),
@@ -203,52 +221,6 @@ class _AccountPageState extends State<AccountPage> {
                 );
               }
             },
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class CardAccount extends StatelessWidget {
-  const CardAccount({
-    super.key,
-    required this.deviceWidth,
-    required this.deviceHeight,
-    required this.child,
-    required this.title,
-  });
-
-  final double deviceWidth;
-  final double deviceHeight;
-  final Widget child;
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: deviceWidth * 0.9,
-      child: Card(
-        elevation: 5,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-          side: const BorderSide(
-            width: 0.4,
-            color: Colors.grey,
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(title),
-              SizedBox(
-                height: deviceHeight * 0.005,
-              ),
-              child
-            ],
           ),
         ),
       ),

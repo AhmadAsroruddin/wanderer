@@ -1,11 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:wanderer/domain/entities/admin.dart';
 import 'package:wanderer/domain/entities/tipe.dart';
+import 'package:wanderer/domain/entities/user.dart';
 import 'package:wanderer/presentations/bloc/admin_bloc.dart';
 import 'package:wanderer/presentations/bloc/type_bloc.dart';
+import 'package:wanderer/presentations/bloc/user_bloc.dart';
 import 'package:wanderer/presentations/pages/order_page/order_page.dart';
 import 'package:wanderer/presentations/shared/alertDialog.dart';
 
@@ -42,7 +45,7 @@ class _PaidMarkerPageState extends State<PaidMarkerPage> {
           widget: widget.widget,
           widgetChild: BlocBuilder<TypeCubitData, TypeDataState>(
             builder: (context, state) {
-              if (state is TypeDataSuccess) {
+              if (state is TypeDataSuccessState) {
                 return Column(
                   children: [
                     SizedBox(
@@ -188,31 +191,52 @@ class _PaidMarkerPageState extends State<PaidMarkerPage> {
                                               ),
                                             ),
                                             GestureDetector(
-                                              onTap: () {
-                                                Navigator.of(context).pushNamed(
-                                                  OrderPage.routeName,
-                                                  arguments: [
-                                                    Tipe(
-                                                      name: state
-                                                          .tipe[index].name,
-                                                      price: state
-                                                          .tipe[index].price,
-                                                      facility: state
-                                                          .tipe[index].facility,
-                                                      images: state
-                                                          .tipe[index].images,
-                                                      capacity: state
-                                                          .tipe[index].capacity,
-                                                      description: state
-                                                          .tipe[index]
-                                                          .description,
-                                                      adminId: state
-                                                          .tipe[index].adminId,
-                                                    ),
-                                                    amount,
-                                                    adminName,
-                                                  ],
-                                                );
+                                              onTap: () async {
+                                                User? currUserData =
+                                                    FirebaseAuth
+                                                        .instance.currentUser;
+                                                Users user = await context
+                                                    .read<UserCubit>()
+                                                    .getUserReturn(
+                                                        currUserData!.uid);
+                                                if (user.role ==
+                                                    state.tipe[index].adminId) {
+                                                  DialogUtils.alertDialog(
+                                                      context,
+                                                      "ERROR!!!",
+                                                      "You Can't Order on Your own ");
+                                                } else {
+                                                  Navigator.of(context)
+                                                      .pushNamed(
+                                                    OrderPage.routeName,
+                                                    arguments: [
+                                                      Tipe(
+                                                        id: state
+                                                            .tipe[index].id,
+                                                        name: state
+                                                            .tipe[index].name,
+                                                        price: state
+                                                            .tipe[index].price,
+                                                        facility: state
+                                                            .tipe[index]
+                                                            .facility,
+                                                        images: state
+                                                            .tipe[index].images,
+                                                        capacity: state
+                                                            .tipe[index]
+                                                            .capacity,
+                                                        description: state
+                                                            .tipe[index]
+                                                            .description,
+                                                        adminId: state
+                                                            .tipe[index]
+                                                            .adminId,
+                                                      ),
+                                                      amount,
+                                                      adminName,
+                                                    ],
+                                                  );
+                                                }
                                               },
                                               child: Container(
                                                 width: deviceWidth * 0.25,

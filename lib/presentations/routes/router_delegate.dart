@@ -8,6 +8,7 @@ import 'package:wanderer/presentations/pages/admin_page/addLocation.dart';
 import 'package:wanderer/presentations/pages/admin_page/addPayout.dart';
 import 'package:wanderer/presentations/pages/admin_page/addPhoto_page.dart';
 import 'package:wanderer/presentations/pages/admin_page/addType_page.dart';
+import 'package:wanderer/presentations/pages/admin_page/adminEditPage.dart';
 import 'package:wanderer/presentations/pages/admin_page/chooseType_page.dart';
 import 'package:wanderer/presentations/pages/admin_page/facilities_page.dart';
 import 'package:wanderer/presentations/pages/admin_page/getStarted_page.dart';
@@ -21,6 +22,7 @@ import 'package:wanderer/presentations/pages/auth/login_page.dart';
 import 'package:wanderer/presentations/pages/auth/register_page.dart';
 import 'package:wanderer/presentations/pages/auth/resetConfirmation.dart';
 import 'package:wanderer/presentations/pages/auth/reset_page.dart';
+import 'package:wanderer/presentations/pages/edit_marker.dart';
 import 'package:wanderer/presentations/pages/edit_profile_page.dart';
 import 'package:wanderer/presentations/pages/favorite_page.dart';
 import 'package:wanderer/presentations/pages/getStarted/first_page.dart';
@@ -34,6 +36,7 @@ import 'package:wanderer/presentations/pages/splashScreen.dart';
 import 'package:wanderer/presentations/pages/tab_screen.dart';
 import 'package:wanderer/presentations/pages/add_marker/tambah_marker.dart';
 import 'package:wanderer/presentations/pages/user_order_list_page/user_order_list_page.dart';
+import 'package:wanderer/presentations/pages/your_marker_page.dart';
 import 'package:wanderer/presentations/shared/search_page.dart';
 import 'package:wanderer/presentations/shared/snapWebView.dart';
 import '../../domain/entities/marker.dart';
@@ -78,7 +81,6 @@ class MyRouterDelegate extends RouterDelegate
       () async {
         await routerCubit.checkLoginStatus();
         isFirstTime = routerCubit.state;
-        print(isFirstTime);
         notifyListeners();
       },
     );
@@ -262,6 +264,25 @@ class MyRouterDelegate extends RouterDelegate
         if (settings.name == EmailVerificationPage.routeName) {
           return MaterialPageRoute(
             builder: (context) => const EmailVerificationPage(),
+            settings: settings,
+          );
+        }
+
+        if (settings.name == AdminEditPage.routeName) {
+          return MaterialPageRoute(
+            builder: (context) => const AdminEditPage(),
+            settings: settings,
+          );
+        }
+        if (settings.name == YourMarkerPage.routeName) {
+          return MaterialPageRoute(
+            builder: (context) => const YourMarkerPage(),
+            settings: settings,
+          );
+        }
+        if (settings.name == EditMarkerPage.routeName) {
+          return MaterialPageRoute(
+            builder: (context) => const EditMarkerPage(),
             settings: settings,
           );
         }

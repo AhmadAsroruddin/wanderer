@@ -66,10 +66,10 @@ class ManageTab extends StatelessWidget {
                     isNeedButton: false,
                   ),
                   ActiveOrderTabPage(
-                    adminId: adminId,
-                    isNeedButton: false,
-                    isUser: isUser,
-                  ),
+                      adminId: adminId,
+                      isNeedButton: true,
+                      isUser: isUser,
+                      isThisAdmin: true),
                   DoneOrderPage(
                       adminId: adminId, isUser: isUser, isNeedButton: true)
                 ],

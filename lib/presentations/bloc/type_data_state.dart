@@ -17,9 +17,9 @@ class TypeDataFailed extends TypeDataState {
   List<Object> get props => [error];
 }
 
-class TypeDataSuccess extends TypeDataState {
+class TypeDataSuccessState extends TypeDataState {
   final List<Tipe> tipe;
-  const TypeDataSuccess({required this.tipe});
+  const TypeDataSuccessState({required this.tipe});
 
   @override
   List<Object> get props => [tipe];

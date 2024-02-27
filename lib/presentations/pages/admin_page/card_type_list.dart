@@ -126,6 +126,7 @@ class _ListTypeCardState extends State<ListTypeCard> {
 
                     context.read<TypeCubit>().setType(
                           Tipe(
+                            id: "",
                             name: name.text,
                             price: double.parse(price.text),
                             facility: const [],

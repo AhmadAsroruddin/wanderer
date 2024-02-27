@@ -15,7 +15,7 @@ class MarkerModel extends Equatable {
       required this.socialMedia,
       required this.address,
       required this.harga,
-      this.id = "id"});
+      required this.id});
 
   final String userId;
   final String jenis;

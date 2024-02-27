@@ -4,7 +4,8 @@ import 'package:wanderer/domain/entities/tipe.dart';
 
 class TipeModel extends Equatable {
   const TipeModel(
-      {required this.name,
+      {required this.id,
+      required this.name,
       required this.price,
       required this.facility,
       required this.images,
@@ -12,6 +13,7 @@ class TipeModel extends Equatable {
       required this.description,
       required this.adminId});
 
+  final String id;
   final String name;
   final double price;
   final List<dynamic> facility;
@@ -36,6 +38,7 @@ class TipeModel extends Equatable {
     Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
 
     return TipeModel(
+        id: data['id'],
         name: data['name'],
         price: data['price'],
         facility: data['facility'],
@@ -47,6 +50,7 @@ class TipeModel extends Equatable {
 
   static Tipe fromMap(Map<String, dynamic> data) {
     return Tipe(
+        id: data['id'],
         name: data['name'],
         price: data['price'],
         facility: data['facility'],
@@ -58,6 +62,7 @@ class TipeModel extends Equatable {
 
   Tipe toEntity() {
     return Tipe(
+        id: id,
         name: name,
         price: price,
         facility: facility,
@@ -69,5 +74,5 @@ class TipeModel extends Equatable {
 
   @override
   List<Object> get props =>
-      [name, price, facility, images, capacity, description, adminId];
+      [id, name, price, facility, images, capacity, description, adminId];
 }

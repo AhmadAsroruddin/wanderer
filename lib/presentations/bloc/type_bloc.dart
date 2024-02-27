@@ -1,7 +1,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wanderer/data/models/tipe_model.dart';
 import 'package:wanderer/domain/entities/tipe.dart';
 import 'package:wanderer/domain/usecase/addTypeToAdmin.dart';
+import 'package:wanderer/domain/usecase/updateTipe.dart';
 
 import '../../domain/usecase/getAllTypes.dart';
 
@@ -31,12 +33,17 @@ class TypeCubit extends Cubit<List<Tipe>> {
 
 class TypeCubitData extends Cubit<TypeDataState> {
   GetAllTypes getAllTypes;
+  UpdateTipe updateTipe;
 
-  TypeCubitData(this.getAllTypes) : super(TypeDataLoading());
+  TypeCubitData(this.getAllTypes, this.updateTipe) : super(TypeDataLoading());
 
   Future<void> getType(String adminId) async {
     final result = await getAllTypes.execute(adminId);
 
-    emit(TypeDataSuccess(tipe: result));
+    emit(TypeDataSuccessState(tipe: result));
+  }
+
+  Future<void> update(TipeModel tipe) async {
+    await updateTipe.execute(tipe);
   }
 }

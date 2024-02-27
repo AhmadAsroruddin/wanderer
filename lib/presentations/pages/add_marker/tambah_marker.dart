@@ -47,6 +47,7 @@ class _AddMarkerPageState extends State<AddMarkerPage> {
   List<XFile>? images;
   List<String> imageLinks = [];
   BuildContext? dContext;
+  bool isValid = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,7 +77,7 @@ class _AddMarkerPageState extends State<AddMarkerPage> {
               ),
               CustomTextFormFieldAddMarker(
                 controller: name,
-                hintText: "Name",
+                hintText: "Name (Required)",
               ),
               CustomTextFormFieldAddMarker(
                 hintText: widget.category,
@@ -191,8 +192,11 @@ class _AddMarkerPageState extends State<AddMarkerPage> {
                             itemCount: images!.length,
                             itemBuilder: (context, index) {
                               return Container(
-                                  margin: const EdgeInsets.all(2),
-                                  child: Image.file(File(images![index].path)));
+                                margin: const EdgeInsets.all(2),
+                                child: Image.file(
+                                  File(images![index].path),
+                                ),
+                              );
                             },
                           ),
                         ),
@@ -236,27 +240,32 @@ class _AddMarkerPageState extends State<AddMarkerPage> {
                         red: 255,
                         green: 248,
                         blue: 248,
-                        func: () {
+                        func: () async {
                           final FirebaseAuth firebaseAuth =
                               FirebaseAuth.instance;
                           final String userId = firebaseAuth.currentUser!.uid;
 
-                          context.read<MarkersCubit>().addMarkers(
-                              Markers(
-                                  name: name.text,
-                                  description: description.text,
-                                  image: imageLinks,
-                                  jenis: widget.category,
-                                  latitude: latLngMarker.latitude,
-                                  longitude: latLngMarker.longitude,
-                                  userId: userId,
-                                  contact: contact.text,
-                                  socialMedia: contact.text,
-                                  address: address.text,
-                                  harga: harga.text),
-                              images!,
-                              false,
-                              []);
+                          if (name.text.isNotEmpty) {
+                            context.read<MarkersCubit>().addMarkers(
+                                Markers(
+                                    name: name.text,
+                                    description: description.text,
+                                    image: imageLinks,
+                                    jenis: widget.category,
+                                    latitude: latLngMarker.latitude,
+                                    longitude: latLngMarker.longitude,
+                                    userId: userId,
+                                    contact: contact.text,
+                                    socialMedia: contact.text,
+                                    address: address.text,
+                                    harga: harga.text),
+                                images!,
+                                false,
+                                []);
+                          } else {
+                            DialogUtils.alertDialog(context, "Warning",
+                                "Please Fill all required Form");
+                          }
                         },
                       ),
                       ButtonAddWidget(

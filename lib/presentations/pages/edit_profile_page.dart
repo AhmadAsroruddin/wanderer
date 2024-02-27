@@ -90,65 +90,67 @@ class _EditProfilePageState extends State<EditProfilePage> {
         ],
       ),
       body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            SizedBox(
-              height: deviceHeight * 0.2,
-              child: Stack(
-                children: [
-                  Positioned(
-                    child: Center(
-                      child: images != null
-                          ? CircleAvatar(
-                              backgroundImage: FileImage(File(images!.path)),
-                              radius: 80,
-                            )
-                          : CircleAvatar(
-                              backgroundImage: NetworkImage(users.imageUrl),
-                              radius: 80,
-                            ),
-                    ),
-                  ),
-                  Positioned(
-                    top: deviceHeight * 0.11,
-                    left: deviceWidth * 0.6,
-                    bottom: 0,
-                    child: IconButton(
-                      onPressed: () {
-                        _showHalfWidthPopup(context);
-                      },
-                      icon: Icon(
-                        Icons.add_a_photo,
-                        size: deviceWidth * 0.1,
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              SizedBox(
+                height: deviceHeight * 0.2,
+                child: Stack(
+                  children: [
+                    Positioned(
+                      child: Center(
+                        child: images != null
+                            ? CircleAvatar(
+                                backgroundImage: FileImage(File(images!.path)),
+                                radius: 80,
+                              )
+                            : CircleAvatar(
+                                backgroundImage: NetworkImage(users.imageUrl),
+                                radius: 80,
+                              ),
                       ),
                     ),
-                  )
-                ],
+                    Positioned(
+                      top: deviceHeight * 0.11,
+                      left: deviceWidth * 0.6,
+                      bottom: 0,
+                      child: IconButton(
+                        onPressed: () {
+                          _showHalfWidthPopup(context);
+                        },
+                        icon: Icon(
+                          Icons.add_a_photo,
+                          size: deviceWidth * 0.1,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
-            ),
-            Text(
-              users.username,
-              style: GoogleFonts.roboto().copyWith(
-                fontSize: 20,
-                fontWeight: bold,
+              Text(
+                users.username,
+                style: GoogleFonts.roboto().copyWith(
+                  fontSize: 20,
+                  fontWeight: bold,
+                ),
               ),
-            ),
-            SizedBox(
-              height: deviceHeight * 0.03,
-            ),
-            CustomtextField(
-              controller: name,
-              label: "Name",
-            ),
-            CustomtextField(
-              controller: email,
-              label: "Email",
-            ),
-            CustomtextField(
-              controller: number,
-              label: "Phone Number",
-            )
-          ],
+              SizedBox(
+                height: deviceHeight * 0.03,
+              ),
+              CustomtextField(
+                controller: name,
+                label: "Name",
+              ),
+              CustomtextField(
+                controller: email,
+                label: "Email",
+              ),
+              CustomtextField(
+                controller: number,
+                label: "Phone Number",
+              )
+            ],
+          ),
         ),
       ),
     );

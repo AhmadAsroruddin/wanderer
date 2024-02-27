@@ -8,6 +8,7 @@ import 'package:wanderer/presentations/bloc/order_bloc.dart';
 import 'package:wanderer/presentations/shared/customTextField.dart';
 import 'package:wanderer/presentations/shared/dialogUtilsWithCustomRoute.dart';
 import 'package:wanderer/presentations/shared/theme.dart';
+import 'package:wanderer/presentations/shared/utils.dart';
 
 import '../../bloc/admin_data_bloc.dart';
 import '../../bloc/auth_bloc.dart';
@@ -276,19 +277,46 @@ class _OrderPageState extends State<OrderPage> {
                         child: Column(
                           children: <Widget>[
                             CustomTextField(
-                              screenSize: Size(deviceWidth, deviceHeight),
-                              hintText: "Nama Pemesan",
-                              icon: const Icon(FontAwesomeIcons.user),
                               label: "Nama Pemesan",
-                              controller: nama,
+                              child: TextFormField(
+                                controller: nama,
+                                decoration: InputDecoration(
+                                  hintText: "Nama Pemesan",
+                                  hintStyle: SafeGoogleFont(
+                                    'Inter',
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    height: 1.2125,
+                                    color: const Color(0xff636363),
+                                  ),
+                                  prefixIcon: const Icon(FontAwesomeIcons.user),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                              ),
                             ),
                             SizedBox(height: deviceHeight * 0.02),
                             CustomTextField(
-                              screenSize: Size(deviceWidth, deviceHeight),
-                              hintText: "Nomor Telpon",
-                              icon: const Icon(FontAwesomeIcons.phone),
                               label: "Nomor Telepon",
-                              controller: nomor,
+                              child: TextFormField(
+                                controller: nomor,
+                                decoration: InputDecoration(
+                                  hintText: "Nomor Telepon",
+                                  hintStyle: SafeGoogleFont(
+                                    'Inter',
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    height: 1.2125,
+                                    color: const Color(0xff636363),
+                                  ),
+                                  prefixIcon:
+                                      const Icon(FontAwesomeIcons.phone),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                              ),
                             )
                           ],
                         ),
@@ -337,6 +365,7 @@ class _OrderPageState extends State<OrderPage> {
         ),
       ),
       bottomNavigationBar: Container(
+        height: deviceHeight * 0.12,
         decoration:
             const BoxDecoration(border: Border(top: BorderSide(width: 0.3))),
         child: BottomAppBar(

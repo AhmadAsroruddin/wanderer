@@ -1,4 +1,6 @@
 import 'package:dartz/dartz.dart';
+import 'package:wanderer/data/models/admin_model.dart';
+import 'package:wanderer/data/models/tipe_model.dart';
 import 'package:wanderer/domain/entities/admin.dart';
 import 'package:wanderer/domain/entities/tipe.dart';
 
@@ -13,4 +15,6 @@ abstract class AdminRepos {
   Future<Either<String, List<Admin>>> getCampervanRental(
       bool onSearch, String key);
   Future<Users> adminUser(String adminId);
+  Future<void> updateAdmin(AdminModel admin);
+  Future<void> updateType(TipeModel tipe);
 }

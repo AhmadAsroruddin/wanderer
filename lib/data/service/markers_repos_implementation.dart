@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+
 import 'package:image_picker/image_picker.dart';
 import 'package:wanderer/data/datasource/markers_datasource.dart';
 import 'package:wanderer/data/models/marker_model.dart';
@@ -76,6 +77,35 @@ class MarkersReposImpl implements MarkerRepos {
     } catch (e) {
       print(e);
       return [];
+    }
+  }
+
+  @override
+  Future<List<MarkerModel>> getUserMarker(List<dynamic> markersId) async {
+    try {
+      final result = await markersDataSource.getUserMarkers(markersId);
+      return result;
+    } catch (e) {
+      print(e);
+      return [];
+    }
+  }
+
+  @override
+  Future<void> updateMarker(MarkerModel marker) async {
+    try {
+      await markersDataSource.updateMarker(marker);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  @override
+  Future<void> deleteMarker(String markerId) async {
+    try {
+      await markersDataSource.deleteMarker(markerId);
+    } catch (e) {
+      rethrow;
     }
   }
 }

@@ -17,6 +17,9 @@ abstract class MarkersDataSource {
   Future<void> updateUserId(String id, String markerId);
   Future<Markers> getMarker(String markerId);
   Future<List<Markers>> searchMarker(String key);
+  Future<List<MarkerModel>> getUserMarkers(List<dynamic> markersId);
+  Future<void> updateMarker(MarkerModel marker);
+  Future<void> deleteMarker(String markerId);
 }
 
 class MarkersDatasourceImpl implements MarkersDataSource {
@@ -140,5 +143,32 @@ class MarkersDatasourceImpl implements MarkersDataSource {
         .map<Markers>((e) => MarkerModel.fromDocumentSnapshot(e).toEntity())
         .toList();
     return marker;
+  }
+
+  @override
+  Future<List<MarkerModel>> getUserMarkers(List<dynamic> markersId) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    CollectionReference markersRef = firestore.collection("markers");
+
+    QuerySnapshot querySnapshot =
+        await markersRef.where('id', whereIn: markersId).get();
+
+    List<MarkerModel> markers = querySnapshot.docs
+        .map((e) => MarkerModel.fromDocumentSnapshot(e))
+        .toList();
+    return markers;
+  }
+
+  @override
+  Future<void> updateMarker(MarkerModel marker) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    await firestore.collection('markers').doc(marker.id).update(marker.toMap());
+  }
+
+  @override
+  Future<void> deleteMarker(String markerId) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    await firestore.collection('markers').doc(markerId).delete();
   }
 }

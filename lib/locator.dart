@@ -40,6 +40,7 @@ import 'package:wanderer/domain/repositories/owner_reposiroty.dart';
 import 'package:wanderer/domain/repositories/payment_repository.dart';
 import 'package:wanderer/domain/repositories/payout_repository.dart';
 import 'package:wanderer/domain/repositories/user_repository.dart';
+import 'package:wanderer/domain/usecase/UpdateMarker.dart';
 import 'package:wanderer/domain/usecase/addMarker.dart';
 import 'package:wanderer/domain/usecase/addMarkerAdmin.dart';
 import 'package:wanderer/domain/usecase/addOwner.dart';
@@ -50,6 +51,8 @@ import 'package:wanderer/domain/usecase/approve.dart';
 import 'package:wanderer/domain/usecase/createAccount.dart';
 import 'package:wanderer/domain/usecase/createBeneficaries.dart';
 import 'package:wanderer/domain/usecase/createPayout.dart';
+import 'package:wanderer/domain/usecase/deleteMarker.dart';
+import 'package:wanderer/domain/usecase/firstTimeDone.dart';
 import 'package:wanderer/domain/usecase/getAdmin.dart';
 import 'package:wanderer/domain/usecase/getAdminCampervan.dart';
 import 'package:wanderer/domain/usecase/getAdminUser.dart';
@@ -64,6 +67,7 @@ import 'package:wanderer/domain/usecase/getOrderDataByStatus.dart';
 import 'package:wanderer/domain/usecase/getPaymentUrl.dart';
 import 'package:wanderer/domain/usecase/getTransactionResponse.dart';
 import 'package:wanderer/domain/usecase/getUserData.dart';
+import 'package:wanderer/domain/usecase/getUserMarker.dart';
 import 'package:wanderer/domain/usecase/isFavorite.dart';
 import 'package:wanderer/domain/usecase/isFirstTime.dart';
 import 'package:wanderer/domain/usecase/login.dart';
@@ -77,7 +81,9 @@ import 'package:wanderer/domain/usecase/searcMarker.dart';
 import 'package:wanderer/domain/usecase/sendNotification.dart';
 import 'package:wanderer/domain/usecase/setUserRoleToAdmin.dart';
 import 'package:wanderer/domain/usecase/signInWithGoogle.dart';
+import 'package:wanderer/domain/usecase/updateAdmin.dart';
 import 'package:wanderer/domain/usecase/updateStatusOrder.dart';
+import 'package:wanderer/domain/usecase/updateTipe.dart';
 import 'package:wanderer/domain/usecase/updateUser.dart';
 import 'package:wanderer/domain/usecase/updateUserIdMarker.dart';
 import 'package:wanderer/domain/usecase/uploadImages.dart';
@@ -112,6 +118,7 @@ void init() {
   locator.registerLazySingleton(() => SignInWithGoogle(authRepos: locator()));
   locator.registerLazySingleton(() => ResetPassword(authRepos: locator()));
   locator.registerLazySingleton(() => IsFirstTime(authRepos: locator()));
+  locator.registerLazySingleton(() => FirstTimeDone(authRepos: locator()));
   locator.registerLazySingleton(() => AddMarkers(markerRepos: locator()));
   locator.registerLazySingleton(() => UploadImages(imageRepos: locator()));
   locator.registerLazySingleton(() => GetAllMarkers(markerRepos: locator()));
@@ -156,6 +163,12 @@ void init() {
   locator.registerLazySingleton(
       () => SendNotification(notificationRepos: locator()));
   locator.registerLazySingleton(() => GetUserAdmin(adminRepos: locator()));
+  locator.registerLazySingleton(() => AdminUpdate(adminRepo: locator()));
+  locator.registerLazySingleton(() => UpdateTipe(adminRepos: locator()));
+  locator.registerLazySingleton(() => GetUserMarker(markerRepos: locator()));
+  locator.registerLazySingleton(() => UpdateMarker(markerRepos: locator()));
+  locator.registerLazySingleton(() => DeleteMarker(markerRepos: locator()));
+
   //REPOSITORY
   locator.registerLazySingleton<AuthRepos>(() => AuthReposImpl(
       dataSource: locator(), firebaseFirestore: FirebaseFirestore.instance));
@@ -194,7 +207,7 @@ void init() {
         firstTimeDone: locator(),
       ));
   locator.registerFactory(() => LocationDataCubit(locator()));
-  locator.registerFactory(() => MarkersCubit(
+  locator.registerFactory(() => MarkersCubit(locator(), locator(), locator(),
       locator(), locator(), locator(), locator(), locator(), locator()));
   locator.registerFactory(() => CommentCubit(locator(), locator()));
   locator.registerFactory(
@@ -202,9 +215,9 @@ void init() {
   locator.registerFactory(() => ImageCubit(locator(), locator()));
   locator.registerFactory(() => AdminCubit(locator(), locator(), locator()));
   locator.registerFactory(() => TypeCubit(locator()));
-  locator.registerFactory(() =>
-      AdminDataCubit(locator(), locator(), locator(), locator(), locator()));
-  locator.registerFactory(() => TypeCubitData(locator()));
+  locator.registerFactory(() => AdminDataCubit(
+      locator(), locator(), locator(), locator(), locator(), locator()));
+  locator.registerFactory(() => TypeCubitData(locator(), locator()));
   locator.registerFactory(() => UserCubit(locator(), locator(), locator()));
   locator.registerFactory(() => OrderCubit(locator(), locator(), locator()));
   locator.registerFactory(() => PaymentCubit(locator(), locator()));

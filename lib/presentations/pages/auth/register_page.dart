@@ -136,11 +136,17 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      await context.read<AuthCubit>().createAccount(
-                          username.text,
-                          emailAddress.text,
-                          password.text,
-                          phoneNumber.text);
+                      if (username.text.isNotEmpty &&
+                          phoneNumber.text.isNotEmpty) {
+                        await context.read<AuthCubit>().createAccount(
+                            username.text,
+                            emailAddress.text,
+                            password.text,
+                            phoneNumber.text);
+                      } else {
+                        DialogUtils.alertDialog(context, "Warning",
+                            "Please Fill username and phone number");
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(

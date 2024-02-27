@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:wanderer/data/datasource/admin_datasource.dart';
+import 'package:wanderer/data/models/admin_model.dart';
+import 'package:wanderer/data/models/tipe_model.dart';
 import 'package:wanderer/domain/entities/admin.dart';
 import 'package:wanderer/domain/entities/tipe.dart';
 import 'package:wanderer/domain/entities/user.dart';
@@ -70,6 +72,24 @@ class AdminReposImpl implements AdminRepos {
       print("USER ADMIN ERROR : $e");
       Map<String, dynamic> temp = {'asd': 'asd'};
       return temp as Users;
+    }
+  }
+
+  @override
+  Future<void> updateAdmin(AdminModel admin) async {
+    try {
+      await adminDataSource.updateAdmin(admin);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  @override
+  Future<void> updateType(TipeModel tipe) async {
+    try {
+      await adminDataSource.updateTipe(tipe);
+    } catch (e) {
+      print(e);
     }
   }
 }
