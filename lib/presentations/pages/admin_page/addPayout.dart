@@ -5,6 +5,7 @@ import 'package:wanderer/presentations/bloc/admin_bloc.dart';
 import 'package:wanderer/presentations/bloc/payout_bloc.dart';
 import 'package:wanderer/presentations/pages/admin_page/location_details_page.dart';
 import 'package:wanderer/presentations/pages/admin_page/step2_page.dart';
+import 'package:wanderer/presentations/shared/alertDialog.dart';
 import 'package:wanderer/presentations/shared/customButton.dart';
 import 'package:wanderer/presentations/shared/theme.dart';
 
@@ -67,18 +68,27 @@ class AddPayoutPage extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    final bankAccount = BankAccount(
-                        name: name.text,
-                        account: number.text,
-                        bank: bankName.text,
-                        aliasName: aliasName.text,
-                        email: email.text);
-                    context.read<AdminCubit>().setBank(bankAccount);
-                    await context
-                        .read<PayoutCubit>()
-                        .createBeneficaries(bankAccount);
-                    Navigator.of(context)
-                        .pushReplacementNamed(Step2Page.routeName);
+                    if (name.text.isNotEmpty &&
+                        number.text.isNotEmpty &&
+                        bankName.text.isNotEmpty &&
+                        aliasName.text.isNotEmpty &&
+                        email.text.isNotEmpty) {
+                      final bankAccount = BankAccount(
+                          name: name.text,
+                          account: number.text,
+                          bank: bankName.text,
+                          aliasName: aliasName.text,
+                          email: email.text);
+                      context.read<AdminCubit>().setBank(bankAccount);
+                      await context
+                          .read<PayoutCubit>()
+                          .createBeneficaries(bankAccount);
+                      Navigator.of(context)
+                          .pushReplacementNamed(Step2Page.routeName);
+                    } else {
+                      DialogUtils.alertDialog(
+                          context, "Warning", "Please Fill up all form above");
+                    }
                   },
                   child: const CustomButton(name: "Next"),
                 )

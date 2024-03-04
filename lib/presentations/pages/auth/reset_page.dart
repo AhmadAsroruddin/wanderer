@@ -9,9 +9,10 @@ import 'package:wanderer/presentations/shared/utils.dart';
 import '../../bloc/auth_bloc.dart';
 
 class ResetPage extends StatelessWidget {
-  const ResetPage({super.key});
+  ResetPage({super.key});
 
   static const routeName = "./resetPage";
+  final TextEditingController email = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -81,6 +82,7 @@ class ResetPage extends StatelessWidget {
                       height: deviceHeight * 0.06,
                       width: double.infinity,
                       child: TextFormField(
+                        controller: email,
                         decoration: InputDecoration(
                           hintText: "Enter Your Email Address",
                           hintStyle: SafeGoogleFont(
@@ -104,7 +106,7 @@ class ResetPage extends StatelessWidget {
                       onTap: () async {
                         await context
                             .read<AuthCubit>()
-                            .resetPassword("asroruddinahmad09@gmail.com");
+                            .resetPassword(email.text);
                       },
                       child: const CustomButton(
                         name: "Send Instructions",

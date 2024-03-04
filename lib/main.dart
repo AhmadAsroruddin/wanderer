@@ -155,7 +155,7 @@ class _MyAppState extends State<MyApp> {
           backButtonDispatcher: RootBackButtonDispatcher(),
         ),
         routes: {
-          ResetPage.routeName: (context) => const ResetPage(),
+          ResetPage.routeName: (context) => ResetPage(),
         },
       ),
     );

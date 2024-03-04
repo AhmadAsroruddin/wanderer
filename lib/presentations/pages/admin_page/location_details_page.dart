@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:wanderer/presentations/bloc/admin_bloc.dart';
 import 'package:wanderer/presentations/pages/admin_page/addPayout.dart';
+import 'package:wanderer/presentations/shared/alertDialog.dart';
 
 import 'package:wanderer/presentations/shared/customButton.dart';
 import 'package:wanderer/presentations/shared/theme.dart';
@@ -13,7 +14,6 @@ class LocationDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextEditingController name = TextEditingController();
-    TextEditingController rekening = TextEditingController();
     TextEditingController email = TextEditingController();
     TextEditingController time = TextEditingController();
     TextEditingController phoneNumber = TextEditingController();
@@ -67,13 +67,6 @@ class LocationDetailsPage extends StatelessWidget {
                   },
                 ),
                 CustomTextField(
-                  hintText: "Account Number (Required)",
-                  controller: rekening,
-                  onChanged: (data) {
-                    context.read<AdminCubit>().setNoRek(rekening.text);
-                  },
-                ),
-                CustomTextField(
                   hintText: "Email (Required)",
                   controller: email,
                   onChanged: (data) {
@@ -96,7 +89,7 @@ class LocationDetailsPage extends StatelessWidget {
                   style: TextStyle(fontSize: deviceWidth * 0.04),
                 ),
                 CustomTextField(
-                  hintText: "Phone Number",
+                  hintText: "Phone Number (required)",
                   controller: phoneNumber,
                   onChanged: (data) {
                     context.read<AdminCubit>().setNoTelp(phoneNumber.text);
@@ -117,7 +110,7 @@ class LocationDetailsPage extends StatelessWidget {
                   },
                 ),
                 Text(
-                  "Descriptions",
+                  "Descriptions (required)",
                   style: TextStyle(fontSize: deviceWidth * 0.04),
                 ),
                 Container(
@@ -141,7 +134,15 @@ class LocationDetailsPage extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.of(context).pushNamed(AddPayoutPage.routeName);
+                    if (name.text.isNotEmpty &&
+                        email.text.isNotEmpty &&
+                        phoneNumber.text.isNotEmpty &&
+                        description.text.isNotEmpty) {
+                      Navigator.of(context).pushNamed(AddPayoutPage.routeName);
+                    } else {
+                      DialogUtils.alertDialog(
+                          context, "Warning", "Please fill all required form");
+                    }
                   },
                   child: const CustomButton(name: "Next"),
                 )

@@ -104,7 +104,7 @@ class MyRouterDelegate extends RouterDelegate
       onGenerateRoute: (settings) {
         if (settings.name == ResetPage.routeName) {
           return MaterialPageRoute(
-            builder: (context) => const ResetPage(),
+            builder: (context) => ResetPage(),
             settings: settings,
           );
         }

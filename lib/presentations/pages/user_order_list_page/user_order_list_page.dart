@@ -80,7 +80,7 @@ class _UserOrderListPageState extends State<UserOrderListPage>
                 ),
               ),
               Container(
-                padding: const EdgeInsets.only(bottom: 10),
+                padding: EdgeInsets.only(bottom: deviceHeight * 0.08),
                 width: deviceWidth,
                 height: deviceHeight * 0.85,
                 child: TabBarView(

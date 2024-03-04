@@ -89,7 +89,8 @@ class _ActiveOrderTabPageState extends State<ActiveOrderTabPage> {
                       itemCount: state.list.length,
                       itemBuilder: (context, index) {
                         OrderData orderData = state.list[index];
-                        bool isgestureEnabled = false;
+
+                        bool adminEnable = false;
                         // String input
                         String inputDate = orderData.firstDate;
 
@@ -107,25 +108,26 @@ class _ActiveOrderTabPageState extends State<ActiveOrderTabPage> {
                         int currentMonth = currentDate.month;
 
                         // Bandingkan tanggal dan bulan target dengan tanggal dan bulan hari ini
-                        int comparisonResult = targetDate.compareTo(DateTime(
-                            currentDate.year, currentMonth, currentDay + 1));
+                        bool comparisonResult = targetDate.isAfter(DateTime(
+                            currentDate.year, currentMonth, currentDay - 1));
 
-                        if (comparisonResult < 0) {
-                          isgestureEnabled = true;
-                        } else if (comparisonResult > 0) {
-                          isgestureEnabled = false;
+                        if (comparisonResult == false &&
+                            targetDate.isAtSameMomentAs(DateTime(
+                                    currentDate.year,
+                                    currentMonth,
+                                    currentDay + 1)) ==
+                                false) {
+                          adminEnable = true;
                         } else {
-                          isgestureEnabled = true;
+                          adminEnable = false;
                         }
-
                         return CardManage(
                           orderData: orderData,
                           isNeedButton: widget.isNeedButton,
                           widgetButton: Column(
                             children: [
-                              isgestureEnabled == false
-                                  ? Container()
-                                  : GestureDetector(
+                              adminEnable == true && widget.isUser == false
+                                  ? GestureDetector(
                                       onTap: () async {
                                         await context
                                             .read<OrderCubit>()
@@ -170,8 +172,63 @@ class _ActiveOrderTabPageState extends State<ActiveOrderTabPage> {
                                                 "Telah berhasil check in, silahkan buka email anda untuk  mendapatkan invoice");
                                         setState(() {});
                                       },
-                                      child:
-                                          const CustomButton(name: "Check-in")),
+                                      child: const CustomButton(
+                                        name: "Check-in",
+                                      ),
+                                    )
+                                  : Container(),
+                              widget.isThisAdmin == false
+                                  ? GestureDetector(
+                                      onTap: () async {
+                                        await context
+                                            .read<OrderCubit>()
+                                            .updateStatus(
+                                                state.list[index].id,
+                                                state
+                                                    .list[index].orderedPlaceId,
+                                                "done");
+
+                                        final Admin admin = await context
+                                            .read<AdminDataCubit>()
+                                            .getAdminDataReturn(state
+                                                .list[index].orderedPlaceId);
+
+                                        final BankAccount bankAccount =
+                                            BankAccount(
+                                                name: admin.nameRek,
+                                                account: admin.noRek,
+                                                bank: admin.bankRek,
+                                                aliasName: admin.aliasNameRek,
+                                                email: admin.emailRek);
+
+                                        final payoutId = await context
+                                            .read<PayoutCubit>()
+                                            .createPayoutBloc(
+                                                bankAccount,
+                                                (orderData.price - 10000)
+                                                    .toString(),
+                                                "Payout dari ${orderData.guestName}");
+
+                                        context
+                                            .read<PayoutCubit>()
+                                            .approvePayout(payoutId);
+                                        Users userAdmin = await context
+                                            .read<AdminDataCubit>()
+                                            .getAdminUser(admin.id);
+
+                                        await context
+                                            .read<NotificationCubit>()
+                                            .sendNotification(
+                                                userAdmin.token,
+                                                "Check-in Berhasil",
+                                                "Telah berhasil check in, silahkan buka email anda untuk  mendapatkan invoice");
+                                        setState(() {});
+                                      },
+                                      child: const CustomButton(
+                                        name: "Check-in",
+                                      ),
+                                    )
+                                  : Container(),
                               SizedBox(
                                 height: deviceHeight * 0.01,
                               ),

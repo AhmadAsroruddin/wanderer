@@ -48,7 +48,6 @@ class ManageTab extends StatelessWidget {
               ),
             ),
             Container(
-              padding: const EdgeInsets.only(bottom: 10),
               width: deviceWidth,
               height: isUser == true ? deviceHeight * 0.86 : deviceHeight * 0.5,
               child: TabBarView(

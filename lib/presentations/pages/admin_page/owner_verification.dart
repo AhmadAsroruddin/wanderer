@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:wanderer/domain/entities/owner.dart';
 
 import 'package:wanderer/presentations/pages/tab_screen.dart';
+import 'package:wanderer/presentations/shared/alertDialog.dart';
 import 'package:wanderer/presentations/shared/customButton.dart';
 import 'package:wanderer/presentations/shared/theme.dart';
 
@@ -187,16 +188,24 @@ class _OwnerVerificationState extends State<OwnerVerification> {
                     ),
                     GestureDetector(
                       onTap: () async {
-                        Owner owner = Owner(
-                            name: name.text,
-                            nik: nik.text,
-                            photoOnlyUrl: ktp,
-                            photoWithBodyUrl: ktpandbody);
-                        print(adminId);
-                        await context
-                            .read<AdminDataCubit>()
-                            .addOwner(owner, adminId);
-                        Navigator.of(context).pushNamed(TabScreen.routeName);
+                        if (name.text.isNotEmpty &&
+                            nik.text.isNotEmpty &&
+                            ktp.isNotEmpty &&
+                            ktpandbody.isNotEmpty) {
+                          Owner owner = Owner(
+                              name: name.text,
+                              nik: nik.text,
+                              photoOnlyUrl: ktp,
+                              photoWithBodyUrl: ktpandbody);
+
+                          await context
+                              .read<AdminDataCubit>()
+                              .addOwner(owner, adminId);
+                          Navigator.of(context).pushNamed(TabScreen.routeName);
+                        } else {
+                          DialogUtils.alertDialog(context, "Warning",
+                              "Please Fill Up All Form above");
+                        }
                       },
                       child: const CustomButton(
                         name: "Finish",

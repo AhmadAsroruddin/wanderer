@@ -90,9 +90,9 @@ class _OrderPageState extends State<OrderPage> {
 
     if (picked != null) {
       int numberOfDays = picked.end.difference(picked.start).inDays;
-      hargaAkhir = ((price * rooms) * numberOfDays);
+      hargaAkhir = (((price * rooms) * numberOfDays));
       setState(() {
-        harga = hargaAkhir;
+        harga = hargaAkhir + 10000;
         days = numberOfDays;
         selectedDate = picked;
       });
@@ -109,7 +109,7 @@ class _OrderPageState extends State<OrderPage> {
 
     if (harga == 0) {
       setState(() {
-        harga = ((tipe.price * amount));
+        harga = ((tipe.price + 10000 * amount));
       });
     }
     return Scaffold(

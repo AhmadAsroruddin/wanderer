@@ -116,7 +116,8 @@ class _ListTypeCardState extends State<ListTypeCard> {
             BlocBuilder<ImageCubit, ImageState>(
               builder: (context, state) {
                 return ElevatedButton(
-                  style: ElevatedButton.styleFrom(foregroundColor: baseColor),
+                  style:
+                      ElevatedButton.styleFrom(foregroundColor: Colors.black),
                   onPressed: () async {
                     List<String> imageLinks = await context
                         .read<ImageCubit>()

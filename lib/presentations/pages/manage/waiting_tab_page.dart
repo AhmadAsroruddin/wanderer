@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:wanderer/presentations/bloc/order_bloc.dart';
 import 'package:wanderer/presentations/bloc/user_bloc.dart';
 import 'package:wanderer/presentations/shared/cardManage.dart';
@@ -47,59 +48,83 @@ class _WaitingTabPageState extends State<WaitingTabPage> {
             child: ListView.builder(
               itemCount: state.list.length,
               itemBuilder: (context, index) {
-                return CardManage(
-                  orderData: state.list[index],
-                  isNeedButton: widget.isNeddButton,
-                  widgetButton: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      SizedBox(
-                        width: deviceWidth * 0.3,
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            await context.read<OrderCubit>().updateStatus(
-                                state.list[index].id,
-                                widget.adminId,
-                                "refused");
-                            Users userData = await context
-                                .read<UserCubit>()
-                                .getUserReturn(state.list[index].accountId);
-                            await context
-                                .read<NotificationCubit>()
-                                .sendNotification(
-                                    userData.token,
-                                    "PESANAN DITOLAK",
-                                    "Pesanan anda telah ditolak oleh ${widget.adminId}");
-                            setState(() {});
-                          },
-                          child: const Text("Tolak"),
+                String inputDate = state.list[index].firstDate;
+
+                // Mendefinisikan formatter untuk mengurai string input
+                DateFormat inputFormatter =
+                    DateFormat.EEEE('id_ID').addPattern(', d MMMM yyyy');
+
+                // Parse string input menjadi objek DateTime
+                DateTime targetDate = inputFormatter.parseLoose(inputDate);
+
+                // Dapatkan tanggal dan bulan hari ini
+                DateTime currentDate = DateTime.now();
+                int currentDay = currentDate.day;
+                int currentMonth = currentDate.month;
+
+                // Bandingkan tanggal dan bulan target dengan tanggal dan bulan hari ini
+
+                DateTime dateNow =
+                    DateTime(currentDate.year, currentMonth, currentDay);
+
+                if (targetDate.isAtSameMomentAs(dateNow) ||
+                    dateNow.isBefore(targetDate)) {
+                  return CardManage(
+                    orderData: state.list[index],
+                    isNeedButton: widget.isNeddButton,
+                    widgetButton: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        SizedBox(
+                          width: deviceWidth * 0.3,
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              await context.read<OrderCubit>().updateStatus(
+                                  state.list[index].id,
+                                  widget.adminId,
+                                  "refused");
+                              Users userData = await context
+                                  .read<UserCubit>()
+                                  .getUserReturn(state.list[index].accountId);
+                              await context
+                                  .read<NotificationCubit>()
+                                  .sendNotification(
+                                      userData.token,
+                                      "PESANAN DITOLAK",
+                                      "Pesanan anda telah ditolak oleh ${widget.adminId}");
+                              setState(() {});
+                            },
+                            child: const Text("Tolak"),
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        width: deviceWidth * 0.3,
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            await context.read<OrderCubit>().updateStatus(
-                                state.list[index].id,
-                                widget.adminId,
-                                "waiting");
-                            Users userData = await context
-                                .read<UserCubit>()
-                                .getUserReturn(state.list[index].accountId);
-                            await context
-                                .read<NotificationCubit>()
-                                .sendNotification(
-                                    userData.token,
-                                    "PESANAN DITERIMA",
-                                    "Pesanan anda telah diterima oleh ${widget.adminId}");
-                            setState(() {});
-                          },
-                          child: const Text("Terima"),
+                        SizedBox(
+                          width: deviceWidth * 0.3,
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              await context.read<OrderCubit>().updateStatus(
+                                  state.list[index].id,
+                                  widget.adminId,
+                                  "waiting");
+                              Users userData = await context
+                                  .read<UserCubit>()
+                                  .getUserReturn(state.list[index].accountId);
+                              await context
+                                  .read<NotificationCubit>()
+                                  .sendNotification(
+                                      userData.token,
+                                      "PESANAN DITERIMA",
+                                      "Pesanan anda telah diterima oleh ${widget.adminId}");
+                              setState(() {});
+                            },
+                            child: const Text("Terima"),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                );
+                      ],
+                    ),
+                  );
+                } else {
+                  return Container();
+                }
               },
             ),
           );
