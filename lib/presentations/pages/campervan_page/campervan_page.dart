@@ -12,6 +12,7 @@ import 'campervan_list.dart';
 
 class CampervanPage extends StatelessWidget {
   const CampervanPage({super.key});
+  static const routeName = '/campervanPage';
 
   @override
   Widget build(BuildContext context) {

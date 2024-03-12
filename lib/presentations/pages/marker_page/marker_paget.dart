@@ -8,6 +8,8 @@ import 'package:wanderer/presentations/bloc/markers_bloc.dart';
 import 'package:wanderer/presentations/pages/account_check_page.dart';
 import 'package:wanderer/presentations/pages/marker_page/marker_tab_page.dart';
 import 'package:wanderer/presentations/shared/theme.dart';
+import 'package:wanderer/presentations/pages/campervan_page/campervan_page.dart';
+import 'package:wanderer/presentations/pages/tab_screen.dart';
 
 class MarkerPage extends StatefulWidget {
   const MarkerPage({super.key});
@@ -49,6 +51,13 @@ class _MarkerPageState extends State<MarkerPage>
               backgroundColor: Colors.white,
               appBar: AppBar(
                 title: const Text("kembali"),
+                leading: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.pushReplacementNamed(context, CampervanPage.routeName);
+                  },
+                  icon: const Icon(Icons.arrow_back),
+                ),
                 actions: [
                   IconButton(
                     onPressed: () async {

@@ -87,7 +87,7 @@ class _TabScreenState extends State<TabScreen> {
           BottomNavigationBarItem(
             icon: Image.asset(
               "assets/img/tab_image/account.png",
-              scale: 1.4,
+              height: 30.5,
             ),
             label: "My Self",
           ),

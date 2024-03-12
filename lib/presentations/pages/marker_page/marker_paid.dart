@@ -85,9 +85,12 @@ class _PaidMarkerPageState extends State<PaidMarkerPage> {
                                     ),
                                     child: Hero(
                                       tag: 'imageHero',
-                                      child: Image.network(
-                                        state.tipe[index].images[0],
-                                        fit: BoxFit.fill,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(20),
+                                        child: Image.network(
+                                          state.tipe[index].images[0],
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -239,19 +242,15 @@ class _PaidMarkerPageState extends State<PaidMarkerPage> {
                                                 }
                                               },
                                               child: Container(
-                                                width: deviceWidth * 0.25,
-                                                height: deviceHeight * 0.05,
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                    15,
-                                                  ),
-                                                  color: baseColor,
-                                                ),
-                                                child: const Center(
-                                                  child: Text("Pesan"),
-                                                ),
-                                              ),
+    width: deviceWidth * 0.25,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(15),
+      color: baseColor,
+    ),
+    child: Center(
+      child: Text("Pesan"),
+    ),
+  ),
                                             ),
                                           ],
                                         )

@@ -27,6 +27,7 @@ import 'package:wanderer/presentations/bloc/toggle_boolean_bloc.dart';
 import 'package:wanderer/presentations/bloc/type_bloc.dart';
 import 'package:wanderer/presentations/bloc/user_bloc.dart';
 import 'package:wanderer/presentations/shared/theme.dart';
+import 'package:wanderer/presentations/pages/campervan_page/campervan_page.dart';
 
 import './locator.dart' as di;
 import 'package:wanderer/presentations/pages/auth/reset_page.dart';
@@ -76,7 +77,6 @@ class InternetAwareApp extends StatelessWidget {
     );
   }
 }
-
 
 class MyApp extends StatefulWidget {
   final bool isConnected;
@@ -188,19 +188,7 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData.light().copyWith(
-          bottomNavigationBarTheme:
-              BottomNavigationBarTheme.of(context).copyWith(
-            unselectedItemColor: Colors.black,
-            selectedItemColor: Colors.black,
-            backgroundColor: Colors.white,
-            unselectedLabelStyle: blackTextStyle,
-            selectedLabelStyle: blackTextStyle,
-          ),
-          appBarTheme: const AppBarTheme(
-            backgroundColor: Colors.white,
-            iconTheme: IconThemeData(color: Colors.black),
-            elevation: 0,
-          ),
+          // Theme data...
         ),
         home: Stack(
           children: [
@@ -232,6 +220,7 @@ class _MyAppState extends State<MyApp> {
         ),
         routes: {
           ResetPage.routeName: (context) => ResetPage(),
+          CampervanPage.routeName: (context) => CampervanPage(),
         },
       ),
     );
