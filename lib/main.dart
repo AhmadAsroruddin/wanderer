@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -42,13 +43,45 @@ void main() async {
     name: 'wanderer-3e072',
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await FirebaseApi().initNotifications();
+  FirebaseApi().initNotifications();
   initializeDateFormatting("id_ID");
-  runApp(const MyApp());
+  runApp(InternetAwareApp());
 }
 
+class InternetAwareApp extends StatelessWidget {
+  const InternetAwareApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<ConnectivityResult>(
+      stream: Connectivity().onConnectivityChanged,
+      builder: (context, snapshot) {
+        bool isConnected = snapshot.data != ConnectivityResult.none;
+        if (snapshot.connectionState == ConnectionState.active) {
+          return MyApp(isConnected: isConnected);
+        } else {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            home: Scaffold(
+              body: Center(
+                child: AlertDialog(
+                  title: Text('No Internet Connection'),
+                  content: Text('Please check your internet connection'),
+                ),
+              ),
+            ),
+          );
+        }
+      },
+    );
+  }
+}
+
+
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  final bool isConnected;
+
+  const MyApp({Key? key, required this.isConnected}) : super(key: key);
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -82,6 +115,14 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
     );
+
+    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+      if (result == ConnectivityResult.none) {
+        _showNoInternetDialog();
+      } else {
+        _hideNoInternetDialog();
+      }
+    });
   }
 
   Future<void> configureLocalNotifications() async {
@@ -108,7 +149,18 @@ class _MyAppState extends State<MyApp> {
         .show(0, title, body, platformChannelSpecifics, payload: 'data');
   }
 
-  // This widget is the root of your application.
+  void _showNoInternetDialog() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('No Internet Connection'),
+      ),
+    );
+  }
+
+  void _hideNoInternetDialog() {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -150,9 +202,33 @@ class _MyAppState extends State<MyApp> {
             elevation: 0,
           ),
         ),
-        home: Router(
-          routerDelegate: routerDelegate,
-          backButtonDispatcher: RootBackButtonDispatcher(),
+        home: Stack(
+          children: [
+            Router(
+              routerDelegate: routerDelegate,
+              backButtonDispatcher: RootBackButtonDispatcher(),
+            ),
+            if (!widget.isConnected)
+              Positioned(
+                bottom: 150,
+                left: 20,
+                right: 20,
+                child: Container(
+                  width: MediaQuery.of(context).size.width - 0.5,
+                  decoration: BoxDecoration(
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                  child: Center(
+                    child: Text(
+                      'No Internet Connection',
+                      style: TextStyle(color: Colors.white, fontSize: 14, decoration: TextDecoration.none),
+                    ),
+                  ),
+                ),
+              ),
+          ],
         ),
         routes: {
           ResetPage.routeName: (context) => ResetPage(),
