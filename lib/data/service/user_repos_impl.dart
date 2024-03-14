@@ -47,4 +47,13 @@ class UserReposImpl extends UserRepository {
       print(e);
     }
   }
+
+  @override
+  Future<void> deleteUser() async {
+    try {
+      await userDataSource.deleteUser();
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

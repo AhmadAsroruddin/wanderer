@@ -20,4 +20,32 @@ class DialogUtils {
       },
     );
   }
+
+  static void alertDialogWithAction(
+      BuildContext context, String title, String content, Function() func) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(content),
+          actions: [
+            TextButton(
+              onPressed: () {
+                func();
+                Navigator.of(context).pop();
+              },
+              child: const Text("Ok"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("Batal"),
+            ),
+          ],
+        );
+      },
+    );
+  }
 }

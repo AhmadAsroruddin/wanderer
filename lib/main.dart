@@ -26,7 +26,6 @@ import 'package:wanderer/presentations/bloc/payout_bloc.dart';
 import 'package:wanderer/presentations/bloc/toggle_boolean_bloc.dart';
 import 'package:wanderer/presentations/bloc/type_bloc.dart';
 import 'package:wanderer/presentations/bloc/user_bloc.dart';
-import 'package:wanderer/presentations/shared/theme.dart';
 import 'package:wanderer/presentations/pages/campervan_page/campervan_page.dart';
 
 import './locator.dart' as di;
@@ -46,7 +45,7 @@ void main() async {
   );
   FirebaseApi().initNotifications();
   initializeDateFormatting("id_ID");
-  runApp(InternetAwareApp());
+  runApp(const InternetAwareApp());
 }
 
 class InternetAwareApp extends StatelessWidget {
@@ -61,7 +60,7 @@ class InternetAwareApp extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.active) {
           return MyApp(isConnected: isConnected);
         } else {
-          return MaterialApp(
+          return const MaterialApp(
             debugShowCheckedModeBanner: false,
             home: Scaffold(
               body: Center(
@@ -96,7 +95,6 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print("onMessage: $message");
       String? title = message.notification?.title;
       String? body = message.notification?.body;
       showNotification(title, body);
@@ -151,7 +149,7 @@ class _MyAppState extends State<MyApp> {
 
   void _showNoInternetDialog() {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
+      const SnackBar(
         content: Text('No Internet Connection'),
       ),
     );
@@ -188,8 +186,8 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData.light().copyWith(
-          // Theme data...
-        ),
+            // Theme data...
+            ),
         home: Stack(
           children: [
             Router(
@@ -207,11 +205,15 @@ class _MyAppState extends State<MyApp> {
                     color: Colors.grey,
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                  child: Center(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                  child: const Center(
                     child: Text(
                       'No Internet Connection',
-                      style: TextStyle(color: Colors.white, fontSize: 14, decoration: TextDecoration.none),
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          decoration: TextDecoration.none),
                     ),
                   ),
                 ),
@@ -220,7 +222,7 @@ class _MyAppState extends State<MyApp> {
         ),
         routes: {
           ResetPage.routeName: (context) => ResetPage(),
-          CampervanPage.routeName: (context) => CampervanPage(),
+          CampervanPage.routeName: (context) => const CampervanPage(),
         },
       ),
     );

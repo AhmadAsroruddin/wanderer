@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wanderer/data/models/report_model.dart';
 import 'package:wanderer/data/models/user_model.dart';
 import 'package:wanderer/domain/entities/user.dart';
+import 'package:wanderer/domain/usecase/deleteUser.dart';
 import 'package:wanderer/domain/usecase/getUserData.dart';
 import 'package:wanderer/domain/usecase/report.dart';
 import 'package:wanderer/domain/usecase/updateUser.dart';
@@ -13,8 +14,10 @@ class UserCubit extends Cubit<UserState> {
   final GetUserData _getUserData;
   final UpdateUser _updateUser;
   final AddReport _report;
+  final DeleteUserUsecase _deleteUserUsecase;
 
-  UserCubit(this._getUserData, this._updateUser, this._report)
+  UserCubit(this._getUserData, this._updateUser, this._report,
+      this._deleteUserUsecase)
       : super(UserLoading());
 
   Future<void> getUser(String uid) async {
@@ -58,5 +61,13 @@ class UserCubit extends Cubit<UserState> {
 
   Future<void> report(ReportModel reportModel) async {
     await _report.execute(reportModel);
+  }
+
+  Future<void> deleteUser() async {
+    emit(UserLoading());
+
+    await _deleteUserUsecase.execute();
+
+    emit(UserDeleteSuccess());
   }
 }

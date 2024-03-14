@@ -52,6 +52,7 @@ import 'package:wanderer/domain/usecase/createAccount.dart';
 import 'package:wanderer/domain/usecase/createBeneficaries.dart';
 import 'package:wanderer/domain/usecase/createPayout.dart';
 import 'package:wanderer/domain/usecase/deleteMarker.dart';
+import 'package:wanderer/domain/usecase/deleteUser.dart';
 import 'package:wanderer/domain/usecase/firstTimeDone.dart';
 import 'package:wanderer/domain/usecase/getAdmin.dart';
 import 'package:wanderer/domain/usecase/getAdminCampervan.dart';
@@ -168,6 +169,8 @@ void init() {
   locator.registerLazySingleton(() => GetUserMarker(markerRepos: locator()));
   locator.registerLazySingleton(() => UpdateMarker(markerRepos: locator()));
   locator.registerLazySingleton(() => DeleteMarker(markerRepos: locator()));
+  locator.registerLazySingleton(
+      () => DeleteUserUsecase(userRepository: locator()));
 
   //REPOSITORY
   locator.registerLazySingleton<AuthRepos>(() => AuthReposImpl(
@@ -218,7 +221,8 @@ void init() {
   locator.registerFactory(() => AdminDataCubit(
       locator(), locator(), locator(), locator(), locator(), locator()));
   locator.registerFactory(() => TypeCubitData(locator(), locator()));
-  locator.registerFactory(() => UserCubit(locator(), locator(), locator()));
+  locator.registerFactory(
+      () => UserCubit(locator(), locator(), locator(), locator()));
   locator.registerFactory(() => OrderCubit(locator(), locator(), locator()));
   locator.registerFactory(() => PaymentCubit(locator(), locator()));
   locator.registerFactory(() => ArticleCubit(locator()));

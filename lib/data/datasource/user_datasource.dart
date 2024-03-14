@@ -11,6 +11,7 @@ abstract class UserDataSource {
   Future<void> updateUserProfile(UserModel userData);
   Future<void> reportSend(ReportModel report);
   Future<void> addToken();
+  Future<void> deleteUser();
 }
 
 class UserDataSourceImpl extends UserDataSource {
@@ -54,5 +55,14 @@ class UserDataSourceImpl extends UserDataSource {
         .collection("users")
         .doc(firebaseAuth.currentUser!.uid)
         .update({'token': token});
+  }
+
+  @override
+  Future<void> deleteUser() async {
+    FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+    User? userCredential = firebaseAuth.currentUser;
+    await userCredential!.delete();
+
+    await firestore.collection('users').doc(userCredential.uid).delete();
   }
 }

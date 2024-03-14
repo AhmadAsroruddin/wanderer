@@ -5,12 +5,14 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:wanderer/presentations/bloc/favorite_bloc.dart';
 import 'package:wanderer/presentations/bloc/user_bloc.dart';
+import 'package:wanderer/presentations/pages/auth/login_page.dart';
 import 'package:wanderer/presentations/pages/edit_profile_page.dart';
 import 'package:wanderer/presentations/pages/favorite_page.dart';
 import 'package:wanderer/presentations/pages/manage/admin_page.dart';
 import 'package:wanderer/presentations/pages/tab_screen.dart';
 import 'package:wanderer/presentations/pages/user_order_list_page/user_order_list_page.dart';
 import 'package:wanderer/presentations/pages/your_marker_page.dart';
+import 'package:wanderer/presentations/shared/alertDialog.dart';
 
 import '../bloc/auth_bloc.dart';
 import '../shared/CardAccount.dart';
@@ -176,6 +178,48 @@ class _AccountPageState extends State<AccountPage> {
                           ),
                           const Divider(
                             thickness: 2,
+                          ),
+                          //DELETE ACCOUNT
+                          GestureDetector(
+                            onTap: () async {
+                              DialogUtils.alertDialogWithAction(
+                                context,
+                                "Warning",
+                                "Do you want to delete your account?",
+                                () async {
+                                  await context.read<UserCubit>().deleteUser();
+
+                                  Navigator.of(context)
+                                      .pushNamed(LoginPage.routeName);
+                                },
+                              );
+                            },
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                              child: Row(
+                                children: <Widget>[
+                                  SizedBox(
+                                    width: deviceWidth * 0.1,
+                                    height: deviceHeight * 0.04,
+                                    child: Image.asset(
+                                      "assets/img/logout.png",
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: deviceWidth * 0.1,
+                                  ),
+                                  Text(
+                                    "Delete My Account",
+                                    style: GoogleFonts.roboto()
+                                        .copyWith(fontSize: 18),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: deviceHeight * 0.01,
                           ),
                           GestureDetector(
                             onTap: () async {

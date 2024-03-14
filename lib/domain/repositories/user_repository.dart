@@ -8,4 +8,5 @@ abstract class UserRepository {
   Future<void> updateUser(UserModel userData);
   Future<void> report(ReportModel reportModel);
   Future<void> addToken();
+  Future<void> deleteUser();
 }
